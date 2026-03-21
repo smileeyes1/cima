@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <title>تطبيق مواقع الافلام بدون اعلانات قوي</title>
+  <title>تطبيق مواقع الافلام العربية</title>
 
   <style>
     body {
@@ -46,18 +46,9 @@
       color: #ffeb3b;
     }
 
-    /* فلتر css قوي جدا لاخفاء اعلانات و overlays */
-    [class*="ad"], [id*="ad"], [class*="banner"], [id*="banner"], 
-    [class*="popup"], [class*="overlay"], [class*="sponsored"], [class*="promo"],
-    [class*="interstitial"], [class*="pre-roll"], div[style*="position: fixed"],
-    div[style*="z-index: 9"], div[style*="z-index: 99"], div[style*="z-index: 999"],
-    iframe:not([src*="youtube"]):not([src*="youtu.be"]), 
-    [data-ad], [data-ads], [aria-label*="ad"], [role="banner"] {
+    /* فلتر css لاخفاء اعلانات */
+    [class*="ad"], [id*="ad"], [class*="banner"], [class*="popup"], [class*="overlay"], div[style*="position: fixed"] {
       display: none !important;
-      visibility: hidden !important;
-      height: 0 !important;
-      width: 0 !important;
-      opacity: 0 !important;
     }
   </style>
 </head>
@@ -68,7 +59,7 @@
     <button class="btn" onclick="openSite('https://wecima.click')">وي سيما</button>
     <button class="btn" onclick="openSite('https://cfu.cam')">سيما فور يو</button>
     <button class="btn" onclick="openSite('https://shahheid4u.net')">شاهد فور يو</button>
-    <button class="btn" onclick="openSite('https://egybest.tube')">ايجي بست</button>
+    <button class="btn" onclick="openSite('https://egibest.fan')">ايجي بست</button>
 
     <div class="top-controls">
       <button class="btn" onclick="window.location.reload()">تحديث</button>
@@ -76,87 +67,27 @@
   </header>
 
   <div id="message">
-    اضغط الزر لفتح الموقع في تبويب جديد مع فلتر اعلانات اقوى ممكن  
-    (لنتيجة مثالية استخدم متصفح brave او uBlock Origin)
+    اضغط على الزر لفتح الموقع في تبويب جديد  
+    جرب تشغيل VPN اذا لم يفتح (مثل ProtonVPN مجاني)  
+    اذا ما زال لا يعمل ابحث في جوجل عن الاسم + "رابط جديد ٢٠٢٦"
   </div>
 
   <script>
     function openSite(url) {
-      window.open(url, '_blank', 'noopener,noreferrer');
+      window.open(url, '_blank');
     }
 
-    // قائمة كلمات اعلانات موسعة وقوية جدا
-    const adKeywords = [
-      "ads", "adsterra", "doubleclick", "googleads", "adservice", "taboola", "popads", "outbrain",
-      "mgid", "exoclick", "popunder", "banner", "sponsor", "promo", "clickad", "tracking", "analytics",
-      "affiliate", "adsafe", "adsafeprotected", "googleadservices", "adnxs", "casalemedia", "openx",
-      "rubicon", "pubmatic", "overlay", "popup", "interstitial", "pre-roll", "videoad", "nativead",
-      "pushads", "pushnotification", "subscribe", "alertad", "adblock", "antiadblock", "adrecover"
-    ];
-
-    // MutationObserver لمراقبة وازالة فورية
-    const observer = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        if (mutation.addedNodes && mutation.addedNodes.length > 0) {
-          mutation.addedNodes.forEach((node) => {
-            if (node.nodeType === 1) {
-              checkAndRemove(node);
-              if (node.querySelectorAll) {
-                node.querySelectorAll('*').forEach(checkAndRemove);
-              }
-            }
-          });
-        }
-      });
-    });
-
-    function checkAndRemove(el) {
-      adKeywords.forEach(key => {
-        const lowerKey = key.toLowerCase();
-        if (
-          (el.src && el.src.toLowerCase().includes(lowerKey)) ||
-          (el.href && el.href.toLowerCase().includes(lowerKey)) ||
-          (el.id && el.id.toLowerCase().includes(lowerKey)) ||
-          (el.className && el.className.toLowerCase().includes(lowerKey)) ||
-          (el.innerHTML && el.innerHTML.toLowerCase().includes(lowerKey)) ||
-          (el.getAttribute('data-ad') || el.getAttribute('data-ads'))
-        ) {
-          el.remove();
-          return;
-        }
-      });
-      // ازالة iframes مشبوهة
-      if (el.tagName === 'IFRAME' && el.src && !el.src.includes('youtube') && !el.src.includes('youtu.be')) {
-        el.remove();
-      }
-    }
-
-    observer.observe(document.documentElement, { childList: true, subtree: true });
-
-    // فحص دوري قوي كل نصف ثانية للاعلانات المتاخرة
+    // فلتر اعلانات بسيط
+    const adKeywords = ["ads", "banner", "popup", "overlay", "sponsored"];
     setInterval(() => {
-      document.querySelectorAll('iframe, script, div, span, a').forEach(el => checkAndRemove(el));
-    }, ٥٠٠);
-
-    // منع popups و window.open غير مرغوب
-    const originalOpen = window.open;
-    window.open = function(url) {
-      if (url && adKeywords.some(k => url.toLowerCase().includes(k))) {
-        return null;
-      }
-      return originalOpen.apply(this, arguments);
-    };
-
-    // منع alerts اعلانية
-    const originalAlert = window.alert;
-    window.alert = function(msg) {
-      if (msg && adKeywords.some(k => msg.toLowerCase().includes(k))) {
-        return;
-      }
-      return originalAlert.apply(this, arguments);
-    };
-
-    console.log('فلتر الاعلانات القوي مفعل');
+      document.querySelectorAll('div, iframe').forEach(el => {
+        adKeywords.forEach(key => {
+          if (el.innerHTML.toLowerCase().includes(key) || (el.src && el.src.includes(key))) {
+            el.remove();
+          }
+        });
+      });
+    }, ١٠٠٠);
   </script>
 
 </body>
