@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>تطبيق مواقع الأفلام</title>
+
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #111;
+      color: #fff;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background: #222;
+      padding: 15px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .btn {
+      display: inline-block;
+      margin: 5px;
+      padding: 12px 18px;
+      background: #e91e63;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .btn:hover { background: #c2185b; }
+
+    iframe {
+      width: 100%;
+      height: calc(100vh - 120px);
+      border: none;
+      margin-top: 10px;
+    }
+
+    .top-controls {
+      margin-top: 10px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <button class="btn" onclick="loadSite('https://cima4u.*')">Cima4u</button>
+    <button class="btn" onclick="loadSite('https://egybest.*')">EgyBest</button>
+    <button class="btn" onclick="loadSite('https://mycima.*')">MyCima</button>
+    <button class="btn" onclick="loadSite('https://shahid4u.*')">Shahid4U</button>
+
+    <div class="top-controls">
+      <button class="btn" onclick="goBack()">رجوع</button>
+      <button class="btn" onclick="refresh()">تحديث</button>
+    </div>
+  </header>
+
+  <iframe id="viewer" src=""></iframe>
+
+  <script>
+    let historyStack = [];
+
+    function loadSite(url) {
+      const viewer = document.getElementById("viewer");
+      if (viewer.src) historyStack.push(viewer.src);
+      viewer.src = url;
+    }
+
+    function goBack() {
+      if (historyStack.length > 0) {
+        document.getElementById("viewer").src = historyStack.pop();
+      }
+    }
+
+    function refresh() {
+      const viewer = document.getElementById("viewer");
+      viewer.src = viewer.src;
+    }
+
+    // أقوى فلتر إعلانات ممكن داخل HTML فقط
+    const adKeywords = [
+      "ads", "adservice", "doubleclick", "taboola", "popads",
+      "banner", "sponsor", "promo", "click", "tracking"
+    ];
+
+    const observer = new MutationObserver(() => {
+      adKeywords.forEach(key => {
+        document.querySelectorAll(`iframe[src*="${key}"], script[src*="${key}"], div[id*="${key}"], div[class*="${key}"]`)
+          .forEach(el => el.remove());
+      });
+    });
+
+    observer.observe(document, { childList: true, subtree: true });
+
+    // منع النوافذ المنبثقة
+    window.open = function() { return null; };
+  </script>
+
+</body>
+</html>
