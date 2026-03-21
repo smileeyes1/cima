@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <title>تطبيق مواقع الأفلام</title>
+  <title>تطبيق مواقع الافلام</title>
 
   <style>
     body {
@@ -52,10 +52,10 @@
 <body>
 
   <header>
-    <button class="btn" onclick="loadSite('https://cima4u.*')">Cima4u</button>
-    <button class="btn" onclick="loadSite('https://egybest.*')">EgyBest</button>
-    <button class="btn" onclick="loadSite('https://mycima.*')">MyCima</button>
-    <button class="btn" onclick="loadSite('https://shahid4u.*')">Shahid4U</button>
+    <button class="btn" onclick="loadSite('https://mycima.cc')">MyCima</button>
+    <button class="btn" onclick="loadSite('https://cima4u.shop')">Cima4u</button>
+    <button class="btn" onclick="loadSite('https://shahid4u.top')">Shahid4u</button>
+    <button class="btn" onclick="loadSite('https://egybest.work')">EgyBest</button>
 
     <div class="top-controls">
       <button class="btn" onclick="goBack()">رجوع</button>
@@ -85,7 +85,7 @@
       viewer.src = viewer.src;
     }
 
-    // أقوى فلتر إعلانات ممكن داخل HTML فقط
+    // اقوى فلتر اعلانات ممكن داخل HTML فقط
     const adKeywords = [
       "ads", "adservice", "doubleclick", "taboola", "popads",
       "banner", "sponsor", "promo", "click", "tracking"
@@ -93,7 +93,7 @@
 
     const observer = new MutationObserver(() => {
       adKeywords.forEach(key => {
-        document.querySelectorAll(`iframe[src*="${key}"], script[src*="${key}"], div[id*="${key}"], div[class*="${key}"]`)
+        document.querySelectorAll(`iframe[src*="\( {key}"], script[src*=" \){key}"], div[id*="\( {key}"], div[class*=" \){key}"]`)
           .forEach(el => el.remove());
       });
     });
