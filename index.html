@@ -53,9 +53,9 @@
 
   <header>
     <button class="btn" onclick="loadSite('https://mycima.cc')">MyCima</button>
-    <button class="btn" onclick="loadSite('https://cima4u.shop')">Cima4u</button>
-    <button class="btn" onclick="loadSite('https://shahid4u.top')">Shahid4u</button>
-    <button class="btn" onclick="loadSite('https://egybest.work')">EgyBest</button>
+    <button class="btn" onclick="loadSite('https://c4u.top')">Cima4u</button>
+    <button class="btn" onclick="loadSite('https://shahheid4u.net')">Shahid4u</button>
+    <button class="btn" onclick="loadSite('https://egybest.store')">EgyBest</button>
 
     <div class="top-controls">
       <button class="btn" onclick="goBack()">رجوع</button>
@@ -85,7 +85,6 @@
       viewer.src = viewer.src;
     }
 
-    // اقوى فلتر اعلانات ممكن داخل HTML فقط
     const adKeywords = [
       "ads", "adservice", "doubleclick", "taboola", "popads",
       "banner", "sponsor", "promo", "click", "tracking"
@@ -100,7 +99,6 @@
 
     observer.observe(document, { childList: true, subtree: true });
 
-    // منع النوافذ المنبثقة
     window.open = function() { return null; };
   </script>
 
