@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <title>تطبيق مواقع الافلام</title>
+  <title>تطبيق مواقع الافلام العربية</title>
 
   <style>
     body {
@@ -36,15 +36,14 @@
 
     .btn:hover { background: #c2185b; }
 
-    iframe {
-      width: 100%;
-      height: calc(100vh - 120px);
-      border: none;
+    .top-controls {
       margin-top: 10px;
     }
 
-    .top-controls {
-      margin-top: 10px;
+    #message {
+      margin: 20px;
+      font-size: 18px;
+      color: #ffeb3b;
     }
   </style>
 </head>
@@ -52,54 +51,40 @@
 <body>
 
   <header>
-    <button class="btn" onclick="loadSite('https://mycima.cc')">MyCima</button>
-    <button class="btn" onclick="loadSite('https://c4u.top')">Cima4u</button>
-    <button class="btn" onclick="loadSite('https://shahheid4u.net')">Shahid4u</button>
-    <button class="btn" onclick="loadSite('https://egybest.store')">EgyBest</button>
+    <button class="btn" onclick="openSite('https://wecima.click')">وي سيما (بديل ماي سيما)</button>
+    <button class="btn" onclick="openSite('https://cfu.cam')">سيما فور يو</button>
+    <button class="btn" onclick="openSite('https://shahid4u.site')">شاهد فور يو</button>
+    <button class="btn" onclick="openSite('https://egybest.tube')">ايجي بست</button>
 
     <div class="top-controls">
-      <button class="btn" onclick="goBack()">رجوع</button>
-      <button class="btn" onclick="refresh()">تحديث</button>
+      <button class="btn" onclick="window.location.reload()">تحديث الصفحة</button>
     </div>
   </header>
 
-  <iframe id="viewer" src=""></iframe>
+  <div id="message">
+    اضغط على الزر لفتح الموقع في تبويب جديد (يعمل بدون مشكلة فارغة)
+  </div>
 
   <script>
-    let historyStack = [];
-
-    function loadSite(url) {
-      const viewer = document.getElementById("viewer");
-      if (viewer.src) historyStack.push(viewer.src);
-      viewer.src = url;
+    function openSite(url) {
+      window.open(url, '_blank');
     }
 
-    function goBack() {
-      if (historyStack.length > 0) {
-        document.getElementById("viewer").src = historyStack.pop();
-      }
-    }
-
-    function refresh() {
-      const viewer = document.getElementById("viewer");
-      viewer.src = viewer.src;
-    }
-
-    const adKeywords = [
-      "ads", "adservice", "doubleclick", "taboola", "popads",
-      "banner", "sponsor", "promo", "click", "tracking"
-    ];
-
+    // فلتر اعلانات بسيط داخل الصفحة نفسها
+    const adKeywords = ["ads", "doubleclick", "taboola", "popads", "banner", "sponsor"];
     const observer = new MutationObserver(() => {
       adKeywords.forEach(key => {
-        document.querySelectorAll(`iframe[src*="\( {key}"], script[src*=" \){key}"], div[id*="\( {key}"], div[class*=" \){key}"]`)
+        document.querySelectorAll(`[src*="\( {key}"], [id*=" \){key}"], [class*="${key}"]`)
           .forEach(el => el.remove());
       });
     });
-
     observer.observe(document, { childList: true, subtree: true });
 
-    window.open = function() { return null; };
+    window.open = (function(open) {
+      return function(url) {
+        return open.call(window, url, '_blank');
+      };
+    })(window.open);
   </script>
 
 </body>
