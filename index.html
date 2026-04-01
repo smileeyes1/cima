@@ -3,210 +3,182 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>لعبة قصة الجمع السحري</title>
+<title>قصة الجمع الذكي</title>
+
 <style>
-body {margin:0;font-family:"Tajawal",Arial,sans-serif;background:linear-gradient(#dff5f2,#ffffff);text-align:center;}
-.container {max-width:420px;margin:auto;padding:15px;}
-.card {background:white;border-radius:18px;padding:18px;margin-top:15px;box-shadow:0 4px 12px rgba(0,0,0,0.1);}
-.character {display:flex;align-items:center;gap:10px;}
-.avatar {font-size:36px;}
-.name {font-weight:bold;color:#00695c;}
-.speech {background:#e0f2f1;border-radius:12px;padding:10px;margin-top:8px;position:relative;}
-.question {font-size:30px;margin:20px 0;}
-input {font-size:22px;width:80px;text-align:center;padding:6px;border-radius:10px;border:2px solid #80cbc4;}
-button {margin-top:10px;padding:8px 16px;font-size:18px;border:none;border-radius:14px;background:#26a69a;color:white;cursor:pointer;}
-.reward {margin-top:15px;font-size:22px;display:none;}
-.circle {width:50px;height:50px;background:#ffca28;border-radius:50%;margin:10px auto;animation:pop 0.6s ease;}
-@keyframes pop {0%{transform:scale(0);}100%{transform:scale(1);}}
-.voice-btn {position:absolute;top:8px;left:8px;background:#26a69a;color:white;border:none;border-radius:50%;width:28px;height:28px;font-size:16px;cursor:pointer;}
-.name-input {width:100%;padding:8px;margin:8px 0;border-radius:10px;border:2px solid #80cbc4;font-size:18px;}
+body{
+  margin:0;
+  font-family:"Tajawal", Arial;
+  background:linear-gradient(#e0f7fa,#ffffff);
+}
+.container{
+  max-width:430px;
+  margin:auto;
+  padding:12px;
+}
+.card{
+  background:#fff;
+  border-radius:18px;
+  padding:16px;
+  margin-top:14px;
+  box-shadow:0 4px 10px rgba(0,0,0,.1);
+}
+.char{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.avatar{font-size:38px}
+.name{font-weight:bold;color:#00695c}
+.speech{
+  background:#e0f2f1;
+  border-radius:12px;
+  padding:12px;
+  margin-top:10px;
+  position:relative;
+}
+.voice{
+  position:absolute;
+  left:6px;
+  top:6px;
+  border:none;
+  background:#26a69a;
+  color:#fff;
+  width:28px;height:28px;
+  border-radius:50%;
+}
+.visual{
+  display:flex;
+  justify-content:center;
+  gap:6px;
+  margin:10px 0;
+  flex-wrap:wrap;
+}
+.item{
+  width:36px;
+  height:36px;
+  background:#ffca28;
+  border-radius:50%;
+  animation:pop .4s ease;
+}
+@keyframes pop{
+  from{transform:scale(0)}
+  to{transform:scale(1)}
+}
+input{
+  width:80px;
+  font-size:22px;
+  text-align:center;
+  border-radius:10px;
+  border:2px solid #80cbc4;
+}
+button{
+  margin-top:12px;
+  padding:10px 18px;
+  font-size:18px;
+  background:#26a69a;
+  color:white;
+  border:none;
+  border-radius:14px;
+}
+.hide{display:none}
 </style>
 </head>
+
 <body>
 <div class="container">
 
 <!-- المقدمة -->
 <div id="intro" class="card">
-  <div class="character">
+  <div class="char">
     <div class="avatar">🧔🏻‍♂️</div>
-    <div><div class="name">الحكيم إبراهيم</div></div>
+    <div class="name">الحكيم إبراهيم</div>
   </div>
   <div class="speech" id="introText"></div>
-  <button onclick="speak(document.getElementById('introText').innerText)" class="voice-btn">🔊</button>
-
-  <p style="margin:15px 0 5px 0;font-size:18px;">اسم الطالب:</p>
-  <input id="studentName" class="name-input" placeholder="اكتب اسمك يا بطل" value="">
-
-  <p style="margin:5px 0;font-size:18px;">اسم ولي الأمر:</p>
-  <input id="parentName" class="name-input" placeholder="اسم الوالد/الوالدة" value="">
-
-  <button onclick="startGame()" style="margin-top:15px;">ابدأ القصة</button>
 </div>
 
-<!-- اللعبة -->
-<div id="game" class="card" style="display:none;">
-  <div class="character">
-    <div class="avatar">👨‍🏫</div>
-    <div><div class="name">المعلم محمد</div></div>
-  </div>
-  <div class="speech" id="teacherText"></div>
-  <button onclick="speak(document.getElementById('teacherText').innerText)" class="voice-btn">🔊</button>
+<!-- الدرس -->
+<div id="lesson" class="card hide">
 
-  <div class="question" id="question"></div>
+  <div class="char">
+    <div class="avatar">👨‍🏫</div>
+    <div class="name">المعلم محمد</div>
+  </div>
+
+  <div class="speech" id="teacherText"></div>
+
+  <!-- تمثيل بصري -->
+  <div class="visual" id="v1"></div>
+  <div style="font-size:26px;font-weight:bold">+</div>
+  <div class="visual" id="v2"></div>
+  <hr>
+  <div class="visual" id="vResult"></div>
+
+  <p style="font-size:26px" id="question"></p>
 
   <input type="number" id="answer">
   <br>
-  <button onclick="checkAnswer()">تحقق</button>
-
-  <div class="reward" id="reward">
-    <div id="rewardText"></div>
-    <div class="circle"></div>
-  </div>
-
-  <!-- زر التالي مع تأخير ١٠ ثوانٍ -->
-  <div id="nextSection" style="display:none;margin-top:15px;">
-    <button id="nextBtn" onclick="handleNextClick()" disabled>التالي</button>
-  </div>
-</div>
-
-<!-- الخاتمة -->
-<div id="end" class="card" style="display:none;">
-  <h2 id="endTitle">🌟 أحسنت 🌟</h2>
-  <p id="endText"></p>
-  <button onclick="location.reload()">العب القصة مرة أخرى</button>
+  <button onclick="check()">تحقق</button>
 </div>
 
 </div>
 
 <script>
-let studentName = "بطلنا";
-let parentName = "ولي أمره الكريم";
-let a, b, count = 0;
-let nextClickCount = 0;
-let nextTimer = null;
+let a,b;
 
-const introMessages = [
-  "كان يا ما كان في قرية خضراء طفل شجاع يحب الجمع…",
-  "اليوم سنعيش قصة ممتعة عن جمع الكنوز السحرية.",
-  "خذ وقتك يا بطل، فالله مع الصابرين."
-];
-
-const teacherMessages = [
-  "اجمع العددين بهدوء ثم اكتب الناتج.",
-  "فكر قليلًا واكتب في دفترك، ثم أجب.",
-  "أنا واثق أنك تستطيع يا بطل."
-];
-
-const rewards = [
-  "محاولتك عبادة جميلة 🌸",
-  "الله يرى جهدك ويباركه ⭐",
-  "أحسنت، تقدم رائع 🌈"
-];
-
-function eastern(n) {
-  return n.replace(/\d/g, d => "٠١٢٣٤٥٦٧٨٩"[d]);
+function speak(txt){
+  const u=new SpeechSynthesisUtterance(txt);
+  u.lang="ar-SA";
+  speechSynthesis.speak(u);
 }
 
-function speak(text) {
-  if ('speechSynthesis' in window) {
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = 'ar-SA';
-    speechSynthesis.speak(utterance);
+function showItems(id,count){
+  const el=document.getElementById(id);
+  el.innerHTML="";
+  for(let i=0;i<count;i++){
+    const d=document.createElement("div");
+    d.className="item";
+    el.appendChild(d);
   }
 }
 
-function introRandom() {
-  document.getElementById("introText").innerText = introMessages[Math.floor(Math.random()*introMessages.length)];
-}
-introRandom();
+function newLesson(){
+  a=Math.floor(Math.random()*5)+1;
+  b=Math.floor(Math.random()*5)+1;
 
-function startGame() {
-  studentName = document.getElementById("studentName").value.trim() || studentName;
-  parentName = document.getElementById("parentName").value.trim() || parentName;
+  const text=`اليوم سنتعلم الجمع. لدينا ${a} أشياء ثم نضيف ${b} أشياء أخرى.`;
+  document.getElementById("teacherText").innerText=text;
+  speak(text);
 
-  document.getElementById("intro").style.display = "none";
-  document.getElementById("game").style.display = "block";
-  newQuestion();
-}
+  showItems("v1",a);
+  showItems("v2",b);
+  document.getElementById("vResult").innerHTML="";
 
-function newQuestion() {
-  a = Math.floor(Math.random()*9)+1;
-  b = Math.floor(Math.random()*(18-a))+1;
-
-  const teacherText = `${studentName}، ${teacherMessages[Math.floor(Math.random()*teacherMessages.length)]}`;
-  document.getElementById("teacherText").innerText = teacherText;
-
-  const qText = `في قصتنا يا ${studentName}، وجدت ${eastern(a.toString())} + ${eastern(b.toString())} من الكنوز السحرية. كم كنز جمعنا؟`;
-  document.getElementById("question").innerText = qText;
-
-  document.getElementById("answer").value = "";
-  document.getElementById("reward").style.display = "none";
-  document.getElementById("nextSection").style.display = "none";
-  nextClickCount = 0;
+  document.getElementById("question").innerText=`كم أصبح المجموع؟`;
 }
 
-function checkAnswer() {
-  const user = Number(document.getElementById("answer").value);
-  if (user === a + b) {
-    const rewardMsg = rewards[Math.floor(Math.random()*rewards.length)];
-    document.getElementById("rewardText").innerText = `${studentName}، ${rewardMsg}`;
-    document.getElementById("reward").style.display = "block";
-    count++;
-
-    if (count >= 5) {
-      setTimeout(showEnd, 1500);
-    } else {
-      showNextButton();
-    }
-  } else {
-    const errorMsg = `لا بأس يا ${studentName}، جرّب مرة أخرى بهدوء. الله مع الصابرين.`;
-    document.getElementById("teacherText").innerText = errorMsg;
+function check(){
+  const val=Number(answer.value);
+  if(val===a+b){
+    showItems("vResult",a+b);
+    const t="أحسنت! عندما جمعنا الأشياء أصبحت أكثر.";
+    document.getElementById("teacherText").innerText=t;
+    speak(t);
+    setTimeout(newLesson,2500);
+  }else{
+    speak("حاول مرة أخرى وتذكر أننا نجمع الكل معًا");
   }
 }
 
-function showNextButton() {
-  const nextSection = document.getElementById("nextSection");
-  const nextBtn = document.getElementById("nextBtn");
-  nextSection.style.display = "block";
-  nextBtn.disabled = true;
-  nextBtn.innerText = "التالي (١٠)";
-  let timeLeft = 10;
+document.getElementById("introText").innerText=
+"مرحبًا بك يا بطل. اليوم سنتعلم الجمع باستخدام النظر والعد.";
+speak(document.getElementById("introText").innerText);
 
-  nextTimer = setInterval(() => {
-    timeLeft--;
-    nextBtn.innerText = `التالي (${timeLeft})`;
-    if (timeLeft <= 0) {
-      clearInterval(nextTimer);
-      nextBtn.disabled = false;
-      nextBtn.innerText = "التالي";
-    }
-  }, 1000);
-}
-
-function handleNextClick() {
-  nextClickCount++;
-  if (nextClickCount === 1) {
-    // الضغط الأول بعد الوقت = التالي
-    document.getElementById("nextSection").style.display = "none";
-    newQuestion();
-  } else if (nextClickCount === 2) {
-    // ضغط متكرر = شرح إضافي
-    document.getElementById("teacherText").innerText = `${studentName}، تذكر: الجمع يعني نضع العددين معًا، مثل تفاحتين + ثلاث تفاحات = خمس تفاحات.`;
-    speak(document.getElementById("teacherText").innerText);
-  } else if (nextClickCount === 3) {
-    // ضغط ثالث = رسالة تشجيع + نشاط مفاجئ
-    document.getElementById("teacherText").innerText = `يا ${studentName}، أنت رائع! اكتب في دفترك الآن: ٤ + ٥ = ؟ ثم اضغط التالي.`;
-    speak(document.getElementById("teacherText").innerText);
-  }
-}
-
-function showEnd() {
-  document.getElementById("game").style.display = "none";
-  const endCard = document.getElementById("end");
-  document.getElementById("endTitle").innerHTML = `🌟 أحسنت يا ${studentName} 🌟`;
-  document.getElementById("endText").innerHTML = `اجتهدت وتعلمت، وكل محاولة قمت بها عبادة جميلة.<br>سيفخر ${parentName} بك كثيرًا، والله معك دائمًا.`;
-  endCard.style.display = "block";
-}
+setTimeout(()=>{
+  document.getElementById("intro").classList.add("hide");
+  document.getElementById("lesson").classList.remove("hide");
+  newLesson();
+},4000);
 </script>
 </body>
 </html>
