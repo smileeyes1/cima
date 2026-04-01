@@ -1,146 +1,213 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <title>لعبة الجمع حتى ١٨</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f5f7fa;
-      text-align: center;
-      padding: 20px;
-    }
-    .card {
-      background: white;
-      padding: 20px;
-      margin: 15px auto;
-      max-width: 500px;
-      border-radius: 12px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
-    h1 {
-      color: #2c3e50;
-    }
-    .character {
-      font-weight: bold;
-      color: #00695c;
-    }
-    .numbers {
-      font-size: 32px;
-      margin: 20px 0;
-    }
-    input {
-      font-size: 20px;
-      padding: 8px;
-      width: 80px;
-      text-align: center;
-    }
-    button {
-      font-size: 18px;
-      padding: 8px 16px;
-      margin-top: 10px;
-      cursor: pointer;
-    }
-    .message {
-      margin-top: 15px;
-      font-size: 18px;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>لعبة الجمع حتى ١٨</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: "Tajawal", Arial, sans-serif;
+  background: linear-gradient(#dff5f2, #ffffff);
+  text-align: center;
+}
+
+.container {
+  max-width: 420px;
+  margin: auto;
+  padding: 15px;
+}
+
+.card {
+  background: white;
+  border-radius: 18px;
+  padding: 18px;
+  margin-top: 15px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.character {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.avatar {
+  font-size: 36px;
+}
+
+.name {
+  font-weight: bold;
+  color: #00695c;
+}
+
+.speech {
+  background: #e0f2f1;
+  border-radius: 12px;
+  padding: 10px;
+  margin-top: 8px;
+}
+
+.question {
+  font-size: 30px;
+  margin: 20px 0;
+}
+
+input {
+  font-size: 22px;
+  width: 80px;
+  text-align: center;
+  padding: 6px;
+  border-radius: 10px;
+  border: 2px solid #80cbc4;
+}
+
+button {
+  margin-top: 10px;
+  padding: 8px 16px;
+  font-size: 18px;
+  border: none;
+  border-radius: 14px;
+  background: #26a69a;
+  color: white;
+}
+
+.reward {
+  margin-top: 15px;
+  font-size: 22px;
+  display: none;
+}
+.circle {
+  width: 50px;
+  height: 50px;
+  background: #ffca28;
+  border-radius: 50%;
+  margin: 10px auto;
+  animation: pop 0.6s ease;
+}
+
+@keyframes pop {
+  0% {transform: scale(0);}
+  100% {transform: scale(1);}
+}
+</style>
 </head>
+
 <body>
+<div class="container">
 
-  <!-- المقدمة -->
-  <div class="card" id="intro">
-    <h1>🌸 مرحبًا بك في لعبة الجمع 🌸</h1>
-    <p class="character">الحكيم إبراهيم:</p>
-    <p>
-      مرحبًا يا بطل 🌟  
-      اليوم سنتعلم معًا الجمع بهدوء وصبر.  
-      لا تقلق إن أخطأت، فالمحاولة طريق النجاح.
-    </p>
-    <button onclick="startGame()">ابدأ</button>
+<!-- المقدمة -->
+<div id="intro" class="card">
+  <div class="character">
+    <div class="avatar">🧔🏻‍♂️</div>
+    <div>
+      <div class="name">الحكيم إبراهيم</div>
+    </div>
   </div>
+  <div class="speech" id="introText"></div>
+  <button onclick="startGame()">ابدأ</button>
+</div>
 
-  <!-- العرض (اللعبة) -->
-  <div class="card" id="game" style="display:none;">
-    <p class="character">المعلم محمد:</p>
-    <p>احسب ناتج الجمع بهدوء، واكتبه في الدفتر ثم هنا.</p>
-
-    <div class="numbers" id="question"></div>
-
-    <input type="number" id="answer" />
-    <br>
-    <button onclick="checkAnswer()">تحقق</button>
-
-    <div class="message" id="feedback"></div>
+<!-- اللعبة -->
+<div id="game" class="card" style="display:none;">
+  <div class="character">
+    <div class="avatar">👨‍🏫</div>
+    <div>
+      <div class="name">المعلم محمد</div>
+    </div>
   </div>
+  <div class="speech" id="teacherText"></div>
 
-  <!-- الخاتمة -->
-  <div class="card" id="end" style="display:none;">
-    <h2>🌟 أحسنت 🌟</h2>
-    <p class="character">الحكيم إبراهيم:</p>
-    <p>
-      اجتهدت اليوم، وهذا يسعدنا كثيرًا.  
-      كل محاولة قمت بها خطوة جميلة في طريق تعلمك.
-    </p>
-    <p class="character">المعلم محمد:</p>
-    <p>
-      استمر في التدريب، وغدًا ستكون أقوى بإذن الله.
-    </p>
-    <button onclick="restart()">العب مرة أخرى</button>
+  <div class="question" id="question"></div>
+
+  <input type="number" id="answer">
+  <br>
+  <button onclick="checkAnswer()">تحقق</button>
+
+  <div class="reward" id="reward">
+    <div id="rewardText"></div>
+    <div class="circle"></div>
   </div>
+</div>
+
+<!-- الخاتمة -->
+<div id="end" class="card" style="display:none;">
+  <h2>🌟 أحسنت 🌟</h2>
+  <p>اجتهدت وتعلمت، وكل محاولة قمت بها عبادة جميلة.</p>
+  <button onclick="location.reload()">العب مرة أخرى</button>
+</div>
+
+</div>
 
 <script>
-  let a, b;
-  let count = 0;
+const introMessages = [
+  "اليوم سنتعلم الجمع، والجمع يعني أن نضع عددًا مع عدد.",
+  "لا تخف إن أخطأت، فالتجربة طريق التعلم.",
+  "خذ وقتك، فالله مع الصابرين."
+];
 
-  function easternNumber(num) {
-    const map = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
-    return num.toString().split('').map(d => map[d]).join('');
-  }
+const teacherMessages = [
+  "اجمع العددين بهدوء ثم اكتب الناتج.",
+  "فكر قليلًا، اكتب في دفترك، ثم أجب.",
+  "أنا واثق أنك تستطيع."
+];
 
-  function startGame() {
-    document.getElementById('intro').style.display = 'none';
-    document.getElementById('game').style.display = 'block';
-    newQuestion();
-  }
+const rewards = [
+  "محاولتك عبادة جميلة 🌸",
+  "الله يرى جهدك ويباركه ⭐",
+  "أحسنت، تقدم رائع 🌈"
+];
 
-  function newQuestion() {
-    a = Math.floor(Math.random() * 10) + 1;
-    b = Math.floor(Math.random() * (18 - a)) + 1;
-    document.getElementById('question').innerText =
-      easternNumber(a) + " + " + easternNumber(b);
-    document.getElementById('answer').value = '';
-    document.getElementById('feedback').innerText = '';
-  }
+let a, b, count = 0;
 
-  function checkAnswer() {
-    let user = Number(document.getElementById('answer').value);
-    if (user === a + b) {
-      document.getElementById('feedback').innerText =
-        "✅ أحسنت، إجابتك صحيحة. محاولتك جميلة.";
-      count++;
-      if (count >= 5) {
-        endGame();
-      } else {
-        setTimeout(newQuestion, 1500);
-      }
+function introRandom() {
+  document.getElementById("introText").innerText =
+    introMessages[Math.floor(Math.random()*introMessages.length)];
+}
+introRandom();
+
+function startGame() {
+  document.getElementById("intro").style.display = "none";
+  document.getElementById("game").style.display = "block";
+  newQuestion();
+}
+
+function eastern(n){
+  return n.replace(/\d/g, d => "٠١٢٣٤٥٦٧٨٩"[d]);
+}
+
+function newQuestion() {
+  a = Math.floor(Math.random()*9)+1;
+  b = Math.floor(Math.random()*(18-a))+1;
+  document.getElementById("teacherText").innerText =
+    teacherMessages[Math.floor(Math.random()*teacherMessages.length)];
+  document.getElementById("question").innerText =
+    eastern(a.toString()) + " + " + eastern(b.toString());
+  document.getElementById("answer").value = "";
+  document.getElementById("reward").style.display = "none";
+}
+
+function checkAnswer() {
+  let user = Number(document.getElementById("answer").value);
+  if(user === a+b){
+    document.getElementById("rewardText").innerText =
+      rewards[Math.floor(Math.random()*rewards.length)];
+    document.getElementById("reward").style.display = "block";
+    count++;
+    if(count >= 5){
+      setTimeout(()=>{
+        document.getElementById("game").style.display="none";
+        document.getElementById("end").style.display="block";
+      },1500);
     } else {
-      document.getElementById('feedback').innerText =
-        "🌱 لا بأس، حاول مرة أخرى بهدوء.";
+      setTimeout(newQuestion, 1500);
     }
+  } else {
+    document.getElementById("teacherText").innerText =
+      "لا بأس، جرّب مرة أخرى بهدوء.";
   }
-
-  function endGame() {
-    document.getElementById('game').style.display = 'none';
-    document.getElementById('end').style.display = 'block';
-  }
-
-  function restart() {
-    count = 0;
-    document.getElementById('end').style.display = 'none';
-    document.getElementById('intro').style.display = 'block';
-  }
+}
 </script>
 
 </body>
