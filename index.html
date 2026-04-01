@@ -3,30 +3,31 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>بيئة تعلّم الجمع الآمن</title>
+<title>منصة التعلم الآمن – الجمع بالقلوب</title>
 
 <style>
+/* ===== أساس عام ===== */
 *{box-sizing:border-box}
 html,body{
   width:100%;
   height:100%;
   margin:0;
   overflow:hidden;
-  font-family:"Tajawal",Arial;
+  font-family:"Tajawal", Arial;
 }
 body{
   background:linear-gradient(#e0f7fa,#ffffff);
+  color:#00695c;
   display:flex;
   justify-content:center;
   align-items:center;
-  color:#00695c;
 }
 
-/* زر تكبير/تصغير */
+/* ===== زر تكبير/تصغير ===== */
 .full-btn{
   position:fixed;
-  top:12px;
-  right:12px;
+  top:10px;
+  right:10px;
   z-index:1000;
   padding:8px 14px;
   border-radius:10px;
@@ -36,7 +37,7 @@ body{
   font-size:14px;
 }
 
-/* الحاوية */
+/* ===== الحاوية ===== */
 .container{
   width:100vw;
   height:100vh;
@@ -46,6 +47,7 @@ body{
   align-items:center;
 }
 
+/* ===== البطاقة ===== */
 .card{
   width:100%;
   height:100%;
@@ -53,10 +55,11 @@ body{
   padding:20px;
   display:flex;
   flex-direction:column;
-  align-items:center;
   justify-content:center;
+  align-items:center;
 }
 
+/* ===== الشخصيات ===== */
 .character{
   display:flex;
   align-items:center;
@@ -65,15 +68,16 @@ body{
 .avatar{font-size:48px}
 .name{font-size:22px;font-weight:bold}
 
+/* ===== فقاعة الكلام ===== */
 .speech{
   background:#e0f2f1;
   border-radius:16px;
   padding:14px 16px 14px 48px;
   margin:12px 0;
   position:relative;
-  max-width:720px;
-  font-size:18px;
+  max-width:780px;
   text-align:center;
+  font-size:18px;
 }
 
 .voice{
@@ -82,45 +86,48 @@ body{
   top:10px;
   width:30px;
   height:30px;
-  border:none;
   border-radius:50%;
+  border:none;
   background:#26a69a;
   color:white;
 }
 
+/* ===== السؤال ===== */
 .question{
   font-size:36px;
   font-weight:bold;
+  margin:10px 0;
 }
 
-/* القلوب */
+/* ===== القلوب ===== */
 .hearts{
   display:flex;
   justify-content:center;
   gap:8px;
   flex-wrap:wrap;
-  margin:8px 0;
+  margin:6px 0;
 }
 .heart{
   font-size:34px;
   animation:glow 1.5s infinite alternate;
 }
 @keyframes glow{
-  from{transform:scale(1);opacity:.7}
-  to{transform:scale(1.2);opacity:1}
+  from{transform:scale(1);opacity:0.7}
+  to{transform:scale(1.25);opacity:1}
 }
 
+/* ===== الإدخال والأزرار ===== */
 input{
   font-size:26px;
   width:100px;
-  padding:8px;
   text-align:center;
   border-radius:12px;
   border:3px solid #80cbc4;
+  padding:8px;
 }
 
 button{
-  margin-top:10px;
+  margin:8px;
   padding:10px 22px;
   font-size:18px;
   border:none;
@@ -130,11 +137,11 @@ button{
 }
 
 .helper{
+  margin-top:10px;
   background:#fff3cd;
   color:#795548;
-  margin-top:10px;
-  padding:10px;
   border-radius:12px;
+  padding:10px;
   font-size:16px;
 }
 
@@ -148,11 +155,11 @@ button{
 
 <body>
 
-<button class="full-btn" onclick="toggleFull()">⛶ تصغير/تكبير</button>
+<button class="full-btn" onclick="toggleFull()">⛶ تصغير / تكبير</button>
 
 <div class="container">
 
-<!-- المقدمة -->
+<!-- ===== المقدمة ===== -->
 <div id="intro" class="card">
   <div class="character">
     <div class="avatar">🧔🏻‍♂️</div>
@@ -160,8 +167,8 @@ button{
   </div>
 
   <div class="speech" id="introText">
-    مرحبًا يا بطل. سنتعلّم اليوم الجمع بهدوء ومحبّة.
-    لا مستعجل هنا، فالتعلّم عبادة، والله مع الصابرين.
+    مرحبًا بك يا بطل. هنا نتعلّم بهدوء ومحبة.
+    لا خطأ هنا يُغضب، فكل محاولة عبادة، والله مع الصابرين.
   </div>
   <button class="voice" onclick="speak(introText.innerText)">🔊</button>
 
@@ -171,15 +178,15 @@ button{
   <p>اسم ولي الأمر:</p>
   <input id="parent">
 
-  <button onclick="start()">ابدأ الدرس</button>
+  <button onclick="start()">ابدأ الرحلة</button>
 </div>
 
-<!-- الدرس -->
+<!-- ===== الدرس ===== -->
 <div id="lesson" class="card" style="display:none">
 
   <div class="character">
     <div class="avatar">👨‍🏫</div>
-    <div class="name">المعلّم محمد</div>
+    <div class="name">المعلم محمد</div>
   </div>
 
   <div class="speech" id="teacherText"></div>
@@ -195,7 +202,7 @@ button{
   <input id="answer" type="number" placeholder="الناتج">
 
   <div>
-    <button onclick="check()">تحقّق</button>
+    <button onclick="check()">تحقق</button>
     <button onclick="help()">🤍 أنا محتار</button>
   </div>
 
@@ -209,15 +216,16 @@ button{
 </div>
 
 <script>
-let studentName="",parentName="";
+/* ===== المتغيرات ===== */
+let studentName="", parentName="";
 let a=0,b=0;
-let timer=null,sec=10;
 let streak=0;
+let timer=null,sec=10;
 
-// تكبير افتراضي
+/* ===== ملء الشاشة افتراضي ===== */
 window.onload=()=>{ document.documentElement.requestFullscreen?.(); }
 
-// تبديل ملء الشاشة
+/* ===== تبديل ملء الشاشة ===== */
 function toggleFull(){
   if(!document.fullscreenElement){
     document.documentElement.requestFullscreen();
@@ -226,7 +234,7 @@ function toggleFull(){
   }
 }
 
-// صوت محسّن
+/* ===== الصوت العربي ===== */
 function speak(text){
   speechSynthesis.cancel();
   const u=new SpeechSynthesisUtterance(text);
@@ -238,12 +246,12 @@ function speak(text){
   speechSynthesis.speak(u);
 }
 
-// أرقام شرقية
+/* ===== أرقام شرقية ===== */
 function eastern(n){
   return n.toString().replace(/\d/g,d=>"٠١٢٣٤٥٦٧٨٩"[d]);
 }
 
-// قلوب
+/* ===== القلوب ===== */
 function hearts(id,n){
   const e=document.getElementById(id);
   e.innerHTML="";
@@ -255,6 +263,7 @@ function hearts(id,n){
   }
 }
 
+/* ===== بدء ===== */
 function start(){
   studentName=student.value||"بطلنا";
   parentName=parent.value||"ولي أمره الكريم";
@@ -263,44 +272,48 @@ function start(){
   newQ();
 }
 
+/* ===== سؤال جديد (تعلم متكيف) ===== */
 function newQ(){
   a=streak>=3?Math.floor(Math.random()*5)+4:Math.floor(Math.random()*3)+1;
   b=Math.floor(Math.random()*3)+1;
 
   teacherText.innerText=
-  `يا ${studentName}، انظر إلى القلوب وعدّها معي بهدوء.
-  الجمع يعني أننا نضم الأشياء معًا.`;
+  `يا ${studentName}، سنعدّ القلوب معًا بهدوء. الجمع يعني أن نضم الأشياء، واحدًا واحدًا.`;
   speak(teacherText.innerText);
 
   question.innerText=`${eastern(a)} + ${eastern(b)}`;
   hearts("heartsA",a);
   hearts("heartsB",b);
   hearts("heartsR",0);
+
   answer.value="";
   helper.style.display="none";
   nextBox.style.display="none";
 }
 
+/* ===== تحقق ===== */
 function check(){
   if(Number(answer.value)==a+b){
     streak++;
     hearts("heartsR",a+b);
     teacherText.innerText=
-    `أحسنت يا ${studentName}. كل محاولة ترفعك درجة، والله يبارك فيك.`;
+    `أحسنت يا ${studentName}. عملك يدل على صبر وقوة، والنبي ﷺ يحب القوي الأمين.`;
     speak(teacherText.innerText);
     startTimer();
   }else{
     streak=0;
-    speak(`لا بأس يا ${studentName}. الخطأ خطوة للتعلم، والله معك.`);
+    speak(`لا بأس يا ${studentName}. الخطأ خطوة نتعلم منها، والله معك.`);
   }
 }
 
+/* ===== مساعدة ===== */
 function help(){
   helper.style.display="block";
-  helper.innerText=`خذ نفسًا عميقًا، وعدّ القلوب واحدة واحدة. لا تعجل.`;
+  helper.innerText=`عدّ القلوب ببطء… واحدة… اثنتان… وتذكر أن السرعة ليست مطلوبة.`;
   speak(helper.innerText);
 }
 
+/* ===== مؤقت التالي ===== */
 function startTimer(){
   sec=10;
   nextBox.style.display="block";
