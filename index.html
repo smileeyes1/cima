@@ -3,11 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>درس الجمع بالقلوب – ملء الشاشة</title>
+<title>بيئة تعلّم الجمع الآمن</title>
 
 <style>
 *{box-sizing:border-box}
-
 html,body{
   width:100%;
   height:100%;
@@ -15,7 +14,6 @@ html,body{
   overflow:hidden;
   font-family:"Tajawal",Arial;
 }
-
 body{
   background:linear-gradient(#e0f7fa,#ffffff);
   display:flex;
@@ -24,12 +22,12 @@ body{
   color:#00695c;
 }
 
-/* زر ملء الشاشة */
+/* زر تكبير/تصغير */
 .full-btn{
   position:fixed;
-  top:10px;
-  right:10px;
-  z-index:999;
+  top:12px;
+  right:12px;
+  z-index:1000;
   padding:8px 14px;
   border-radius:10px;
   background:#26a69a;
@@ -48,44 +46,37 @@ body{
   align-items:center;
 }
 
-/* البطاقة */
 .card{
   width:100%;
   height:100%;
   background:white;
-  border-radius:0;
-  box-shadow:0 6px 14px rgba(0,0,0,.15);
   padding:20px;
   display:flex;
   flex-direction:column;
-  justify-content:center;
   align-items:center;
+  justify-content:center;
 }
 
-/* الشخصيات */
 .character{
   display:flex;
   align-items:center;
   gap:10px;
-  margin-bottom:10px;
 }
 .avatar{font-size:48px}
-.name{font-weight:bold;font-size:22px}
+.name{font-size:22px;font-weight:bold}
 
-/* الفقاعة */
 .speech{
-  width:100%;
-  max-width:700px;
   background:#e0f2f1;
   border-radius:16px;
   padding:14px 16px 14px 48px;
+  margin:12px 0;
   position:relative;
+  max-width:720px;
   font-size:18px;
-  margin:10px 0;
   text-align:center;
 }
 
-.voice-btn{
+.voice{
   position:absolute;
   left:10px;
   top:10px;
@@ -95,18 +86,15 @@ body{
   border-radius:50%;
   background:#26a69a;
   color:white;
-  font-size:16px;
 }
 
-/* السؤال */
 .question{
   font-size:36px;
   font-weight:bold;
-  margin:10px 0;
 }
 
 /* القلوب */
-.hearts-row{
+.hearts{
   display:flex;
   justify-content:center;
   gap:8px;
@@ -119,26 +107,35 @@ body{
 }
 @keyframes glow{
   from{transform:scale(1);opacity:.7}
-  to{transform:scale(1.25);opacity:1}
+  to{transform:scale(1.2);opacity:1}
 }
 
 input{
   font-size:26px;
   width:100px;
+  padding:8px;
   text-align:center;
   border-radius:12px;
   border:3px solid #80cbc4;
-  padding:8px;
 }
 
 button{
-  margin-top:12px;
+  margin-top:10px;
   padding:10px 22px;
   font-size:18px;
   border:none;
   border-radius:14px;
   background:#26a69a;
   color:white;
+}
+
+.helper{
+  background:#fff3cd;
+  color:#795548;
+  margin-top:10px;
+  padding:10px;
+  border-radius:12px;
+  font-size:16px;
 }
 
 @media(max-width:600px){
@@ -151,7 +148,7 @@ button{
 
 <body>
 
-<button class="full-btn" onclick="goFull()">⛶ ملء الشاشة</button>
+<button class="full-btn" onclick="toggleFull()">⛶ تصغير/تكبير</button>
 
 <div class="container">
 
@@ -163,15 +160,16 @@ button{
   </div>
 
   <div class="speech" id="introText">
-    مرحبًا بك يا بطل. سنتعلم اليوم الجمع بهدوء ومحبة. خذ وقتك، فالله مع الصابرين.
+    مرحبًا يا بطل. سنتعلّم اليوم الجمع بهدوء ومحبّة.
+    لا مستعجل هنا، فالتعلّم عبادة، والله مع الصابرين.
   </div>
-  <button class="voice-btn" onclick="speak(introText.innerText)">🔊</button>
+  <button class="voice" onclick="speak(introText.innerText)">🔊</button>
 
   <p>اسم الطالب:</p>
-  <input id="studentName">
+  <input id="student">
 
   <p>اسم ولي الأمر:</p>
-  <input id="parentName">
+  <input id="parent">
 
   <button onclick="start()">ابدأ الدرس</button>
 </div>
@@ -181,23 +179,29 @@ button{
 
   <div class="character">
     <div class="avatar">👨‍🏫</div>
-    <div class="name">المعلم محمد</div>
+    <div class="name">المعلّم محمد</div>
   </div>
 
   <div class="speech" id="teacherText"></div>
-  <button class="voice-btn" onclick="speak(teacherText.innerText)">🔊</button>
+  <button class="voice" onclick="speak(teacherText.innerText)">🔊</button>
 
   <div class="question" id="question"></div>
 
-  <div id="heartsA" class="hearts-row"></div>
+  <div id="heartsA" class="hearts"></div>
   <div style="font-size:26px;font-weight:bold">+</div>
-  <div id="heartsB" class="hearts-row"></div>
-  <div id="heartsResult" class="hearts-row"></div>
+  <div id="heartsB" class="hearts"></div>
+  <div id="heartsR" class="hearts"></div>
 
-  <input type="number" id="answer" placeholder="الناتج">
-  <button onclick="check()">تحقق</button>
+  <input id="answer" type="number" placeholder="الناتج">
 
-  <div id="nextArea" style="display:none">
+  <div>
+    <button onclick="check()">تحقّق</button>
+    <button onclick="help()">🤍 أنا محتار</button>
+  </div>
+
+  <div id="helper" class="helper" style="display:none"></div>
+
+  <div id="nextBox" style="display:none">
     <button id="nextBtn" disabled onclick="nextQ()">التالي (١٠)</button>
   </div>
 
@@ -205,24 +209,29 @@ button{
 </div>
 
 <script>
-let student="",parent="";
+let studentName="",parentName="";
 let a=0,b=0;
-let timer=null,countDown=10;
+let timer=null,sec=10;
+let streak=0;
 
-// ملء الشاشة
-function goFull(){
-  if(document.documentElement.requestFullscreen){
+// تكبير افتراضي
+window.onload=()=>{ document.documentElement.requestFullscreen?.(); }
+
+// تبديل ملء الشاشة
+function toggleFull(){
+  if(!document.fullscreenElement){
     document.documentElement.requestFullscreen();
+  }else{
+    document.exitFullscreen();
   }
 }
 
-// صوت عربي محسّن قدر الإمكان
+// صوت محسّن
 function speak(text){
   speechSynthesis.cancel();
   const u=new SpeechSynthesisUtterance(text);
-  const voices=speechSynthesis.getVoices();
-  const ar=voices.find(v=>v.lang.startsWith("ar"));
-  if(ar) u.voice=ar;
+  const v=speechSynthesis.getVoices().find(x=>x.lang.startsWith("ar"));
+  if(v)u.voice=v;
   u.lang="ar-SA";
   u.rate=0.9;
   u.pitch=1.1;
@@ -236,66 +245,71 @@ function eastern(n){
 
 // قلوب
 function hearts(id,n){
-  const el=document.getElementById(id);
-  el.innerHTML="";
+  const e=document.getElementById(id);
+  e.innerHTML="";
   for(let i=0;i<n;i++){
     const h=document.createElement("span");
     h.className="heart";
     h.innerText="❤";
-    el.appendChild(h);
+    e.appendChild(h);
   }
 }
 
-// بدء
 function start(){
-  student=studentName.value||"بطلنا";
-  parent=parentName.value||"ولي أمره الكريم";
+  studentName=student.value||"بطلنا";
+  parentName=parent.value||"ولي أمره الكريم";
   intro.style.display="none";
   lesson.style.display="flex";
   newQ();
 }
 
-// سؤال جديد
 function newQ(){
-  a=Math.floor(Math.random()*5)+1;
-  b=Math.floor(Math.random()*5)+1;
+  a=streak>=3?Math.floor(Math.random()*5)+4:Math.floor(Math.random()*3)+1;
+  b=Math.floor(Math.random()*3)+1;
 
   teacherText.innerText=
-  `يا ${student}، انظر إلى القلوب وعدّها معي بهدوء. الجمع يعني أننا نضم الأشياء معًا.`;
+  `يا ${studentName}، انظر إلى القلوب وعدّها معي بهدوء.
+  الجمع يعني أننا نضم الأشياء معًا.`;
   speak(teacherText.innerText);
 
   question.innerText=`${eastern(a)} + ${eastern(b)}`;
   hearts("heartsA",a);
   hearts("heartsB",b);
-  hearts("heartsResult",0);
-
+  hearts("heartsR",0);
   answer.value="";
-  nextArea.style.display="none";
+  helper.style.display="none";
+  nextBox.style.display="none";
 }
 
-// تحقق
 function check(){
   if(Number(answer.value)==a+b){
-    hearts("heartsResult",a+b);
+    streak++;
+    hearts("heartsR",a+b);
     teacherText.innerText=
-    `أحسنت يا ${student}. محاولتك عبادة جميلة، والله يبارك فيك.`;
+    `أحسنت يا ${studentName}. كل محاولة ترفعك درجة، والله يبارك فيك.`;
     speak(teacherText.innerText);
     startTimer();
   }else{
-    speak(`لا بأس يا ${student}. خذ نفسًا عميقًا، والله مع الصابرين.`);
+    streak=0;
+    speak(`لا بأس يا ${studentName}. الخطأ خطوة للتعلم، والله معك.`);
   }
 }
 
-// مؤقت
+function help(){
+  helper.style.display="block";
+  helper.innerText=`خذ نفسًا عميقًا، وعدّ القلوب واحدة واحدة. لا تعجل.`;
+  speak(helper.innerText);
+}
+
 function startTimer(){
-  nextArea.style.display="block";
-  countDown=10;
+  sec=10;
+  nextBox.style.display="block";
   nextBtn.disabled=true;
-  nextBtn.innerText=`التالي (${countDown})`;
+  nextBtn.innerText=`التالي (${sec})`;
   timer=setInterval(()=>{
-    countDown--;
-    nextBtn.innerText=`التالي (${countDown})`;
-    if(countDown<=0){
+    sec--;
+    nextBtn.innerText=`التالي (${sec})`;
+    if(sec<=0){
       clearInterval(timer);
       nextBtn.disabled=false;
       nextBtn.innerText="التالي";
