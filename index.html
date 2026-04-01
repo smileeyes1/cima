@@ -3,85 +3,137 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>درس الجمع بالقلوب</title>
+<title>درس الجمع بالقلوب – ملء الشاشة</title>
 
 <style>
 *{box-sizing:border-box}
 
-body{
-  margin:0;
-  font-family:"Tajawal",Arial;
-  background:linear-gradient(#e0f7fa,#ffffff);
-  text-align:center;
-  color:#00695c;
-}
-
-.container{
+html,body{
   width:100%;
-  max-width:480px;
-  margin:auto;
-  padding:clamp(10px,3vw,20px);
+  height:100%;
+  margin:0;
+  overflow:hidden;
+  font-family:"Tajawal",Arial;
 }
 
-.card{
-  background:#fff;
-  border-radius:20px;
-  padding:18px;
-  margin-top:15px;
-  box-shadow:0 6px 14px rgba(0,0,0,.12);
-}
-
-.character{
+body{
+  background:linear-gradient(#e0f7fa,#ffffff);
   display:flex;
   justify-content:center;
   align-items:center;
-  gap:10px;
+  color:#00695c;
 }
 
-.avatar{font-size:44px}
-.name{font-weight:bold;font-size:20px}
+/* زر ملء الشاشة */
+.full-btn{
+  position:fixed;
+  top:10px;
+  right:10px;
+  z-index:999;
+  padding:8px 14px;
+  border-radius:10px;
+  background:#26a69a;
+  color:white;
+  border:none;
+  font-size:14px;
+}
 
+/* الحاوية */
+.container{
+  width:100vw;
+  height:100vh;
+  padding:3vh 3vw;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+/* البطاقة */
+.card{
+  width:100%;
+  height:100%;
+  background:white;
+  border-radius:0;
+  box-shadow:0 6px 14px rgba(0,0,0,.15);
+  padding:20px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+}
+
+/* الشخصيات */
+.character{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:10px;
+}
+.avatar{font-size:48px}
+.name{font-weight:bold;font-size:22px}
+
+/* الفقاعة */
 .speech{
+  width:100%;
+  max-width:700px;
   background:#e0f2f1;
   border-radius:16px;
-  padding:14px 14px 14px 44px;
-  margin:12px 0;
+  padding:14px 16px 14px 48px;
   position:relative;
-  min-height:70px;
-  font-size:17px;
+  font-size:18px;
+  margin:10px 0;
+  text-align:center;
 }
 
 .voice-btn{
   position:absolute;
-  left:8px;
-  top:8px;
+  left:10px;
+  top:10px;
   width:30px;
   height:30px;
   border:none;
   border-radius:50%;
   background:#26a69a;
-  color:#fff;
+  color:white;
   font-size:16px;
 }
 
+/* السؤال */
 .question{
-  font-size:32px;
-  margin:16px 0;
+  font-size:36px;
   font-weight:bold;
+  margin:10px 0;
+}
+
+/* القلوب */
+.hearts-row{
+  display:flex;
+  justify-content:center;
+  gap:8px;
+  flex-wrap:wrap;
+  margin:8px 0;
+}
+.heart{
+  font-size:34px;
+  animation:glow 1.5s infinite alternate;
+}
+@keyframes glow{
+  from{transform:scale(1);opacity:.7}
+  to{transform:scale(1.25);opacity:1}
 }
 
 input{
-  font-size:24px;
-  width:90px;
+  font-size:26px;
+  width:100px;
   text-align:center;
-  padding:8px;
   border-radius:12px;
   border:3px solid #80cbc4;
+  padding:8px;
 }
 
 button{
   margin-top:12px;
-  padding:10px 20px;
+  padding:10px 22px;
   font-size:18px;
   border:none;
   border-radius:14px;
@@ -89,41 +141,18 @@ button{
   color:white;
 }
 
-/* القلوب */
-.hearts-row{
-  display:flex;
-  justify-content:center;
-  gap:6px;
-  flex-wrap:wrap;
-  margin:10px 0;
-}
-
-.heart{
-  font-size:30px;
-  animation:glow 1.5s infinite alternate;
-}
-
-@keyframes glow{
-  from{transform:scale(1);opacity:.7}
-  to{transform:scale(1.2);opacity:1}
-}
-
-/* التكيّف مع الهاتف */
-@media(max-width:480px){
-  .question{font-size:26px}
-  .heart{font-size:26px}
-}
-
-/* التكيّف مع الكمبيوتر */
-@media(min-width:768px){
-  .container{max-width:720px}
-  .question{font-size:34px}
-  .heart{font-size:36px}
+@media(max-width:600px){
+  .question{font-size:28px}
+  .heart{font-size:28px}
+  .name{font-size:18px}
 }
 </style>
 </head>
 
 <body>
+
+<button class="full-btn" onclick="goFull()">⛶ ملء الشاشة</button>
+
 <div class="container">
 
 <!-- المقدمة -->
@@ -132,18 +161,18 @@ button{
     <div class="avatar">🧔🏻‍♂️</div>
     <div class="name">الحكيم إبراهيم</div>
   </div>
+
   <div class="speech" id="introText">
-    مرحبًا يا بطل. اليوم سنتعلم الجمع بهدوء ومحبة. خذ وقتك، فالله مع الصابرين.
+    مرحبًا بك يا بطل. سنتعلم اليوم الجمع بهدوء ومحبة. خذ وقتك، فالله مع الصابرين.
   </div>
   <button class="voice-btn" onclick="speak(introText.innerText)">🔊</button>
 
   <p>اسم الطالب:</p>
-  <input id="studentName" placeholder="اسمك يا بطل">
+  <input id="studentName">
 
   <p>اسم ولي الأمر:</p>
-  <input id="parentName" placeholder="اسم الوالد أو الوالدة">
+  <input id="parentName">
 
-  <br>
   <button onclick="start()">ابدأ الدرس</button>
 </div>
 
@@ -166,36 +195,50 @@ button{
   <div id="heartsResult" class="hearts-row"></div>
 
   <input type="number" id="answer" placeholder="الناتج">
-  <br>
   <button onclick="check()">تحقق</button>
 
   <div id="nextArea" style="display:none">
-    <button id="nextBtn" disabled onclick="next()">التالي (١٠)</button>
+    <button id="nextBtn" disabled onclick="nextQ()">التالي (١٠)</button>
   </div>
 
 </div>
 </div>
 
 <script>
-let student="", parent="";
+let student="",parent="";
 let a=0,b=0;
-let counter=10,timer=null;
+let timer=null,countDown=10;
 
-function speak(txt){
+// ملء الشاشة
+function goFull(){
+  if(document.documentElement.requestFullscreen){
+    document.documentElement.requestFullscreen();
+  }
+}
+
+// صوت عربي محسّن قدر الإمكان
+function speak(text){
   speechSynthesis.cancel();
-  const u=new SpeechSynthesisUtterance(txt);
+  const u=new SpeechSynthesisUtterance(text);
+  const voices=speechSynthesis.getVoices();
+  const ar=voices.find(v=>v.lang.startsWith("ar"));
+  if(ar) u.voice=ar;
   u.lang="ar-SA";
+  u.rate=0.9;
+  u.pitch=1.1;
   speechSynthesis.speak(u);
 }
 
+// أرقام شرقية
 function eastern(n){
   return n.toString().replace(/\d/g,d=>"٠١٢٣٤٥٦٧٨٩"[d]);
 }
 
-function hearts(id,count){
+// قلوب
+function hearts(id,n){
   const el=document.getElementById(id);
   el.innerHTML="";
-  for(let i=0;i<count;i++){
+  for(let i=0;i<n;i++){
     const h=document.createElement("span");
     h.className="heart";
     h.innerText="❤";
@@ -203,25 +246,25 @@ function hearts(id,count){
   }
 }
 
+// بدء
 function start(){
   student=studentName.value||"بطلنا";
   parent=parentName.value||"ولي أمره الكريم";
   intro.style.display="none";
-  lesson.style.display="block";
-  newQuestion();
+  lesson.style.display="flex";
+  newQ();
 }
 
-function newQuestion(){
+// سؤال جديد
+function newQ(){
   a=Math.floor(Math.random()*5)+1;
   b=Math.floor(Math.random()*5)+1;
 
   teacherText.innerText=
-  `يا ${student}، انظر إلى القلوب وعدّها بهدوء. الجمع يعني أننا نضم الأشياء معًا.`;
-
+  `يا ${student}، انظر إلى القلوب وعدّها معي بهدوء. الجمع يعني أننا نضم الأشياء معًا.`;
   speak(teacherText.innerText);
 
   question.innerText=`${eastern(a)} + ${eastern(b)}`;
-
   hearts("heartsA",a);
   hearts("heartsB",b);
   hearts("heartsResult",0);
@@ -230,6 +273,7 @@ function newQuestion(){
   nextArea.style.display="none";
 }
 
+// تحقق
 function check(){
   if(Number(answer.value)==a+b){
     hearts("heartsResult",a+b);
@@ -242,16 +286,16 @@ function check(){
   }
 }
 
+// مؤقت
 function startTimer(){
   nextArea.style.display="block";
-  counter=10;
+  countDown=10;
   nextBtn.disabled=true;
-  nextBtn.innerText=`التالي (${counter})`;
-
+  nextBtn.innerText=`التالي (${countDown})`;
   timer=setInterval(()=>{
-    counter--;
-    nextBtn.innerText=`التالي (${counter})`;
-    if(counter<=0){
+    countDown--;
+    nextBtn.innerText=`التالي (${countDown})`;
+    if(countDown<=0){
       clearInterval(timer);
       nextBtn.disabled=false;
       nextBtn.innerText="التالي";
@@ -259,9 +303,7 @@ function startTimer(){
   },1000);
 }
 
-function next(){
-  newQuestion();
-}
+function nextQ(){ newQ(); }
 </script>
 
 </body>
