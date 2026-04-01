@@ -2,93 +2,146 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <title>تطبيق مواقع الافلام العربية</title>
-
+  <title>لعبة الجمع حتى ١٨</title>
   <style>
     body {
-      font-family: sans-serif;
-      background: #111;
-      color: #fff;
+      font-family: Arial, sans-serif;
+      background: #f5f7fa;
       text-align: center;
-      margin: 0;
-      padding: 0;
+      padding: 20px;
     }
-
-    header {
-      background: #222;
-      padding: 15px;
-      position: sticky;
-      top: 0;
-      z-index: 10;
+    .card {
+      background: white;
+      padding: 20px;
+      margin: 15px auto;
+      max-width: 500px;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     }
-
-    .btn {
-      display: inline-block;
-      margin: 5px;
-      padding: 12px 18px;
-      background: #e91e63;
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      font-size: 16px;
+    h1 {
+      color: #2c3e50;
+    }
+    .character {
+      font-weight: bold;
+      color: #00695c;
+    }
+    .numbers {
+      font-size: 32px;
+      margin: 20px 0;
+    }
+    input {
+      font-size: 20px;
+      padding: 8px;
+      width: 80px;
+      text-align: center;
+    }
+    button {
+      font-size: 18px;
+      padding: 8px 16px;
+      margin-top: 10px;
       cursor: pointer;
     }
-
-    .btn:hover { background: #c2185b; }
-
-    .top-controls {
-      margin-top: 10px;
-    }
-
-    #message {
-      margin: 20px;
+    .message {
+      margin-top: 15px;
       font-size: 18px;
-      color: #ffeb3b;
-    }
-
-    /* فلتر css لاخفاء اعلانات */
-    [class*="ad"], [id*="ad"], [class*="banner"], [class*="popup"], [class*="overlay"], div[style*="position: fixed"] {
-      display: none !important;
     }
   </style>
 </head>
-
 <body>
 
-  <header>
-    <button class="btn" onclick="openSite('https://wecima.click')">وي سيما</button>
-    <button class="btn" onclick="openSite('https://cfu.cam')">سيما فور يو</button>
-    <button class="btn" onclick="openSite('https://shahheid4u.net')">شاهد فور يو</button>
-    <button class="btn" onclick="openSite('https://egibest.fan')">ايجي بست</button>
-
-    <div class="top-controls">
-      <button class="btn" onclick="window.location.reload()">تحديث</button>
-    </div>
-  </header>
-
-  <div id="message">
-    اضغط على الزر لفتح الموقع في تبويب جديد  
-    جرب تشغيل VPN اذا لم يفتح (مثل ProtonVPN مجاني)  
-    اذا ما زال لا يعمل ابحث في جوجل عن الاسم + "رابط جديد ٢٠٢٦"
+  <!-- المقدمة -->
+  <div class="card" id="intro">
+    <h1>🌸 مرحبًا بك في لعبة الجمع 🌸</h1>
+    <p class="character">الحكيم إبراهيم:</p>
+    <p>
+      مرحبًا يا بطل 🌟  
+      اليوم سنتعلم معًا الجمع بهدوء وصبر.  
+      لا تقلق إن أخطأت، فالمحاولة طريق النجاح.
+    </p>
+    <button onclick="startGame()">ابدأ</button>
   </div>
 
-  <script>
-    function openSite(url) {
-      window.open(url, '_blank');
-    }
+  <!-- العرض (اللعبة) -->
+  <div class="card" id="game" style="display:none;">
+    <p class="character">المعلم محمد:</p>
+    <p>احسب ناتج الجمع بهدوء، واكتبه في الدفتر ثم هنا.</p>
 
-    // فلتر اعلانات بسيط
-    const adKeywords = ["ads", "banner", "popup", "overlay", "sponsored"];
-    setInterval(() => {
-      document.querySelectorAll('div, iframe').forEach(el => {
-        adKeywords.forEach(key => {
-          if (el.innerHTML.toLowerCase().includes(key) || (el.src && el.src.includes(key))) {
-            el.remove();
-          }
-        });
-      });
-    }, ١٠٠٠);
-  </script>
+    <div class="numbers" id="question"></div>
+
+    <input type="number" id="answer" />
+    <br>
+    <button onclick="checkAnswer()">تحقق</button>
+
+    <div class="message" id="feedback"></div>
+  </div>
+
+  <!-- الخاتمة -->
+  <div class="card" id="end" style="display:none;">
+    <h2>🌟 أحسنت 🌟</h2>
+    <p class="character">الحكيم إبراهيم:</p>
+    <p>
+      اجتهدت اليوم، وهذا يسعدنا كثيرًا.  
+      كل محاولة قمت بها خطوة جميلة في طريق تعلمك.
+    </p>
+    <p class="character">المعلم محمد:</p>
+    <p>
+      استمر في التدريب، وغدًا ستكون أقوى بإذن الله.
+    </p>
+    <button onclick="restart()">العب مرة أخرى</button>
+  </div>
+
+<script>
+  let a, b;
+  let count = 0;
+
+  function easternNumber(num) {
+    const map = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
+    return num.toString().split('').map(d => map[d]).join('');
+  }
+
+  function startGame() {
+    document.getElementById('intro').style.display = 'none';
+    document.getElementById('game').style.display = 'block';
+    newQuestion();
+  }
+
+  function newQuestion() {
+    a = Math.floor(Math.random() * 10) + 1;
+    b = Math.floor(Math.random() * (18 - a)) + 1;
+    document.getElementById('question').innerText =
+      easternNumber(a) + " + " + easternNumber(b);
+    document.getElementById('answer').value = '';
+    document.getElementById('feedback').innerText = '';
+  }
+
+  function checkAnswer() {
+    let user = Number(document.getElementById('answer').value);
+    if (user === a + b) {
+      document.getElementById('feedback').innerText =
+        "✅ أحسنت، إجابتك صحيحة. محاولتك جميلة.";
+      count++;
+      if (count >= 5) {
+        endGame();
+      } else {
+        setTimeout(newQuestion, 1500);
+      }
+    } else {
+      document.getElementById('feedback').innerText =
+        "🌱 لا بأس، حاول مرة أخرى بهدوء.";
+    }
+  }
+
+  function endGame() {
+    document.getElementById('game').style.display = 'none';
+    document.getElementById('end').style.display = 'block';
+  }
+
+  function restart() {
+    count = 0;
+    document.getElementById('end').style.display = 'none';
+    document.getElementById('intro').style.display = 'block';
+  }
+</script>
 
 </body>
 </html>
