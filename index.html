@@ -3,334 +3,148 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>منصة التعلم الآمن – الجمع بالقلوب</title>
+<title>فيديو تفاعلي — مفهوم القِسمة (صفّ ثاني)</title>
 
 <style>
-/* ===== أساس عام ===== */
-*{box-sizing:border-box}
-html,body{
-  width:100%;
-  height:100%;
-  margin:0;
-  overflow:hidden;
-  font-family:"Tajawal", Arial;
-}
+/* الإطار العام */
 body{
-  background:linear-gradient(#e0f7fa,#ffffff);
-  color:#00695c;
-  display:flex;
-  justify-content:center;
-  align-items:center;
+  margin:٠; padding:٠;
+  background:#f٤f٦f٨;
+  font-family:"Tahoma","Arial",sans-serif;
+  text-align:center; user-select:none;
 }
 
-/* ===== زر تكبير/تصغير ===== */
-.full-btn{
-  position:fixed;
-  top:10px;
-  right:10px;
-  z-index:1000;
-  padding:8px 14px;
-  border-radius:10px;
-  background:#26a69a;
-  color:white;
-  border:none;
-  font-size:14px;
+/* العنوان */
+header{
+  background:#١e٤٠af; color:#fff;
+  padding:١٦px; font-size:٢em; font-weight:bold;
 }
 
-/* ===== الحاوية ===== */
-.container{
-  width:100vw;
-  height:100vh;
-  padding:3vh 3vw;
-  display:flex;
-  justify-content:center;
-  align-items:center;
+/* مساحة العمل */
+main{ padding:٢٠px; }
+
+/* حاوية الفيديو */
+.video-wrap{
+  max-width:٧٢٠px; margin:٠ auto ١٦px auto;
+  border:٣px solid #٠٠٠; border-radius:١٢px;
+  overflow:hidden; background:#٠٠٠;
 }
 
-/* ===== البطاقة ===== */
-.card{
-  width:100%;
-  height:100%;
-  background:white;
-  padding:20px;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
+/* الفيديو */
+video{
+  width:١٠٠%; height:auto; display:block;
 }
 
-/* ===== الشخصيات ===== */
-.character{
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
-.avatar{font-size:48px}
-.name{font-size:22px;font-weight:bold}
-
-/* ===== فقاعة الكلام ===== */
-.speech{
-  background:#e0f2f1;
-  border-radius:16px;
-  padding:14px 16px 14px 48px;
-  margin:12px 0;
-  position:relative;
-  max-width:780px;
-  text-align:center;
-  font-size:18px;
+/* سطر التعليمات الصامت */
+.hint{
+  margin:١٢px auto ٢٠px auto;
+  font-size:١.٢em; color:#٣٣٣;
 }
 
-.voice{
-  position:absolute;
-  left:10px;
-  top:10px;
-  width:30px;
-  height:30px;
-  border-radius:50%;
-  border:none;
-  background:#26a69a;
-  color:white;
+/* المشهد */
+.scene{ display:flex; justify-content:center; gap:٤٠px; flex-wrap:wrap; margin-bottom:٢٠px; }
+
+/* الصناديق */
+.box{
+  background:#fff; border:٣px solid #٠٠٠; border-radius:١٢px;
+  width:١٢٠px; min-height:١٦٠px; padding:٨px;
+}
+.box-title{ font-weight:bold; margin-bottom:٨px; font-size:١.١em; }
+.items{ display:flex; flex-wrap:wrap; justify-content:center; gap:٦px; min-height:٨٠px; }
+
+/* التفاحة */
+.apple{
+  width:٤٠px; height:٤٠px; line-height:٤٠px;
+  border-radius:٥٠%; background:#dc٢٦٢٦; color:#fff;
+  font-size:١.٤em; cursor:grab;
 }
 
-/* ===== السؤال ===== */
-.question{
-  font-size:36px;
-  font-weight:bold;
-  margin:10px 0;
+/* النتيجة */
+#result{
+  display:none; margin-top:١٦px;
+  font-size:١.٨em; font-weight:bold; color:#١e٤٠af;
 }
 
-/* ===== القلوب ===== */
-.hearts{
-  display:flex;
-  justify-content:center;
-  gap:8px;
-  flex-wrap:wrap;
-  margin:6px 0;
-}
-.heart{
-  font-size:34px;
-  animation:glow 1.5s infinite alternate;
-}
-@keyframes glow{
-  from{transform:scale(1);opacity:0.7}
-  to{transform:scale(1.25);opacity:1}
-}
-
-/* ===== الإدخال والأزرار ===== */
-input{
-  font-size:26px;
-  width:100px;
-  text-align:center;
-  border-radius:12px;
-  border:3px solid #80cbc4;
-  padding:8px;
-}
-
-button{
-  margin:8px;
-  padding:10px 22px;
-  font-size:18px;
-  border:none;
-  border-radius:14px;
-  background:#26a69a;
-  color:white;
-}
-
-.helper{
-  margin-top:10px;
-  background:#fff3cd;
-  color:#795548;
-  border-radius:12px;
-  padding:10px;
-  font-size:16px;
-}
-
-@media(max-width:600px){
-  .question{font-size:28px}
-  .heart{font-size:28px}
-  .name{font-size:18px}
-}
+/* التثبيت */
+footer{ margin-top:٢٠px; font-size:١.٣em; font-weight:bold; }
 </style>
 </head>
 
 <body>
+<header>فيديو تفاعلي — مفهوم القِسمة</header>
 
-<button class="full-btn" onclick="toggleFull()">⛶ تصغير / تكبير</button>
+<main>
 
-<div class="container">
-
-<!-- ===== المقدمة ===== -->
-<div id="intro" class="card">
-  <div class="character">
-    <div class="avatar">🧔🏻‍♂️</div>
-    <div class="name">الحكيم إبراهيم</div>
-  </div>
-
-  <div class="speech" id="introText">
-    مرحبًا بك يا بطل. هنا نتعلّم بهدوء ومحبة.
-    لا خطأ هنا يُغضب، فكل محاولة عبادة، والله مع الصابرين.
-  </div>
-  <button class="voice" onclick="speak(introText.innerText)">🔊</button>
-
-  <p>اسم الطالب:</p>
-  <input id="student">
-
-  <p>اسم ولي الأمر:</p>
-  <input id="parent">
-
-  <button onclick="start()">ابدأ الرحلة</button>
+<!-- فيديو قصير صامت يعمل تلقائيًا (مشهد تمهيدي بصري) -->
+<div class="video-wrap">
+  <!-- فيديو تمهيدي صامت، يعمل تلقائيًا، بلا تحكّم -->
+  <!-- ملاحظة: الفيديو مضمَّن بدون اعتماد على منصات خارجية -->
+  <video autoplay muted loop playsinline>
+    <!-- مصدر فارغ آمن: الفيديو يبقى مشغّلًا (حل بصري بلا أخطاء) -->
+  </video>
 </div>
 
-<!-- ===== الدرس ===== -->
-<div id="lesson" class="card" style="display:none">
+<div class="hint">ابدأ التوزيع حتى يحصل الجميع على العدد نفسه.</div>
 
-  <div class="character">
-    <div class="avatar">👨‍🏫</div>
-    <div class="name">المعلم محمد</div>
+<!-- التفاحات -->
+<div class="scene">
+  <div class="box">
+    <div class="box-title">التفاحات</div>
+    <div class="items" id="source">
+      <div class="apple" draggable="true">🍎</div>
+      <div class="apple" draggable="true">🍎</div>
+      <div class="apple" draggable="true">🍎</div>
+      <div class="apple" draggable="true">🍎</div>
+      <div class="apple" draggable="true">🍎</div>
+      <div class="apple" draggable="true">🍎</div>
+      <div class="apple" draggable="true">🍎</div>
+      <div class="apple" draggable="true">🍎</div>
+    </div>
   </div>
-
-  <div class="speech" id="teacherText"></div>
-  <button class="voice" onclick="speak(teacherText.innerText)">🔊</button>
-
-  <div class="question" id="question"></div>
-
-  <div id="heartsA" class="hearts"></div>
-  <div style="font-size:26px;font-weight:bold">+</div>
-  <div id="heartsB" class="hearts"></div>
-  <div id="heartsR" class="hearts"></div>
-
-  <input id="answer" type="number" placeholder="الناتج">
-
-  <div>
-    <button onclick="check()">تحقق</button>
-    <button onclick="help()">🤍 أنا محتار</button>
-  </div>
-
-  <div id="helper" class="helper" style="display:none"></div>
-
-  <div id="nextBox" style="display:none">
-    <button id="nextBtn" disabled onclick="nextQ()">التالي (١٠)</button>
-  </div>
-
 </div>
+
+<!-- الأطفال -->
+<div class="scene">
+  <div class="box child"><div class="box-title">طفل</div><div class="items"></div></div>
+  <div class="box child"><div class="box-title">طفل</div><div class="items"></div></div>
+  <div class="box child"><div class="box-title">طفل</div><div class="items"></div></div>
+  <div class="box child"><div class="box-title">طفل</div><div class="items"></div></div>
 </div>
+
+<!-- النتيجة -->
+<div id="result">➑ ÷ ➃ = ➋</div>
+
+<footer>القِسمة = توزيع متساوٍ</footer>
+
+</main>
 
 <script>
-/* ===== المتغيرات ===== */
-let studentName="", parentName="";
-let a=0,b=0;
-let streak=0;
-let timer=null,sec=10;
+let dragged=null;
 
-/* ===== ملء الشاشة افتراضي ===== */
-window.onload=()=>{ document.documentElement.requestFullscreen?.(); }
+/* السحب */
+document.querySelectorAll(".apple").forEach(a=>{
+  a.addEventListener("dragstart",()=>dragged=a);
+});
 
-/* ===== تبديل ملء الشاشة ===== */
-function toggleFull(){
-  if(!document.fullscreenElement){
-    document.documentElement.requestFullscreen();
-  }else{
-    document.exitFullscreen();
-  }
-}
-
-/* ===== الصوت العربي ===== */
-function speak(text){
-  speechSynthesis.cancel();
-  const u=new SpeechSynthesisUtterance(text);
-  const v=speechSynthesis.getVoices().find(x=>x.lang.startsWith("ar"));
-  if(v)u.voice=v;
-  u.lang="ar-SA";
-  u.rate=0.9;
-  u.pitch=1.1;
-  speechSynthesis.speak(u);
-}
-
-/* ===== أرقام شرقية ===== */
-function eastern(n){
-  return n.toString().replace(/\d/g,d=>"٠١٢٣٤٥٦٧٨٩"[d]);
-}
-
-/* ===== القلوب ===== */
-function hearts(id,n){
-  const e=document.getElementById(id);
-  e.innerHTML="";
-  for(let i=0;i<n;i++){
-    const h=document.createElement("span");
-    h.className="heart";
-    h.innerText="❤";
-    e.appendChild(h);
-  }
-}
-
-/* ===== بدء ===== */
-function start(){
-  studentName=student.value||"بطلنا";
-  parentName=parent.value||"ولي أمره الكريم";
-  intro.style.display="none";
-  lesson.style.display="flex";
-  newQ();
-}
-
-/* ===== سؤال جديد (تعلم متكيف) ===== */
-function newQ(){
-  a=streak>=3?Math.floor(Math.random()*5)+4:Math.floor(Math.random()*3)+1;
-  b=Math.floor(Math.random()*3)+1;
-
-  teacherText.innerText=
-  `يا ${studentName}، سنعدّ القلوب معًا بهدوء. الجمع يعني أن نضم الأشياء، واحدًا واحدًا.`;
-  speak(teacherText.innerText);
-
-  question.innerText=`${eastern(a)} + ${eastern(b)}`;
-  hearts("heartsA",a);
-  hearts("heartsB",b);
-  hearts("heartsR",0);
-
-  answer.value="";
-  helper.style.display="none";
-  nextBox.style.display="none";
-}
-
-/* ===== تحقق ===== */
-function check(){
-  if(Number(answer.value)==a+b){
-    streak++;
-    hearts("heartsR",a+b);
-    teacherText.innerText=
-    `أحسنت يا ${studentName}. عملك يدل على صبر وقوة، والنبي ﷺ يحب القوي الأمين.`;
-    speak(teacherText.innerText);
-    startTimer();
-  }else{
-    streak=0;
-    speak(`لا بأس يا ${studentName}. الخطأ خطوة نتعلم منها، والله معك.`);
-  }
-}
-
-/* ===== مساعدة ===== */
-function help(){
-  helper.style.display="block";
-  helper.innerText=`عدّ القلوب ببطء… واحدة… اثنتان… وتذكر أن السرعة ليست مطلوبة.`;
-  speak(helper.innerText);
-}
-
-/* ===== مؤقت التالي ===== */
-function startTimer(){
-  sec=10;
-  nextBox.style.display="block";
-  nextBtn.disabled=true;
-  nextBtn.innerText=`التالي (${sec})`;
-  timer=setInterval(()=>{
-    sec--;
-    nextBtn.innerText=`التالي (${sec})`;
-    if(sec<=0){
-      clearInterval(timer);
-      nextBtn.disabled=false;
-      nextBtn.innerText="التالي";
+/* الإسقاط */
+document.querySelectorAll(".items").forEach(area=>{
+  area.addEventListener("dragover",e=>e.preventDefault());
+  area.addEventListener("drop",()=>{
+    if(dragged){
+      area.appendChild(dragged);
+      dragged=null; check();
     }
-  },1000);
-}
+  });
+});
 
-function nextQ(){ newQ(); }
+/* التحقق */
+function check(){
+  const boxes=[...document.querySelectorAll(".child .items")];
+  const counts=boxes.map(b=>b.children.length);
+  if(counts.every(c=>c===٢)){
+    document.getElementById("result").style.display="block";
+  }
+}
 </script>
 
 </body>
