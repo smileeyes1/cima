@@ -2,200 +2,152 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>قصة تفاعلية حاكمة — مفهوم القِسمة</title>
+<title>مفهوم القسمة – الرياضيات ٢</title>
 
 <style>
-:root{
-  --primary:#١e٤٠af;
-  --danger:#dc٢٦٢٦;
-  --bg:#f٤f٦f٨;
-  --ink:#٠٠٠;
-  --soft:#e٠f٢fe;
-  --sand:#fde٦٨a;
-  --ok:#٢٢c٥٥e;
-}
-*{box-sizing:border-box}
 body{
-  margin:٠; padding:٠;
-  background:var(--bg);
-  font-family:"Tahoma","Arial",sans-serif;
+  margin:0;
+  background:#f5f6fa;
+  font-family: "Segoe UI", Tahoma, sans-serif;
+  color:#222;
+}
+
+.section{
+  padding:40px;
+  max-width:1000px;
+  margin:auto;
+}
+
+.story{
+  font-size:28px;
+  line-height:1.8;
   text-align:center;
-  user-select:none;
-}
-header{
-  background:var(--primary);
-  color:#fff;
-  padding:١٦px;
-  font-size:٢em;
-  font-weight:bold;
-}
-main{max-width:٩٦٠px; margin:٠ auto; padding:٢٠px}
-
-/* تعزيز بصري غير لفظي */
-.ok{
-  outline:٤px solid var(--ok);
-  box-shadow:0 0 ٠ ٦px rgba(٣٤,١٩٧,٩۴,٠.٣);
-}
-.shake{
-  animation:shake ٠.٢s;
-}
-@keyframes shake{
-  0%{transform:translateX(٠)}
-  25%{transform:translateX(-٤px)}
-  50%{transform:translateX(٤px)}
-  75%{transform:translateX(-٤px)}
-  100%{transform:translateX(٠)}
 }
 
-/* القصة */
+.story span{
+  display:block;
+  margin:18px 0;
+}
+
 .scene{
-  position:relative;
-  background:#fff;
-  border:٣px solid var(--ink);
-  border-radius:١٢px;
-  padding:٢٠px;
+  display:flex;
+  justify-content:center;
+  gap:180px;
+  margin-top:40px;
+  min-height:300px;
+  align-items:center;
 }
-.character{
-  position:absolute; bottom:٨px;
-  width:٨٠px; height:١٢٠px;
-  border-radius:١٥px;
-  background:var(--sand);
-  display:flex; align-items:flex-end; justify-content:center;
-  font-size:٢em;
-}
-#sara{right:٢٠px}
-#kids{left:٢٠px}
-.bubble{
-  position:absolute; bottom:١٣٠px;
-  background:var(--soft);
-  border:٢px solid var(--ink);
-  border-radius:١٢px;
-  padding:٨px ١٢px;
-  width:٢٢٠px;
-  display:none;
-}
-#bSara{right:١٠px}
-#bKids{left:١٠px}
 
-/* التفاعل */
-.sceneInteract{
-  display:flex; justify-content:center;
-  gap:٤٠px; flex-wrap:wrap;
-  margin-top:١٢٠px;
+.vase{
+  width:180px;
+  height:180px;
+  border:4px solid #444;
+  border-radius:50%;
+  position:relative;
 }
-.box{
-  width:١٢٠px; min-height:١٦٠px;
-  border:٣px solid var(--ink);
-  border-radius:١٢px;
-  padding:٨px;
-  background:#fff;
-  transition:٠.٢s;
+
+.flower{
+  width:30px;
+  height:30px;
+  background:#e74c3c;
+  border-radius:50%;
+  position:absolute;
+  transition:all 0.8s ease;
 }
-.box-title{font-weight:bold; margin-bottom:٨px}
-.items{
-  display:flex; flex-wrap:wrap;
-  justify-content:center; gap:٦px;
-  min-height:٨٠px;
+
+.question{
+  margin-top:50px;
+  text-align:center;
+  font-size:26px;
+  color:#000;
 }
-.apple{
-  width:٤٠px; height:٤٠px; line-height:٤٠px;
-  border-radius:٥٠%;
-  background:var(--danger);
+
+.btn{
+  display:none;
+  margin:40px auto;
+  padding:16px 40px;
+  font-size:22px;
+  border:none;
+  border-radius:10px;
+  background:#2c3e50;
   color:#fff;
-  font-size:١.٤em;
-  cursor:grab;
+  cursor:pointer;
 }
-#result{
+
+.math{
   display:none;
-  font-size:١.٨em;
-  font-weight:bold;
-  margin-top:١٦px;
-  color:var(--primary);
+  text-align:center;
+  font-size:36px;
+  margin-top:30px;
 }
-.check{
-  font-size:٢em;
-  color:var(--ok);
-  display:none;
-}
-footer{
-  margin-top:١٢px;
-  font-size:١.٣em;
-  font-weight:bold;
+
+.caption{
+  font-size:22px;
+  margin-top:10px;
+  color:#555;
 }
 </style>
 </head>
 
 <body>
-<header>قصة تفاعلية حاكمة — مفهوم القِسمة</header>
-<main>
 
-<div class="scene">
-  <div class="character" id="sara">👩</div>
-  <div class="bubble" id="bSara">معي ➑ تفّاحات.</div>
-
-  <div class="character" id="kids">👦👦👦👦</div>
-  <div class="bubble" id="bKids">نحن ➃ أطفال.</div>
-
-  <div class="sceneInteract">
-    <div class="box">
-      <div class="box-title">التفاحات</div>
-      <div class="items" id="source" data-source>
-        <div class="apple" draggable="true">🍎</div><div class="apple" draggable="true">🍎</div>
-        <div class="apple" draggable="true">🍎</div><div class="apple" draggable="true">🍎</div>
-        <div class="apple" draggable="true">🍎</div><div class="apple" draggable="true">🍎</div>
-        <div class="apple" draggable="true">🍎</div><div class="apple" draggable="true">🍎</div>
-      </div>
-    </div>
-
-    <div class="box child"><div class="box-title">طفل</div><div class="items" data-child></div></div>
-    <div class="box child"><div class="box-title">طفل</div><div class="items" data-child></div></div>
-    <div class="box child"><div class="box-title">طفل</div><div class="items" data-child></div></div>
-    <div class="box child"><div class="box-title">طفل</div><div class="items" data-child></div></div>
-  </div>
-
-  <div class="check" id="check">✔</div>
-  <div id="result">➑ ÷ ➃ = ➋</div>
-  <footer>القِسمة = توزيع متساوٍ</footer>
+<!-- القصة -->
+<div class="section story">
+  <span>ليلى تحب الزهور.</span>
+  <span>في هذا الصباح، وجدت أمامها ورودًا جميلة.</span>
+  <span>على الطاولة… مزهريتان فقط.</span>
+  <span>ليلى تحب العدل.</span>
 </div>
 
-</main>
+<!-- المشهد -->
+<div class="scene">
+  <div class="vase" id="v1"></div>
+  <div class="vase" id="v2"></div>
+</div>
+
+<!-- السؤال -->
+<div class="section question">
+  ماذا تلاحظ؟
+</div>
+
+<button class="btn" id="next">نُكْمِل</button>
+
+<div class="math" id="math">
+  ٦&nbsp;&nbsp;÷&nbsp;&nbsp;٢&nbsp;&nbsp;=&nbsp;&nbsp;٣
+  <div class="caption">توزيع متساوٍ</div>
+</div>
 
 <script>
-setTimeout(()=>bSara.style.display="block",٥٠٠);
-setTimeout(()=>bKids.style.display="block",٢٥٠٠);
+const v1=document.getElementById("v1");
+const v2=document.getElementById("v2");
+const next=document.getElementById("next");
+const math=document.getElementById("math");
 
-let dragged=null;
-document.querySelectorAll(".apple").forEach(a=>{
-  a.addEventListener("dragstart",()=>dragged=a);
-});
+let count=0;
 
-document.querySelectorAll(".items").forEach(area=>{
-  area.addEventListener("dragover",e=>e.preventDefault());
-  area.addEventListener("drop",()=>{
-    if(!dragged) return;
-    if(area.hasAttribute("data-child")){
-      if(area.children.length>=٢){
-        area.closest(".box").classList.add("shake");
-        setTimeout(()=>area.closest(".box").classList.remove("shake"),٢٠٠);
-        dragged=null; return;
-      }
-    }
-    area.appendChild(dragged);
-    dragged=null;
-    check();
-  });
-});
-
-function check(){
-  const kids=[...document.querySelectorAll("[data-child]")];
-  const counts=kids.map(k=>k.children.length);
-  if(counts.every(c=>c===٢)){
-    kids.forEach(k=>k.closest(".box").classList.add("ok"));
-    checkEl.style.display="block";
-    result.style.display="block";
+function addFlower(v){
+  let f=document.createElement("div");
+  f.className="flower";
+  f.style.top=20+(count*10)%100+"px";
+  f.style.left=40+(count*14)%100+"px";
+  v.appendChild(f);
+  count++;
+  if(count===6){
+    next.style.display="block";
   }
 }
+
+setTimeout(()=>addFlower(v1),1000);
+setTimeout(()=>addFlower(v2),2000);
+setTimeout(()=>addFlower(v1),3000);
+setTimeout(()=>addFlower(v2),4000);
+setTimeout(()=>addFlower(v1),5000);
+setTimeout(()=>addFlower(v2),6000);
+
+next.onclick=()=>{
+  math.style.display="block";
+};
 </script>
+
 </body>
 </html>
