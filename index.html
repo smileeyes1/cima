@@ -6,104 +6,117 @@
 <title>قصة العدل</title>
 
 <style>
-:root{
-  --tap: 56px;
-}
 body{
   margin:0;
   font-family:system-ui;
-  background:#fff;
+  background:#ffffff;
 }
 main{
   min-height:100vh;
   display:flex;
   flex-direction:column;
   justify-content:space-between;
-  padding:12px;
+  padding:١٢px;
   box-sizing:border-box;
 }
 
-.character{
+.top{
   text-align:center;
-  font-size:3rem;
 }
-.speech{
-  text-align:center;
-  border:2px solid #000;
-  border-radius:12px;
-  padding:8px;
-  margin-top:6px;
+.character{
+  font-size:٣.٥rem;
+}
+.story{
+  margin-top:٨px;
+  padding:٨px;
+  border:٢px solid #000;
+  border-radius:١٢px;
+  font-size:١.١rem;
 }
 
 .plates{
   display:flex;
   justify-content:space-around;
-  margin:12px 0;
+  margin:١٢px ٠;
 }
 .plate{
-  width:64px;
-  height:64px;
-  border:2px solid #000;
-  border-radius:50%;
+  width:٦٥px;
+  height:٦٥px;
+  border:٢px solid #000;
+  border-radius:٥٠%;
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:1.8rem;
+  font-size:٢rem;
 }
 
 .apple-area{
   text-align:center;
-  font-size:2.2rem;
-  transition:transform .4s ease;
+  font-size:٢.٥rem;
+  min-height:٣rem;
 }
 
 .controls{
   display:flex;
   justify-content:center;
-  margin-bottom:8px;
+  margin-bottom:٨px;
 }
 button{
-  min-height:var(--tap);
-  padding:0 24px;
-  font-size:1.1rem;
-  border:2px solid #000;
+  min-height:٥٦px;
+  padding:٠ ٢٤px;
+  font-size:١.١rem;
+  border:٢px solid #000;
   background:#fff;
 }
+.hidden{display:none;}
 </style>
 </head>
 
 <body>
 <main>
 
-<div>
+<div class="top">
   <div class="character">🧒</div>
-  <div class="speech">هل هذا عادل؟</div>
+  <div class="story" id="text">لدينا تفاح…</div>
 </div>
 
 <div class="plates">
-  <div class="plate">🍽️</div>
-  <div class="plate">🍽️</div>
-  <div class="plate">🍽️</div>
-  <div class="plate">🍽️</div>
+  <div class="plate" id="p1">🍽️</div>
+  <div class="plate" id="p2">🍽️</div>
+  <div class="plate" id="p3">🍽️</div>
+  <div class="plate" id="p4">🍽️</div>
 </div>
 
-<div class="apple-area" id="apple">🍎</div>
+<div class="apple-area" id="apples">🍎 🍎 🍎 🍎 🍎 🍎 🍎 🍎</div>
 
 <div class="controls">
-  <button onclick="moveApple()">ضع التفاحة</button>
+  <button onclick="step()">ضع تفاحة</button>
 </div>
 
 </main>
 
 <script>
-let placed = 0;
-function moveApple(){
-  if(placed < 4){
-    apple.style.transform = `translateY(-${80}px)`;
-    setTimeout(()=>{
-      placed++;
-      apple.style.transform = 'translateY(0)';
-    },400);
+let stepCount = ٠;
+let plates = [p1,p2,p3,p4];
+let applesLeft = ٨;
+
+function step(){
+  if(applesLeft === ٠) return;
+
+  plates[stepCount % 4].textContent += "🍎";
+  applesLeft--;
+  apples.textContent = "🍎 ".repeat(applesLeft);
+
+  stepCount++;
+
+  if(stepCount === ١){
+    text.textContent = "تفاحة هنا… وتفاحة هناك…";
+  }
+  if(stepCount === ٤){
+    text.textContent = "هل هذا عادل؟";
+  }
+  if(stepCount === ٨){
+    text.textContent = "✅ الآن أصبح التوزيع عادلًا";
   }
 }
 </script>
