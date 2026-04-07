@@ -1,62 +1,80 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>قصة العدل — القسمة</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تجربة سامر</title>
 <style>
-:root{--tap:56px;--plate:88px;--apple:28px}
-*{box-sizing:border-box}
-body{margin:0;font-family:system-ui;background:#fff}
-main{min-height:100vh;display:flex;flex-direction:column;justify-content:space-between;padding:12px}
-.top{text-align:center}
-.char{width:72px;height:72px;margin:0 auto;border-radius:50%;background:#f1d2b6;position:relative}
-.char:before,.char:after{content:"";position:absolute;top:22px;width:10px;height:10px;background:#000;border-radius:50%}
-.char:before{left:16px}.char:after{right:16px}
-.mouth{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);width:28px;height:10px;border-bottom:3px solid #000;border-radius:0 0 30px 30px}
-.story{margin-top:8px;padding:8px;border:2px solid #000;border-radius:12px}
-.mid{flex:1;display:flex;flex-direction:column;justify-content:space-around;align-items:center}
-.plates{width:100%;display:flex;justify-content:space-around}
-.plate{width:var(--plate);height:var(--plate);border:3px solid #000;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px}
-.source{display:flex;gap:6px;font-size:var(--apple)}
-.controls{display:flex;justify-content:center}
-button{min-height:var(--tap);padding:0 28px;border:3px solid #000;background:#fff;font-size:1.1rem}
-button[disabled]{opacity:.5}
+body{
+  margin:0;font-family:system-ui, sans-serif;background:#f7f7f7;
+  display:flex;flex-direction:column;height:100vh;touch-action:manipulation;
+}
+#top{padding:١rem;text-align:center;font-size:١.٢rem;}
+#middle{
+  flex:١;display:flex;justify-content:center;align-items:center;
+}
+.container{
+  width:٨٠%;height:٦٠%;border:٤px solid #999;border-radius:١rem;
+  display:flex;justify-content:space-around;align-items:flex-end;padding:١rem;
+}
+.box{
+  width:٣٠%;height:١٠٠%;border:٣px dashed #bbb;border-radius:٠.٥rem;
+  display:flex;justify-content:center;align-items:flex-end;
+}
+.balls{display:flex;flex-wrap:wrap;gap:٠.٣rem;padding:٠.٥rem;}
+.ball{width:١.٢rem;height:١.٢rem;border-radius:٥٠%;background:#4caf50;}
+#bottom{padding:١rem;}
+button{
+  width:١٠٠%;padding:٠.٨rem;font-size:١.١rem;
+  border:none;border-radius:٠.٨rem;background:#1976d2;color:white;
+}
+.hidden{display:none;}
 </style>
 </head>
 <body>
-<main>
-  <div class="top">
-    <div class="char"><div class="mouth"></div></div>
-    <div class="story" id="txt">لدينا تفاح.</div>
-  </div>
 
-  <div class="mid">
-    <div class="plates">
-      <div class="plate" id="p0">🍽️</div>
-      <div class="plate" id="p1">🍽️</div>
-      <div class="plate" id="p2">🍽️</div>
-      <div class="plate" id="p3">🍽️</div>
-    </div>
-    <div class="source" id="src">🍎 🍎 🍎 🍎 🍎 🍎 🍎 🍎</div>
-  </div>
+<div id="top">سامر يرتب كراته في علب متشابهة</div>
 
-  <div class="controls">
-    <button id="btn" onclick="step()">ضع تفاحة</button>
+<div id="middle">
+  <div class="container">
+    <div class="box"><div class="balls" id="b١">
+      <div class="ball"></div><div class="ball"></div><div class="ball"></div>
+    </div></div>
+    <div class="box"><div class="balls" id="b٢">
+      <div class="ball"></div>
+    </div></div>
+    <div class="box"><div class="balls" id="b٣"></div></div>
   </div>
-</main>
+</div>
+
+<div id="bottom">
+  <button id="action">رَتِّب</button>
+</div>
 
 <script>
-let k=0;const plates=[p0,p1,p2,p3];
-function step(){
-  if(k>=8){btn.disabled=true;return;}
-  plates[k%4].textContent += "🍎";
-  src.textContent = "🍎 ".repeat(7-k);
-  k++;
-  if(k===1) txt.textContent="نحاول التوزيع.";
-  if(k===4) txt.textContent="هل هذا عادل؟";
-  if(k===8){ txt.textContent="✅ الآن هذا عادل"; btn.disabled=true; }
-}
+let state = ٠;
+const action = document.getElementById("action");
+action.addEventListener("click", ()=>{
+  if(state===٠){
+    // STATE ١ -> ٤ مباشرة عبر تصحيح تلقائي (Error‑Proof)
+    const all = document.querySelectorAll(".ball");
+    document.getElementById("b١").innerHTML="";
+    document.getElementById("b٢").innerHTML="";
+    document.getElementById("b٣").innerHTML="";
+    all.forEach((b,i)=>{
+      if(i%٣===٠)document.getElementById("b١").appendChild(b);
+      if(i%٣===١)document.getElementById("b٢").appendChild(b);
+      if(i%٣===٢)document.getElementById("b٣").appendChild(b);
+    });
+    state=٥;
+    action.textContent="انتهى";
+    document.getElementById("top").textContent="هذه مجموعات متساوية";
+  }else{
+    // STATE ٦ Termination
+    document.body.innerHTML="<div style='margin:auto;font-size:١.٣rem'>انتهت التجربة</div>";
+  }
+});
 </script>
+
 </body>
 </html>
