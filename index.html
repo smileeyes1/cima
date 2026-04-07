@@ -1,153 +1,65 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<title>مفهوم القسمة – الرياضيات ٢</title>
-
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>قِصّة العدل — القسمة</title>
 <style>
-body{
-  margin:0;
-  background:#f5f6fa;
-  font-family: "Segoe UI", Tahoma, sans-serif;
-  color:#222;
+html,body{margin:0;font-family:system-ui;background:#fff;color:#111}
+main{max-width:٤٢٠px;margin:auto;padding:١٦px;text-align:center}
+.character{font-size:٤rem;margin:٤px ٠}
+.speech{border:٢px solid #000;border-radius:٨px;padding:٨px;margin:٨px ٠}
+.plates{display:flex;justify-content:center;gap:١٢px;margin:١٦px ٠}
+.plate{
+  width:٧٢px;height:٧٢px;border:٢px solid #000;border-radius:١٠٠%;
+  display:flex;align-items:center;justify-content:center;font-size:٢rem
 }
-
-.section{
-  padding:40px;
-  max-width:1000px;
-  margin:auto;
-}
-
-.story{
-  font-size:28px;
-  line-height:1.8;
-  text-align:center;
-}
-
-.story span{
-  display:block;
-  margin:18px 0;
-}
-
-.scene{
-  display:flex;
-  justify-content:center;
-  gap:180px;
-  margin-top:40px;
-  min-height:300px;
-  align-items:center;
-}
-
-.vase{
-  width:180px;
-  height:180px;
-  border:4px solid #444;
-  border-radius:50%;
-  position:relative;
-}
-
-.flower{
-  width:30px;
-  height:30px;
-  background:#e74c3c;
-  border-radius:50%;
-  position:absolute;
-  transition:all 0.8s ease;
-}
-
-.question{
-  margin-top:50px;
-  text-align:center;
-  font-size:26px;
-  color:#000;
-}
-
-.btn{
-  display:none;
-  margin:40px auto;
-  padding:16px 40px;
-  font-size:22px;
-  border:none;
-  border-radius:10px;
-  background:#2c3e50;
-  color:#fff;
-  cursor:pointer;
-}
-
-.math{
-  display:none;
-  text-align:center;
-  font-size:36px;
-  margin-top:30px;
-}
-
-.caption{
-  font-size:22px;
-  margin-top:10px;
-  color:#555;
-}
+.food{font-size:٢rem;margin:٨px ٠}
+button{width:١٠٠%;padding:١٢px;font-size:١rem;border:٢px solid #000;background:#fff}
+.notice{font-size:١.٤rem;margin-top:١٢px}
+.hidden{display:none}
 </style>
 </head>
-
 <body>
+<main>
 
-<!-- القصة -->
-<div class="section story">
-  <span>ليلى تحب الزهور.</span>
-  <span>في هذا الصباح، وجدت أمامها ورودًا جميلة.</span>
-  <span>على الطاولة… مزهريتان فقط.</span>
-  <span>ليلى تحب العدل.</span>
+<div class="character">🧒</div>
+<div class="speech">هل هذا عادل؟</div>
+
+<div class="plates">
+  <div class="plate" id="p١">🍽️</div>
+  <div class="plate" id="p٢">🍽️</div>
+  <div class="plate" id="p٣">🍽️</div>
+  <div class="plate" id="p٤">🍽️</div>
 </div>
 
-<!-- المشهد -->
-<div class="scene">
-  <div class="vase" id="v1"></div>
-  <div class="vase" id="v2"></div>
-</div>
+<div class="food">🍎 🍎 🍎 🍎 🍎 🍎 🍎 🍎</div>
 
-<!-- السؤال -->
-<div class="section question">
-  ماذا تلاحظ؟
-</div>
+<button onclick="deal()">وزّع</button>
 
-<button class="btn" id="next">نُكْمِل</button>
-
-<div class="math" id="math">
-  ٦&nbsp;&nbsp;÷&nbsp;&nbsp;٢&nbsp;&nbsp;=&nbsp;&nbsp;٣
-  <div class="caption">توزيع متساوٍ</div>
-</div>
+<div class="notice hidden" id="ok">✅ عادل</div>
 
 <script>
-const v1=document.getElementById("v1");
-const v2=document.getElementById("v2");
-const next=document.getElementById("next");
-const math=document.getElementById("math");
-
-let count=0;
-
-function addFlower(v){
-  let f=document.createElement("div");
-  f.className="flower";
-  f.style.top=20+(count*10)%100+"px";
-  f.style.left=40+(count*14)%100+"px";
-  v.appendChild(f);
-  count++;
-  if(count===6){
-    next.style.display="block";
+let step=٠;
+function reset(){
+  p١.textContent='🍽️'; p٢.textContent='🍽️';
+  p٣.textContent='🍽️'; p٤.textContent='🍽️';
+}
+function deal(){
+  reset(); step++;
+  // توزيع غير عادل
+  if(step===١){p١.textContent='🍽️🍎🍎🍎'; p٢.textContent='🍽️🍎';}
+  // محاولة
+  if(step===٢){p١.textContent='🍽️🍎🍎'; p٢.textContent='🍽️🍎🍎';}
+  // عدل
+  if(step===٣){
+    p١.textContent='🍽️🍎🍎'; p٢.textContent='🍽️🍎🍎';
+    p٣.textContent='🍽️🍎🍎'; p٤.textContent='🍽️🍎🍎';
+    document.getElementById('ok').classList.remove('hidden');
   }
 }
-
-setTimeout(()=>addFlower(v1),1000);
-setTimeout(()=>addFlower(v2),2000);
-setTimeout(()=>addFlower(v1),3000);
-setTimeout(()=>addFlower(v2),4000);
-setTimeout(()=>addFlower(v1),5000);
-setTimeout(()=>addFlower(v2),6000);
-
-next.onclick=()=>{
-  math.style.display="block";
-};
 </script>
 
+</main>
 </body>
 </html>
