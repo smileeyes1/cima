@@ -1,62 +1,77 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ترتيب سامر</title>
-<style>
-html,body{margin:0;height:١٠٠%;font-family:system-ui;background:#f7f7f7}
-.page{display:flex;flex-direction:column;height:١٠٠%}
-.header{text-align:center;padding:١rem;font-size:١.٢rem}
-.stage{flex:١;display:flex;justify-content:center;align-items:center}
-.tray{width:٩٠%;height:٦٠%;border:٤px solid #aaa;border-radius:١rem;
-display:flex;justify-content:space-around;align-items:flex-end;padding:١rem}
-.box{width:٢٥%;height:١٠٠%;border:٣px dashed #ccc;
-display:flex;align-items:flex-end;justify-content:center}
-.ball{width:١.٢rem;height:١.٢rem;border-radius:٥٠%;background:#4caf50;margin:٠.٢rem}
-.footer{padding:١rem}
-button{width:١٠٠%;padding:٠.٨rem;font-size:١.١rem;border-radius:٠.٨rem;
-border:none;background:#1976d2;color:white}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>مفهوم القِسمة — سيناريو داعم</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: system-ui, sans-serif;
+      background: #f7f7f7;
+      color: #000;
+    }
+    section {
+      padding: ١٢px;
+    }
+    #top {
+      background: #ffffff;
+      border-bottom: ٢px solid #000;
+    }
+    #middle {
+      background: #eef2ff;
+      border-bottom: ٢px solid #000;
+    }
+    #bottom {
+      background: #ffffff;
+      font-size: ١٢px;
+      color: #333;
+    }
+    button {
+      width: ١٠٠٪;
+      padding: ١٢px;
+      font-size: ١٦px;
+      background: #000;
+      color: #fff;
+      border: none;
+    }
+  </style>
 </head>
+
 <body>
 
-<div class="page">
-  <div class="header" id="title">سامر يرتّب كراته في علب متشابهة</div>
+<!-- TOP: للمعلم -->
+<section id="top">
+  <h2>للمعلّم — التوجيه السيادي</h2>
+  <p><strong>الهدف:</strong> إدراك القِسمة كتوزيع متساوٍ دون باقٍ.</p>
+  <p><strong>ما تقوله حرفيًا:</strong><br>
+  «سأوزّع هذه الأقلام بالتساوي. راقبوا ولا تتكلموا.»</p>
+  <p><strong>نقطة صمت:</strong> صمت كامل أثناء التوزيع.</p>
+  <p><strong>إغلاق:</strong><br>
+  «انتهى الدرس. القِسمة هي توزيع متساوٍ دون باقٍ.»</p>
+</section>
 
-  <div class="stage">
-    <div class="tray">
-      <div class="box" id="b١">
-        <div class="ball"></div><div class="ball"></div><div class="ball"></div>
-      </div>
-      <div class="box" id="b٢">
-        <div class="ball"></div>
-      </div>
-      <div class="box" id="b٣"></div>
-    </div>
-  </div>
+<!-- MIDDLE: للطلاب -->
+<section id="middle">
+  <h2>للطلاب — ماذا نلاحظ؟</h2>
+  <p>انظر إلى الأقلام الموزّعة في الأكواب.</p>
+  <p>هل أخذ كل كوب العدد نفسه؟</p>
+  <p><strong>نقول مع المعلّم:</strong><br>
+  ٦ ÷ ٣ = ٢</p>
+</section>
 
-  <div class="footer">
-    <button id="btn">رتّب</button>
-  </div>
-</div>
+<!-- زر واحد فقط -->
+<button onclick="void(0)">بدء النشاط</button>
 
-<script>
-let done=false;
-document.getElementById("btn").onclick=function(){
- if(done)return;
- const balls=document.querySelectorAll(".ball");
- b١.innerHTML="";b٢.innerHTML="";b٣.innerHTML="";
- balls.forEach((x,i)=>{
-  if(i%٣==٠)b١.appendChild(x);
-  if(i%٣==١)b٢.appendChild(x);
-  if(i%٣==٢)b٣.appendChild(x);
- });
- title.textContent="هذه مجموعات متساوية";
- btn.textContent="انتهى";
- done=true;
-};
-</script>
+<!-- BOTTOM: Fail-Closed -->
+<section id="bottom">
+  <p>HTML FAIL‑CLOSED VALIDATOR</p>
+  <p>
+    هذه الصفحة مقفلة البنية بثلاثة أقسام فقط، هدف واحد، نشاط واحد،
+    زر واحد، وفعل واحد. في حال فشل أي جزء (CSS أو JavaScript)
+    يبقى المحتوى ظاهرًا دون كسر العرض.
+  </p>
+</section>
 
 </body>
 </html>
