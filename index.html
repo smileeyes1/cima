@@ -1,76 +1,32 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>مفهوم القِسمة — سيناريو داعم</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=١.٠">
+  <title>مفهوم القِسمة — عرض الطلاب</title>
   <style>
-    body {
-      margin: 0;
-      font-family: system-ui, sans-serif;
-      background: #f7f7f7;
-      color: #000;
-    }
-    section {
-      padding: ١٢px;
-    }
-    #top {
-      background: #ffffff;
-      border-bottom: ٢px solid #000;
-    }
-    #middle {
-      background: #eef2ff;
-      border-bottom: ٢px solid #000;
-    }
-    #bottom {
-      background: #ffffff;
-      font-size: ١٢px;
-      color: #333;
-    }
-    button {
-      width: ١٠٠٪;
-      padding: ١٢px;
-      font-size: ١٦px;
-      background: #000;
-      color: #fff;
-      border: none;
-    }
+    body{margin:٠;font-family:system-ui,sans-serif;background:#ffffff;color:#000}
+    section{padding:١٢px}
+    #top,#middle,#bottom{border-bottom:٢px solid #000}
+    button{width:١٠٠٪;padding:١٢px;font-size:١٦px;background:#000;color:#fff;border:none}
   </style>
 </head>
-
 <body>
 
-<!-- TOP: للمعلم -->
 <section id="top">
-  <h2>للمعلّم — التوجيه السيادي</h2>
-  <p><strong>الهدف:</strong> إدراك القِسمة كتوزيع متساوٍ دون باقٍ.</p>
-  <p><strong>ما تقوله حرفيًا:</strong><br>
-  «سأوزّع هذه الأقلام بالتساوي. راقبوا ولا تتكلموا.»</p>
-  <p><strong>نقطة صمت:</strong> صمت كامل أثناء التوزيع.</p>
-  <p><strong>إغلاق:</strong><br>
-  «انتهى الدرس. القِسمة هي توزيع متساوٍ دون باقٍ.»</p>
+  <h2>نلاحظ فقط</h2>
+  <p>انظر إلى الأدوات أمامك.</p>
 </section>
 
-<!-- MIDDLE: للطلاب -->
 <section id="middle">
-  <h2>للطلاب — ماذا نلاحظ؟</h2>
-  <p>انظر إلى الأقلام الموزّعة في الأكواب.</p>
-  <p>هل أخذ كل كوب العدد نفسه؟</p>
-  <p><strong>نقول مع المعلّم:</strong><br>
-  ٦ ÷ ٣ = ٢</p>
+  <p>٦ عناصر موزّعة على ٣ مجموعات.</p>
+  <p><strong>٦ ÷ ٣ = ٢</strong></p>
 </section>
 
-<!-- زر واحد فقط -->
-<button onclick="void(0)">بدء النشاط</button>
+<button onclick="void(٠)">نلاحظ</button>
 
-<!-- BOTTOM: Fail-Closed -->
 <section id="bottom">
   <p>HTML FAIL‑CLOSED VALIDATOR</p>
-  <p>
-    هذه الصفحة مقفلة البنية بثلاثة أقسام فقط، هدف واحد، نشاط واحد،
-    زر واحد، وفعل واحد. في حال فشل أي جزء (CSS أو JavaScript)
-    يبقى المحتوى ظاهرًا دون كسر العرض.
-  </p>
 </section>
 
 </body>
