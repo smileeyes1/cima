@@ -3,21 +3,18 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>قصة العدل</title>
+<title>حقائق الضرب للعدد ١٠</title>
 
 <style>
 :root{
   --tap: 56px;
-  --plate: 90px;
-  --apple: 32px;
+  --step: 40px;
 }
-
 body{
   margin:0;
   font-family: system-ui;
-  background:#fff;
+  background:#ffffff;
 }
-
 main{
   min-height:100vh;
   display:flex;
@@ -32,75 +29,61 @@ main{
   text-align:center;
 }
 .character{
-  width:80px;
-  height:80px;
+  width:72px;
+  height:72px;
   margin:0 auto;
   border-radius:50%;
-  background:#f2d6b3;
+  background:#f1d2b6;
   position:relative;
 }
-.character::before{
+.character:before,
+.character:after{
   content:"";
   position:absolute;
-  top:24px; left:20px;
-  width:12px; height:12px;
-  background:#000; border-radius:50%;
+  top:22px;
+  width:10px;
+  height:10px;
+  background:#000;
+  border-radius:50%;
 }
-.character::after{
-  content:"";
-  position:absolute;
-  top:24px; right:20px;
-  width:12px; height:12px;
-  background:#000; border-radius:50%;
-}
+.character:before{left:18px;}
+.character:after{right:18px;}
 .mouth{
-  width:30px; height:8px;
+  position:absolute;
+  bottom:18px;
+  left:50%;
+  transform:translateX(-50%);
+  width:28px;
+  height:10px;
   border-bottom:3px solid #000;
   border-radius:0 0 30px 30px;
-  margin:40px auto 0;
 }
-
 .story-text{
   margin-top:8px;
   padding:8px;
   border:2px solid #000;
   border-radius:12px;
+  font-size:1.1rem;
 }
 
 /* ACTION ZONE */
 .action-zone{
   flex-grow:1;
   display:flex;
-  flex-direction:column;
-  justify-content:space-around;
-  align-items:center;
-}
-
-.plates{
-  width:100%;
-  display:flex;
-  justify-content:space-around;
-}
-.plate{
-  width:var(--plate);
-  height:var(--plate);
-  border:3px solid #000;
-  border-radius:50%;
-  display:flex;
   align-items:center;
   justify-content:center;
-  font-size:calc(var(--plate) / 3);
 }
-
-.apple-source{
+.path{
   display:flex;
   gap:6px;
-  justify-content:center;
-  min-height:var(--apple);
 }
-.apple{
-  font-size:var(--apple);
-  transition:transform .5s ease;
+.step{
+  width:var(--step);
+  height:var(--step);
+  border:2px solid #000;
+  border-radius:50%;
+  opacity:0;
+  transition:opacity .4s ease;
 }
 
 /* CONTROL ZONE */
@@ -124,80 +107,84 @@ button:disabled{
 <body>
 <main>
 
-<!-- STORY -->
+<!-- STORY ZONE -->
 <div class="story-zone">
   <div class="character">
     <div class="mouth"></div>
   </div>
-  <div class="story-text" id="story">
-    لدينا تفاح.
-  </div>
+  <div class="story-text" id="story">أمشي عشر خطوات كل مرة.</div>
 </div>
 
-<!-- ACTION -->
+<!-- ACTION ZONE -->
 <div class="action-zone">
-
-  <div class="plates">
-    <div class="plate" id="p0"></div>
-    <div class="plate" id="p1"></div>
-    <div class="plate" id="p2"></div>
-    <div class="plate" id="p3"></div>
-  </div>
-
-  <div class="apple-source" id="apples">
-    <div class="apple">🍎</div><div class="apple">🍎</div><div class="apple">🍎</div><div class="apple">🍎</div>
-    <div class="apple">🍎</div><div class="apple">🍎</div><div class="apple">🍎</div><div class="apple">🍎</div>
-  </div>
-
+  <div class="path" id="path"></div>
 </div>
 
-<!-- CONTROL -->
+<!-- CONTROL ZONE -->
 <div class="control-zone">
-  <button onclick="next()">ضع تفاحة</button>
+  <button id="btn" onclick="next()">امشِ مرة أخرى</button>
 </div>
 
 </main>
 
 <script>
-let step = 0;
-let apples = Array.from(document.querySelectorAll('.apple'));
-let plates = [p0,p1,p2,p3];
-let btn = document.querySelector('button');
+const path = document.getElementById("path");
+const story = document.getElementById("story");
+const btn = document.getElementById("btn");
+
+let state = 0;
+let groups = 0;
+
+// prepare empty steps
+function showSteps(){
+  for(let i=0;i<10;i++){
+    const s = document.createElement("div");
+    s.className = "step";
+    path.appendChild(s);
+    setTimeout(()=>{s.style.opacity = 1;}, i*80);
+  }
+}
+
+// clear path
+function clearPath(){
+  path.innerHTML = "";
+}
 
 function next(){
-  if(step >= 8){
-    btn.disabled = true;
+  // STATE ١-٣: مشي متكرر
+  if(state >=1 && state <=3){
+    showSteps();
+    groups++;
+    state++;
     return;
   }
 
-  // move apple
-  let a = apples[step];
-  let target = plates[step % 4];
-  let r1 = a.getBoundingClientRect();
-  let r2 = target.getBoundingClientRect();
-
-  let dx = r2.left - r1.left + (r2.width/2);
-  let dy = r2.top - r1.top;
-
-  a.style.transform = `translate(${dx}px, ${dy}px) scale(.8)`;
-
-  setTimeout(()=>{
-    target.textContent += "🍎";
-    a.style.visibility = "hidden";
-  },400);
-
-  step++;
-
-  if(step === 1){
-    story.textContent = "نضع التفاح...";
+  if(state === 0){
+    state = 1;
+    showSteps();
+    return;
   }
-  if(step === 4){
-    story.textContent = "هل هذا عادل؟";
-  }
-  if(step === 8){
-    story.textContent = "✅ الآن هذا عادل";
+
+  // STATE ٤: الحكم
+  if(state === 4){
+    story.textContent = "كل مرة عشر.";
+    btn.disabled = true;
+    setTimeout(()=>{
+      story.textContent = "١٠ × ٣ = ٣٠";
+    }, 800);
+    state = 5;
+    return;
   }
 }
+
+// transition handling
+// after each group, prepare next
+path.addEventListener("transitionend", ()=>{
+  clearPath();
+  if(groups === 1) state = 2;
+  if(groups === 2) state = 3;
+  if(groups === 3) state = 4;
+});
 </script>
 
 </body>
