@@ -3,85 +3,147 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>فيديو تفاعلي — مفهوم القِسمة (صفّ ثاني)</title>
+
+<title>فيديو تفاعلي حاكم — مفهوم القِسمة (الصفّ الثاني)</title>
 
 <style>
-/* الإطار العام */
+/* ============== الإطار العام ============== */
+:root{
+  --primary:#١e٤٠af;
+  --danger:#dc٢٦٢٦;
+  --bg:#f٤f٦f٨;
+  --ink:#٠٠٠;
+}
+*{box-sizing:border-box}
 body{
   margin:٠; padding:٠;
-  background:#f٤f٦f٨;
+  background:var(--bg);
   font-family:"Tahoma","Arial",sans-serif;
-  text-align:center; user-select:none;
+  text-align:center;
+  user-select:none;
 }
 
-/* العنوان */
+/* ============== العنوان ============== */
 header{
-  background:#١e٤٠af; color:#fff;
-  padding:١٦px; font-size:٢em; font-weight:bold;
+  background:var(--primary);
+  color:#fff;
+  padding:١٦px;
+  font-size:٢em;
+  font-weight:bold;
 }
 
-/* مساحة العمل */
-main{ padding:٢٠px; }
+/* ============== مساحة العمل ============== */
+main{ padding:٢٠px; max-width:٩٦٠px; margin:٠ auto; }
 
-/* حاوية الفيديو */
-.video-wrap{
-  max-width:٧٢٠px; margin:٠ auto ١٦px auto;
-  border:٣px solid #٠٠٠; border-radius:١٢px;
-  overflow:hidden; background:#٠٠٠;
+/* ============== مشهد الحركة (بديل فيديو آمن) ============== */
+/* حركة هادئة غير مشتتة لمحاكاة فيديو صامت دون ملفات خارجية */
+.motion-strip{
+  position:relative;
+  height:٥٦px;
+  margin:٠ auto ١٦px auto;
+  border:٣px solid var(--ink);
+  border-radius:١٢px;
+  background:#fff;
+  overflow:hidden;
+}
+.motion-dot{
+  position:absolute; top:١٦px;
+  width:٢٤px; height:٢٤px; border-radius:٥٠%;
+  background:var(--primary);
+  animation: glide ٤s linear infinite;
+}
+@keyframes glide{
+  from{ right:-٣٢px; }
+  to{ right:calc(١٠٠% + ٣٢px); }
 }
 
-/* الفيديو */
-video{
-  width:١٠٠%; height:auto; display:block;
-}
-
-/* سطر التعليمات الصامت */
+/* ============== التلميح الصامت ============== */
 .hint{
   margin:١٢px auto ٢٠px auto;
-  font-size:١.٢em; color:#٣٣٣;
+  font-size:١.٣em;
+  color:#٣٣٣;
 }
 
-/* المشهد */
-.scene{ display:flex; justify-content:center; gap:٤٠px; flex-wrap:wrap; margin-bottom:٢٠px; }
+/* ============== المشهد ============== */
+.scene{
+  display:flex;
+  justify-content:center;
+  gap:٤٠px;
+  flex-wrap:wrap;
+  margin-bottom:٢٠px;
+}
 
-/* الصناديق */
+/* ============== الصناديق ============== */
 .box{
-  background:#fff; border:٣px solid #٠٠٠; border-radius:١٢px;
-  width:١٢٠px; min-height:١٦٠px; padding:٨px;
+  background:#fff;
+  border:٣px solid var(--ink);
+  border-radius:١٢px;
+  width:١٢٠px;
+  min-height:١٦٠px;
+  padding:٨px;
 }
-.box-title{ font-weight:bold; margin-bottom:٨px; font-size:١.١em; }
-.items{ display:flex; flex-wrap:wrap; justify-content:center; gap:٦px; min-height:٨٠px; }
+.box-title{
+  font-weight:bold;
+  margin-bottom:٨px;
+  font-size:١.١em;
+}
+.items{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:٦px;
+  min-height:٨٠px;
+}
 
-/* التفاحة */
+/* ============== التفاحة ============== */
 .apple{
   width:٤٠px; height:٤٠px; line-height:٤٠px;
-  border-radius:٥٠%; background:#dc٢٦٢٦; color:#fff;
-  font-size:١.٤em; cursor:grab;
+  border-radius:٥٠%;
+  background:var(--danger); color:#fff;
+  font-size:١.٤em;
+  cursor:grab;
+  touch-action:none;
 }
 
-/* النتيجة */
+/* ============== النتيجة والتثبيت ============== */
 #result{
-  display:none; margin-top:١٦px;
-  font-size:١.٨em; font-weight:bold; color:#١e٤٠af;
+  display:none;
+  margin-top:١٦px;
+  font-size:١.٨em;
+  font-weight:bold;
+  color:var(--primary);
+}
+footer{
+  margin-top:٢٠px;
+  font-size:١.٣em;
+  font-weight:bold;
 }
 
-/* التثبيت */
-footer{ margin-top:٢٠px; font-size:١.٣em; font-weight:bold; }
+/* ============== زر إعادة محكوم (للسلامة فقط) ============== */
+.controls{
+  margin-top:١٢px;
+}
+button{
+  padding:٨px ١٦px;
+  border:٣px solid var(--ink);
+  border-radius:١٠px;
+  background:#fff;
+  font-size:١em;
+  cursor:pointer;
+}
+button:active{ transform:scale(٠.٩٨); }
 </style>
 </head>
 
 <body>
-<header>فيديو تفاعلي — مفهوم القِسمة</header>
+
+<header>فيديو تفاعلي حاكم — مفهوم القِسمة</header>
 
 <main>
 
-<!-- فيديو قصير صامت يعمل تلقائيًا (مشهد تمهيدي بصري) -->
-<div class="video-wrap">
-  <!-- فيديو تمهيدي صامت، يعمل تلقائيًا، بلا تحكّم -->
-  <!-- ملاحظة: الفيديو مضمَّن بدون اعتماد على منصات خارجية -->
-  <video autoplay muted loop playsinline>
-    <!-- مصدر فارغ آمن: الفيديو يبقى مشغّلًا (حل بصري بلا أخطاء) -->
-  </video>
+<!-- حركة صامتة محكومة (بديل فيديو بلا أعطال) -->
+<div class="motion-strip" aria-hidden="true">
+  <span class="motion-dot"></span>
 </div>
 
 <div class="hint">ابدأ التوزيع حتى يحصل الجميع على العدد نفسه.</div>
@@ -90,61 +152,101 @@ footer{ margin-top:٢٠px; font-size:١.٣em; font-weight:bold; }
 <div class="scene">
   <div class="box">
     <div class="box-title">التفاحات</div>
-    <div class="items" id="source">
-      <div class="apple" draggable="true">🍎</div>
-      <div class="apple" draggable="true">🍎</div>
-      <div class="apple" draggable="true">🍎</div>
-      <div class="apple" draggable="true">🍎</div>
-      <div class="apple" draggable="true">🍎</div>
-      <div class="apple" draggable="true">🍎</div>
-      <div class="apple" draggable="true">🍎</div>
-      <div class="apple" draggable="true">🍎</div>
+    <div class="items" id="source" data-source>
+      <div class="apple" draggable="true" tabindex="٠">🍎</div>
+      <div class="apple" draggable="true" tabindex="٠">🍎</div>
+      <div class="apple" draggable="true" tabindex="٠">🍎</div>
+      <div class="apple" draggable="true" tabindex="٠">🍎</div>
+      <div class="apple" draggable="true" tabindex="٠">🍎</div>
+      <div class="apple" draggable="true" tabindex="٠">🍎</div>
+      <div class="apple" draggable="true" tabindex="٠">🍎</div>
+      <div class="apple" draggable="true" tabindex="٠">🍎</div>
     </div>
   </div>
 </div>
 
 <!-- الأطفال -->
 <div class="scene">
-  <div class="box child"><div class="box-title">طفل</div><div class="items"></div></div>
-  <div class="box child"><div class="box-title">طفل</div><div class="items"></div></div>
-  <div class="box child"><div class="box-title">طفل</div><div class="items"></div></div>
-  <div class="box child"><div class="box-title">طفل</div><div class="items"></div></div>
+  <div class="box child"><div class="box-title">طفل</div><div class="items" data-child></div></div>
+  <div class="box child"><div class="box-title">طفل</div><div class="items" data-child></div></div>
+  <div class="box child"><div class="box-title">طفل</div><div class="items" data-child></div></div>
+  <div class="box child"><div class="box-title">طفل</div><div class="items" data-child></div></div>
 </div>
 
-<!-- النتيجة -->
 <div id="result">➑ ÷ ➃ = ➋</div>
 
 <footer>القِسمة = توزيع متساوٍ</footer>
 
+<div class="controls">
+  <button id="reset">إعادة المشهد</button>
+</div>
+
 </main>
 
 <script>
+/* ======================
+   منطق التفاعل المحكوم
+   ====================== */
+
+/* دعم السحب بالفأرة واللمس */
 let dragged=null;
 
-/* السحب */
+/* بدء السحب */
 document.querySelectorAll(".apple").forEach(a=>{
-  a.addEventListener("dragstart",()=>dragged=a);
+  a.addEventListener("dragstart",()=> dragged=a);
+  a.addEventListener("touchstart",()=> dragged=a, {passive:true});
 });
 
-/* الإسقاط */
+/* مناطق الإسقاط */
 document.querySelectorAll(".items").forEach(area=>{
   area.addEventListener("dragover",e=>e.preventDefault());
-  area.addEventListener("drop",()=>{
-    if(dragged){
-      area.appendChild(dragged);
-      dragged=null; check();
-    }
-  });
+  area.addEventListener("drop",()=> tryDrop(area));
+  area.addEventListener("touchend",()=> tryDrop(area));
 });
 
-/* التحقق */
+function tryDrop(area){
+  if(!dragged) return;
+
+  const isSource = area.hasAttribute("data-source");
+  const isChild  = area.hasAttribute("data-child");
+
+  /* قاعدة الحكم:
+     - يُسمح بالإسقاط على الأطفال فقط
+     - حدّ أقصى طفل = تفّاحتان */
+  if(isChild){
+    if(area.children.length>=٢){ dragged=null; return; }
+    area.appendChild(dragged);
+  }else if(isSource){
+    area.appendChild(dragged);
+  }
+
+  dragged=null;
+  check();
+}
+
 function check(){
-  const boxes=[...document.querySelectorAll(".child .items")];
-  const counts=boxes.map(b=>b.children.length);
+  const children=[...document.querySelectorAll("[data-child]")];
+  const counts=children.map(c=>c.children.length);
+
+  /* إظهار النتيجة فقط عند تحقق التساوي الكامل */
   if(counts.every(c=>c===٢)){
     document.getElementById("result").style.display="block";
+  }else{
+    document.getElementById("result").style.display="none";
   }
 }
+
+/* إعادة محكومة للسلامة التشغيلية */
+document.getElementById("reset").addEventListener("click",()=>{
+  const source=document.getElementById("source");
+  document.querySelectorAll("[data-child]").forEach(c=>{
+    [...c.children].forEach(a=> source.appendChild(a));
+  });
+  document.getElementById("result").style.display="none";
+});
+
+/* اختبار ذاتي صامت عند التحميل */
+check();
 </script>
 
 </body>
