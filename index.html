@@ -4,141 +4,57 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ترتيب سامر</title>
-
 <style>
-html,body{
-  margin:0;height:100%;
-  font-family:system-ui,sans-serif;
-  background:#f9f9f9;
-}
-
-.page{
-  display:flex;
-  flex-direction:column;
-  height:100%;
-}
-
-/* TOP */
-.header{
-  text-align:center;
-  padding:١rem;
-  font-size:١.٢rem;
-}
-
-/* MIDDLE */
-.stage{
-  flex:١;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-}
-
-.tray{
-  width:٩٠%;
-  height:٦٠%;
-  border:٤px solid #aaa;
-  border-radius:١rem;
-  display:flex;
-  justify-content:space-around;
-  align-items:flex-end;
-  padding:١rem;
-}
-
-.box{
-  width:٢٥%;
-  height:١٠٠%;
-  border:٣px dashed #ccc;
-  border-radius:٠.٥rem;
-  display:flex;
-  align-items:flex-end;
-  justify-content:center;
-}
-
-.balls{
-  display:flex;
-  flex-wrap:wrap;
-  gap:٠.٣rem;
-  padding-bottom:٠.٥rem;
-}
-
-.ball{
-  width:١.٢rem;
-  height:١.٢rem;
-  border-radius:٥٠%;
-  background:#4CAF50;
-}
-
-/* BOTTOM */
-.footer{
-  padding:١rem;
-}
-
-button{
-  width:١٠٠%;
-  padding:٠.٨rem;
-  font-size:١.١rem;
-  border:none;
-  border-radius:٠.٨rem;
-  background:#1976D2;
-  color:white;
-}
+html,body{margin:0;height:١٠٠%;font-family:system-ui;background:#f7f7f7}
+.page{display:flex;flex-direction:column;height:١٠٠%}
+.header{text-align:center;padding:١rem;font-size:١.٢rem}
+.stage{flex:١;display:flex;justify-content:center;align-items:center}
+.tray{width:٩٠%;height:٦٠%;border:٤px solid #aaa;border-radius:١rem;
+display:flex;justify-content:space-around;align-items:flex-end;padding:١rem}
+.box{width:٢٥%;height:١٠٠%;border:٣px dashed #ccc;
+display:flex;align-items:flex-end;justify-content:center}
+.ball{width:١.٢rem;height:١.٢rem;border-radius:٥٠%;background:#4caf50;margin:٠.٢rem}
+.footer{padding:١rem}
+button{width:١٠٠%;padding:٠.٨rem;font-size:١.١rem;border-radius:٠.٨rem;
+border:none;background:#1976d2;color:white}
 </style>
 </head>
-
 <body>
+
 <div class="page">
+  <div class="header" id="title">سامر يرتّب كراته في علب متشابهة</div>
 
-  <!-- TOP -->
-  <div class="header">
-    سامر يرتّب كراته في علب متشابهة
-  </div>
-
-  <!-- MIDDLE -->
   <div class="stage">
     <div class="tray">
-      <div class="box"><div class="balls" id="b1">
+      <div class="box" id="b١">
+        <div class="ball"></div><div class="ball"></div><div class="ball"></div>
+      </div>
+      <div class="box" id="b٢">
         <div class="ball"></div>
-        <div class="ball"></div>
-        <div class="ball"></div>
-      </div></div>
-
-      <div class="box"><div class="balls" id="b2">
-        <div class="ball"></div>
-      </div></div>
-
-      <div class="box"><div class="balls" id="b3"></div></div>
+      </div>
+      <div class="box" id="b٣"></div>
     </div>
   </div>
 
-  <!-- BOTTOM -->
   <div class="footer">
     <button id="btn">رتّب</button>
   </div>
-
 </div>
 
 <script>
-let done = false;
-
-document.getElementById("btn").onclick = function(){
-  if(done){ return; }
-
-  const balls = document.querySelectorAll(".ball");
-  document.getElementById("b1").innerHTML="";
-  document.getElementById("b2").innerHTML="";
-  document.getElementById("b3").innerHTML="";
-
-  balls.forEach((ball,i)=>{
-    if(i%3===0) b1.appendChild(ball);
-    if(i%3===1) b2.appendChild(ball);
-    if(i%3===2) b3.appendChild(ball);
-  });
-
-  document.querySelector(".header").textContent =
-    "هذه مجموعات متساوية";
-
-  document.getElementById("btn").textContent = "انتهى";
-  done = true;
+let done=false;
+document.getElementById("btn").onclick=function(){
+ if(done)return;
+ const balls=document.querySelectorAll(".ball");
+ b١.innerHTML="";b٢.innerHTML="";b٣.innerHTML="";
+ balls.forEach((x,i)=>{
+  if(i%٣==٠)b١.appendChild(x);
+  if(i%٣==١)b٢.appendChild(x);
+  if(i%٣==٢)b٣.appendChild(x);
+ });
+ title.textContent="هذه مجموعات متساوية";
+ btn.textContent="انتهى";
+ done=true;
 };
 </script>
 
