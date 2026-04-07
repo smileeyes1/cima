@@ -3,79 +3,144 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>مرافق المعلم العلاجي</title>
+<title>ترتيب سامر</title>
+
 <style>
-body{margin:0;font-family:system-ui,sans-serif;background:#ffffff;}
-section{padding:١rem;border-bottom:١px solid #ddd;}
-h٢{margin-top:٠;}
-.box{background:#f5f5f5;padding:١rem;border-radius:٠.٥rem;margin-top:٠.٥rem;}
-.badge{display:inline-block;background:#1976d2;color:white;
-padding:٠.٢rem ٠.٥rem;border-radius:٠.٣rem;font-size:٠.٨rem;}
+html,body{
+  margin:0;height:100%;
+  font-family:system-ui,sans-serif;
+  background:#f9f9f9;
+}
+
+.page{
+  display:flex;
+  flex-direction:column;
+  height:100%;
+}
+
+/* TOP */
+.header{
+  text-align:center;
+  padding:١rem;
+  font-size:١.٢rem;
+}
+
+/* MIDDLE */
+.stage{
+  flex:١;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.tray{
+  width:٩٠%;
+  height:٦٠%;
+  border:٤px solid #aaa;
+  border-radius:١rem;
+  display:flex;
+  justify-content:space-around;
+  align-items:flex-end;
+  padding:١rem;
+}
+
+.box{
+  width:٢٥%;
+  height:١٠٠%;
+  border:٣px dashed #ccc;
+  border-radius:٠.٥rem;
+  display:flex;
+  align-items:flex-end;
+  justify-content:center;
+}
+
+.balls{
+  display:flex;
+  flex-wrap:wrap;
+  gap:٠.٣rem;
+  padding-bottom:٠.٥rem;
+}
+
+.ball{
+  width:١.٢rem;
+  height:١.٢rem;
+  border-radius:٥٠%;
+  background:#4CAF50;
+}
+
+/* BOTTOM */
+.footer{
+  padding:١rem;
+}
+
+button{
+  width:١٠٠%;
+  padding:٠.٨rem;
+  font-size:١.١rem;
+  border:none;
+  border-radius:٠.٨rem;
+  background:#1976D2;
+  color:white;
+}
 </style>
 </head>
+
 <body>
+<div class="page">
 
-<section>
-<h٢>الهدف العلاجي الواحد <span class="badge">مغلق</span></h٢>
-<div class="box">
-إعادة تثبيت أن الضرب = مجموعات متساوية محسوسة قبل الرمز.
-</div>
-</section>
+  <!-- TOP -->
+  <div class="header">
+    سامر يرتّب كراته في علب متشابهة
+  </div>
 
-<section>
-<h٢>السيناريو الزمني — ٦٠ دقيقة</h٢>
-<div class="box">
-<strong>٠–١٠ دقائق:</strong> صمت مقصود. عرض تجربة الطالب فقط. لا شرح.<br>
-<strong>١٠–٣٠ دقيقة:</strong> لمس وترتيب. سؤال واحد فقط يتكرر: «ماذا ترى؟».<br>
-<strong>٣٠–٤٥ دقيقة:</strong> حكم لفظي من المتعلمين: «مجموعات متساوية».<br>
-<strong>٤٥–٦٠ دقيقة:</strong> إغلاق المسار. لا جداول، لا حقائق، لا تدريب.
-</div>
-</section>
+  <!-- MIDDLE -->
+  <div class="stage">
+    <div class="tray">
+      <div class="box"><div class="balls" id="b1">
+        <div class="ball"></div>
+        <div class="ball"></div>
+        <div class="ball"></div>
+      </div></div>
 
-<section>
-<h₂>ما الذي يراه المتعلم</h₂>
-<div class="box">
-علب → عدم تساوٍ → ترتيب → تساوٍ بصري → عبارة حكم واحدة.
-</div>
-</section>
+      <div class="box"><div class="balls" id="b2">
+        <div class="ball"></div>
+      </div></div>
 
-<section>
-<h₂>عبارات المعلم المسموحة (حرفيًا)</h₂>
-<div class="box">
-• «انظر.»<br>
-• «هل العلب متشابهة؟»<br>
-• «متى يصبح الترتيب عادلًا؟»
-</div>
-</section>
+      <div class="box"><div class="balls" id="b3"></div></div>
+    </div>
+  </div>
 
-<section>
-<h₂>نقاط الصمت الإلزامية</h₂>
-<div class="box">
-صمت كامل أثناء اللمس والترتيب. أي شرح = إيقاف الحصة.
-</div>
-</section>
+  <!-- BOTTOM -->
+  <div class="footer">
+    <button id="btn">رتّب</button>
+  </div>
 
-<section>
-<h₂>سوء الفهم المقبول</h₂>
-<div class="box">
-قول: «كرات متشابهة» مقبول مؤقتًا. لا تصحيح الآن.
 </div>
-</section>
 
-<section>
-<h₂>شرط الإيقاف</h₂>
-<div class="box">
-عند نطق المتعلم: «مجموعات متساوية». بعدها تُغلق الحصة.
-</div>
-</section>
+<script>
+let done = false;
 
-<section>
-<h₂>محاكاة سريعة (للمعلم)</h₂>
-<div class="box">
-افتح <strong>Student.html</strong> أمامك. اضغط «رَتِّب». راقب الانتقال.
-لا تشرح. هذا هو المسار الوحيد.
-</div>
-</section>
+document.getElementById("btn").onclick = function(){
+  if(done){ return; }
+
+  const balls = document.querySelectorAll(".ball");
+  document.getElementById("b1").innerHTML="";
+  document.getElementById("b2").innerHTML="";
+  document.getElementById("b3").innerHTML="";
+
+  balls.forEach((ball,i)=>{
+    if(i%3===0) b1.appendChild(ball);
+    if(i%3===1) b2.appendChild(ball);
+    if(i%3===2) b3.appendChild(ball);
+  });
+
+  document.querySelector(".header").textContent =
+    "هذه مجموعات متساوية";
+
+  document.getElementById("btn").textContent = "انتهى";
+  done = true;
+};
+</script>
 
 </body>
 </html>
