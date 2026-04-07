@@ -3,63 +3,110 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>قِصّة العدل — القسمة</title>
+<title>قصة العدل</title>
+
 <style>
-html,body{margin:0;font-family:system-ui;background:#fff;color:#111}
-main{max-width:٤٢٠px;margin:auto;padding:١٦px;text-align:center}
-.character{font-size:٤rem;margin:٤px ٠}
-.speech{border:٢px solid #000;border-radius:٨px;padding:٨px;margin:٨px ٠}
-.plates{display:flex;justify-content:center;gap:١٢px;margin:١٦px ٠}
-.plate{
-  width:٧٢px;height:٧٢px;border:٢px solid #000;border-radius:١٠٠%;
-  display:flex;align-items:center;justify-content:center;font-size:٢rem
+:root{
+  --tap: 56px;
 }
-.food{font-size:٢rem;margin:٨px ٠}
-button{width:١٠٠%;padding:١٢px;font-size:١rem;border:٢px solid #000;background:#fff}
-.notice{font-size:١.٤rem;margin-top:١٢px}
-.hidden{display:none}
+body{
+  margin:0;
+  font-family:system-ui;
+  background:#fff;
+}
+main{
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  padding:12px;
+  box-sizing:border-box;
+}
+
+.character{
+  text-align:center;
+  font-size:3rem;
+}
+.speech{
+  text-align:center;
+  border:2px solid #000;
+  border-radius:12px;
+  padding:8px;
+  margin-top:6px;
+}
+
+.plates{
+  display:flex;
+  justify-content:space-around;
+  margin:12px 0;
+}
+.plate{
+  width:64px;
+  height:64px;
+  border:2px solid #000;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:1.8rem;
+}
+
+.apple-area{
+  text-align:center;
+  font-size:2.2rem;
+  transition:transform .4s ease;
+}
+
+.controls{
+  display:flex;
+  justify-content:center;
+  margin-bottom:8px;
+}
+button{
+  min-height:var(--tap);
+  padding:0 24px;
+  font-size:1.1rem;
+  border:2px solid #000;
+  background:#fff;
+}
 </style>
 </head>
+
 <body>
 <main>
 
-<div class="character">🧒</div>
-<div class="speech">هل هذا عادل؟</div>
-
-<div class="plates">
-  <div class="plate" id="p١">🍽️</div>
-  <div class="plate" id="p٢">🍽️</div>
-  <div class="plate" id="p٣">🍽️</div>
-  <div class="plate" id="p٤">🍽️</div>
+<div>
+  <div class="character">🧒</div>
+  <div class="speech">هل هذا عادل؟</div>
 </div>
 
-<div class="food">🍎 🍎 🍎 🍎 🍎 🍎 🍎 🍎</div>
+<div class="plates">
+  <div class="plate">🍽️</div>
+  <div class="plate">🍽️</div>
+  <div class="plate">🍽️</div>
+  <div class="plate">🍽️</div>
+</div>
 
-<button onclick="deal()">وزّع</button>
+<div class="apple-area" id="apple">🍎</div>
 
-<div class="notice hidden" id="ok">✅ عادل</div>
+<div class="controls">
+  <button onclick="moveApple()">ضع التفاحة</button>
+</div>
+
+</main>
 
 <script>
-let step=٠;
-function reset(){
-  p١.textContent='🍽️'; p٢.textContent='🍽️';
-  p٣.textContent='🍽️'; p٤.textContent='🍽️';
-}
-function deal(){
-  reset(); step++;
-  // توزيع غير عادل
-  if(step===١){p١.textContent='🍽️🍎🍎🍎'; p٢.textContent='🍽️🍎';}
-  // محاولة
-  if(step===٢){p١.textContent='🍽️🍎🍎'; p٢.textContent='🍽️🍎🍎';}
-  // عدل
-  if(step===٣){
-    p١.textContent='🍽️🍎🍎'; p٢.textContent='🍽️🍎🍎';
-    p٣.textContent='🍽️🍎🍎'; p٤.textContent='🍽️🍎🍎';
-    document.getElementById('ok').classList.remove('hidden');
+let placed = 0;
+function moveApple(){
+  if(placed < 4){
+    apple.style.transform = `translateY(-${80}px)`;
+    setTimeout(()=>{
+      placed++;
+      apple.style.transform = 'translateY(0)';
+    },400);
   }
 }
 </script>
 
-</main>
 </body>
 </html>
