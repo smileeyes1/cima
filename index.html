@@ -3,78 +3,79 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>تجربة سامر</title>
+<title>مرافق المعلم العلاجي</title>
 <style>
-body{
-  margin:0;font-family:system-ui, sans-serif;background:#f7f7f7;
-  display:flex;flex-direction:column;height:100vh;touch-action:manipulation;
-}
-#top{padding:١rem;text-align:center;font-size:١.٢rem;}
-#middle{
-  flex:١;display:flex;justify-content:center;align-items:center;
-}
-.container{
-  width:٨٠%;height:٦٠%;border:٤px solid #999;border-radius:١rem;
-  display:flex;justify-content:space-around;align-items:flex-end;padding:١rem;
-}
-.box{
-  width:٣٠%;height:١٠٠%;border:٣px dashed #bbb;border-radius:٠.٥rem;
-  display:flex;justify-content:center;align-items:flex-end;
-}
-.balls{display:flex;flex-wrap:wrap;gap:٠.٣rem;padding:٠.٥rem;}
-.ball{width:١.٢rem;height:١.٢rem;border-radius:٥٠%;background:#4caf50;}
-#bottom{padding:١rem;}
-button{
-  width:١٠٠%;padding:٠.٨rem;font-size:١.١rem;
-  border:none;border-radius:٠.٨rem;background:#1976d2;color:white;
-}
-.hidden{display:none;}
+body{margin:0;font-family:system-ui,sans-serif;background:#ffffff;}
+section{padding:١rem;border-bottom:١px solid #ddd;}
+h٢{margin-top:٠;}
+.box{background:#f5f5f5;padding:١rem;border-radius:٠.٥rem;margin-top:٠.٥rem;}
+.badge{display:inline-block;background:#1976d2;color:white;
+padding:٠.٢rem ٠.٥rem;border-radius:٠.٣rem;font-size:٠.٨rem;}
 </style>
 </head>
 <body>
 
-<div id="top">سامر يرتب كراته في علب متشابهة</div>
-
-<div id="middle">
-  <div class="container">
-    <div class="box"><div class="balls" id="b١">
-      <div class="ball"></div><div class="ball"></div><div class="ball"></div>
-    </div></div>
-    <div class="box"><div class="balls" id="b٢">
-      <div class="ball"></div>
-    </div></div>
-    <div class="box"><div class="balls" id="b٣"></div></div>
-  </div>
+<section>
+<h٢>الهدف العلاجي الواحد <span class="badge">مغلق</span></h٢>
+<div class="box">
+إعادة تثبيت أن الضرب = مجموعات متساوية محسوسة قبل الرمز.
 </div>
+</section>
 
-<div id="bottom">
-  <button id="action">رَتِّب</button>
+<section>
+<h٢>السيناريو الزمني — ٦٠ دقيقة</h٢>
+<div class="box">
+<strong>٠–١٠ دقائق:</strong> صمت مقصود. عرض تجربة الطالب فقط. لا شرح.<br>
+<strong>١٠–٣٠ دقيقة:</strong> لمس وترتيب. سؤال واحد فقط يتكرر: «ماذا ترى؟».<br>
+<strong>٣٠–٤٥ دقيقة:</strong> حكم لفظي من المتعلمين: «مجموعات متساوية».<br>
+<strong>٤٥–٦٠ دقيقة:</strong> إغلاق المسار. لا جداول، لا حقائق، لا تدريب.
 </div>
+</section>
 
-<script>
-let state = ٠;
-const action = document.getElementById("action");
-action.addEventListener("click", ()=>{
-  if(state===٠){
-    // STATE ١ -> ٤ مباشرة عبر تصحيح تلقائي (Error‑Proof)
-    const all = document.querySelectorAll(".ball");
-    document.getElementById("b١").innerHTML="";
-    document.getElementById("b٢").innerHTML="";
-    document.getElementById("b٣").innerHTML="";
-    all.forEach((b,i)=>{
-      if(i%٣===٠)document.getElementById("b١").appendChild(b);
-      if(i%٣===١)document.getElementById("b٢").appendChild(b);
-      if(i%٣===٢)document.getElementById("b٣").appendChild(b);
-    });
-    state=٥;
-    action.textContent="انتهى";
-    document.getElementById("top").textContent="هذه مجموعات متساوية";
-  }else{
-    // STATE ٦ Termination
-    document.body.innerHTML="<div style='margin:auto;font-size:١.٣rem'>انتهت التجربة</div>";
-  }
-});
-</script>
+<section>
+<h₂>ما الذي يراه المتعلم</h₂>
+<div class="box">
+علب → عدم تساوٍ → ترتيب → تساوٍ بصري → عبارة حكم واحدة.
+</div>
+</section>
+
+<section>
+<h₂>عبارات المعلم المسموحة (حرفيًا)</h₂>
+<div class="box">
+• «انظر.»<br>
+• «هل العلب متشابهة؟»<br>
+• «متى يصبح الترتيب عادلًا؟»
+</div>
+</section>
+
+<section>
+<h₂>نقاط الصمت الإلزامية</h₂>
+<div class="box">
+صمت كامل أثناء اللمس والترتيب. أي شرح = إيقاف الحصة.
+</div>
+</section>
+
+<section>
+<h₂>سوء الفهم المقبول</h₂>
+<div class="box">
+قول: «كرات متشابهة» مقبول مؤقتًا. لا تصحيح الآن.
+</div>
+</section>
+
+<section>
+<h₂>شرط الإيقاف</h₂>
+<div class="box">
+عند نطق المتعلم: «مجموعات متساوية». بعدها تُغلق الحصة.
+</div>
+</section>
+
+<section>
+<h₂>محاكاة سريعة (للمعلم)</h₂>
+<div class="box">
+افتح <strong>Student.html</strong> أمامك. اضغط «رَتِّب». راقب الانتقال.
+لا تشرح. هذا هو المسار الوحيد.
+</div>
+</section>
 
 </body>
 </html>
