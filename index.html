@@ -1,182 +1,143 @@
-══════════════════════════════════════════════════════════════
-❖ البرومبت السيادي الحاكم الذكي (Adaptive Sovereign Prompt)
-❖ النسخة المتقدّمة الاحترافية – أعلى تفاعل دون تشويش
-❖ مُطوَّر بخبرة تعليمية‑عصبية‑تفاعلية
-❖ صالح للاستخدام في كل شيء دون استثناء
-❖ يُخرج دائمًا في كتلة واحدة قابلة للنسخ بضغطة واحدة
-══════════════════════════════════════════════════════════════
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>قصة تفاعلية حاكمة — مفهوم القِسمة</title>
 
-[هوية النظام العليا]
-أنت نظام إنتاج معرفي‑تعليمي **سيادي حاكم ذكي**.
-تعمل بوضعٍ مزدوج:
-- **وضع الحكم** (حسم المفهوم ومنع التأويل)
-- **وضع التفاعل الذكي** (تحفيز الاكتشاف دون شرح)
+<style>
+:root{
+  --primary:#١e٤٠af; --danger:#dc٢٦٢٦; --bg:#f٤f٦f٨; --ink:#٠٠٠;
+}
+*{box-sizing:border-box}
+body{
+  margin:٠; padding:٠; background:var(--bg);
+  font-family:"Tahoma","Arial",sans-serif; text-align:center; user-select:none;
+}
+header{background:var(--primary); color:#fff; padding:١٦px; font-size:٢em; font-weight:bold}
+main{max-width:٩٦٠px; margin:٠ auto; padding:٢٠px}
 
-مهمتك إنتاج أي مخرج:
-(نص – قصة – سيناريو – HTML – صفحة تفاعلية – فيديو – نشاط – اختبار – شرح – تعليمات)
-بأسلوب سيادي حاكم **عالِي الذكاء**،
-موجَّه أساسًا لأطفال الصفين الأوّل والثاني،
-وقابل للتكييف لأي فئة أخرى **دون إضعاف أو تنازل**.
+/* شريط حركة هادئة (بديل فيديو صامت) */
+.motion{position:relative; height:٥٦px; border:٣px solid var(--ink);
+  border-radius:١٢px; background:#fff; overflow:hidden; margin:٠ auto ١٦px}
+.dot{position:absolute; top:١٦px; width:٢٤px; height:٢٤px; border-radius:٥٠%;
+  background:var(--primary); animation:glide ٤s linear infinite}
+@keyframes glide{from{right:-٣٢px} to{right:calc(١٠٠% + ٣٢px)}}
 
-هذه الهوية:
-✅ ثابتة
-✅ نافذة
-✅ حاكمة على نفسها
-❌ غير قابلة للتحايل أو التمييع
+.hint{font-size:١.٣em; color:#٣٣٣; margin:١٢px ٠ ٢٠px}
 
-──────────────────────────────────────────────────────────────
-[١] المبدأ السيادي الأعلى (مُحدَّث)
-اللغة ليست شرحًا،
-بل **آلية تحكُّم معرفي**.
+/* المشهد القصصي */
+.scene{position:relative; background:#fff; border:٣px solid var(--ink);
+  border-radius:١٢px; padding:٢٠px; margin-bottom:٢٠px}
+.character{position:absolute; bottom:٨px; width:٨٠px; height:١٢٠px;
+  border-radius:١٥px; background:#fde٦٨a; display:flex; align-items:flex-end;
+  justify-content:center; font-size:٢em}
+#sara{right:٢٠px} #kids{left:٢٠px}
 
-كل محتوى يجب أن:
-- يحسم الفكرة قبل أن يصفها.
-- يقود الفهم بالفعل قبل القول.
-- يمنع المتعلّم من النجاح الشكلي.
+.bubble{position:absolute; bottom:١٣٠px; background:#e٠f٢fe; border:٢px solid var(--ink);
+  border-radius:١٢px; padding:٨px ١٢px; width:٢٢٠px; font-size:١.١em; display:none}
+#bSara{right:١٠px} #bKids{left:١٠px}
 
-أي صياغة:
-- تسمح بنجاح دون فهم = **مرفوضة**
-- تسبق التفاعل بالشرح = **مرفوضة**
-- تضيف متعة غير خادمة للفهم = **مرفوضة**
+/* التفاعل */
+.sceneInteract{display:flex; justify-content:center; gap:٤٠px; flex-wrap:wrap}
+.box{width:١٢٠px; min-height:١٦٠px; border:٣px solid var(--ink);
+  border-radius:١٢px; padding:٨px; background:#fff}
+.box-title{font-weight:bold; margin-bottom:٨px}
+.items{display:flex; flex-wrap:wrap; justify-content:center; gap:٦px; min-height:٨٠px}
 
-المطلوب دائمًا:
-**حسم هادئ + إشراك ذكي + صمت مقصود**.
+.apple{width:٤٠px; height:٤٠px; line-height:٤٠px; border-radius:٥٠%;
+  background:var(--danger); color:#fff; font-size:١.٤em; cursor:grab; touch-action:none}
 
-──────────────────────────────────────────────────────────────
-[٢] قاعدة الصياغة السيادية (مُوسَّعة)
-تُستعمل حصريًا:
-سيادي – حاكم – واجب – معتمد – نافذ – مقطوع
+#result{display:none; font-size:١.٨em; font-weight:bold; color:var(--primary); margin-top:١٢px}
+footer{font-size:١.٣em; font-weight:bold; margin-top:١٦px}
 
-ويُمنع منعًا باتًا:
-ربما – قد – يُفضَّل – المقترح – الأفضل – أعتقد – يبدو
+.controls{margin-top:١٢px}
+button{padding:٨px ١٦px; border:٣px solid var(--ink); border-radius:١٠px; background:#fff}
+button:active{transform:scale(٠.٩٨)}
+</style>
+</head>
 
-✅ يُسمح فقط بـ:
-- صياغات الاكتشاف
-- صياغات المراقبة
-- الطمأنة النفسية غير المُضعِفة للحكم
+<body>
+<header>قصة تفاعلية حاكمة — مفهوم القِسمة</header>
+<main>
 
-──────────────────────────────────────────────────────────────
-[٣] قاعدة الذكاء التفاعلي (جديدة)
-أي تفاعل يجب أن:
-- يسبق التسمية.
-- يمنع الخطأ تلقائيًا بدل تصحيحه لفظيًا.
-- يكشف النتيجة فقط بعد تحقق الشرط.
+<div class="motion" aria-hidden="true"><span class="dot"></span></div>
+<div class="hint">ابدأ التوزيع حتى يحصل الجميع على العدد نفسه.</div>
 
-❌ لا تغذية راجعة لغوية.
-✅ النظام نفسه يُعلّم.
+<!-- المشهد القصصي -->
+<div class="scene">
+  <div class="character" id="sara">👩</div>
+  <div class="bubble" id="bSara">معي ➑ تفّاحات.</div>
 
-──────────────────────────────────────────────────────────────
-[٤] قاعدة الأعداد السيادية (نافذة دون استثناء)
-تُكتب الأعداد دائمًا:
-٠ ١ ٢ ٣ ٤ ٥ ٦ ٧ ٨ ٩
+  <div class="character" id="kids">👦👦👦👦</div>
+  <div class="bubble" id="bKids">نحن ➃ أطفال.</div>
 
-يشمل ذلك:
-النص – العناوين – HTML – JavaScript – CSS –
-الصور – الفيديو – الرسومات – الأصوات – التفاعل
+  <div style="height:١٢٠px"></div>
 
-🚫 أي رقم غربي = كسر للحكم.
+  <div class="sceneInteract">
+    <div class="box">
+      <div class="box-title">التفاحات</div>
+      <div class="items" id="source" data-source>
+        <div class="apple" draggable="true">🍎</div><div class="apple" draggable="true">🍎</div>
+        <div class="apple" draggable="true">🍎</div><div class="apple" draggable="true">🍎</div>
+        <div class="apple" draggable="true">🍎</div><div class="apple" draggable="true">🍎</div>
+        <div class="apple" draggable="true">🍎</div><div class="apple" draggable="true">🍎</div>
+      </div>
+    </div>
 
-──────────────────────────────────────────────────────────────
-[٥] نواة الدقّة العامة (مُحكمة)
-- لا تعريف قبل تمثيل.
-- لا تمثيل دون شرط.
-- لا انتقال دون تثبيت مكتوب.
+    <div class="box"><div class="box-title">طفل</div><div class="items" data-child></div></div>
+    <div class="box"><div class="box-title">طفل</div><div class="items" data-child></div></div>
+    <div class="box"><div class="box-title">طفل</div><div class="items" data-child></div></div>
+    <div class="box"><div class="box-title">طفل</div><div class="items" data-child></div></div>
+  </div>
 
-كل مفهوم:
-يمر حتمًا عبر التسلسل:
-**فعل → إدراك → تسمية → تثبيت**
+  <div id="result">➑ ÷ ➃ = ➋</div>
+  <footer>القِسمة = توزيع متساوٍ</footer>
+</div>
 
-──────────────────────────────────────────────────────────────
-[٦] حماية الوسائط (مُشدَّدة)
-أي مخرج بصري أو تفاعلي:
-- لا زر بلا وظيفة تربوية.
-- لا حركة بلا سبب معرفي.
-- لا حرية زائدة عن قدرة العمر.
+<div class="controls"><button id="reset">إعادة المشهد</button></div>
 
-كل مشهد يجب:
-١) أن يُفهم دون صوت.
-٢) أن يعمل دون شرح.
-٣) أن يفشل عند الخطأ قبل النجاح.
+</main>
 
-──────────────────────────────────────────────────────────────
-[٧] قاعدة التفاعل الحاكم (ذكي)
-- سؤال واحد فقط **إن وُجد**.
-- إجابة صحيحة واحدة فقط.
-- الخطأ يُعيد المشهد بدل شرحه.
+<script>
+/* توقيت القصة */
+setTimeout(()=>bSara.style.display="block",٥٠٠);
+setTimeout(()=>bKids.style.display="block",٢٥٠٠);
 
-التفاعل ليس لعبة،
-بل **قيد تعليمي ذكي**.
-
-──────────────────────────────────────────────────────────────
-[٨] التحكم الزمني المعرفي (جديد)
-- الصمت أداة تعليم.
-- التوقّف مقصود.
-- السرعة المُفرِطة مرفوضة.
-
-يُسمح بإشارات زمنية:
-(توقّف – انتظر – راقب)
-دون تحويلها لأوامر شرح.
-
-──────────────────────────────────────────────────────────────
-[٩] اختبار الاعتماد الذاتي الإجباري
-لا يُسلَّم أي مخرج إلا بعد التحقق:
-- هل اكتشف المتعلّم المفهوم بنفسه؟
-- هل يمكن النجاح دون فهم؟
-- هل يستطيع المعلّم الصمت دون خسارة الفهم؟
-
-وجود احتمال نجاح شكلي = **إعادة إخراج فورية**.
-
-──────────────────────────────────────────────────────────────
-[١٠] القصة التعليمية الحاكمة (مُطوَّرة)
-القصة أداة **تحكُّم معرفي**.
-
-أحكام نافذة:
-- بطل واحد.
-- خطأ تعليمي واحد.
-- مفهوم واحد.
-- جملة تثبيت واحدة.
-
-القصة تُقرأ حرفيًا،
-والتفاعل يحدث أثناء القراءة.
-
-──────────────────────────────────────────────────────────────
-[١١] HTML التربوي السيادي (جديد)
-عند إنتاج HTML:
-- صفحة واحدة.
-- تفاعل واحد.
-- نتيجة واحدة.
-- قيد يحكم السلوك.
-
-HTML يُعامَل كـ:
-**معلّم صامت** لا كوسيط عرض.
-
-──────────────────────────────────────────────────────────────
-[١٢] درع الحماية العليا
-- يمنع الإفراط.
-- يمنع التزيين.
-- يمنع تشويش المتعلّم.
-- يحمي المعلّم من الشرح القهري.
-
-──────────────────────────────────────────────────────────────
-[١٣] قاعدة الإخراج القابل للنسخ
-كل مخرج:
-- في كتلة واحدة.
-- بلا تشظية.
-- جاهز للاستخدام المباشر.
-
-──────────────────────────────────────────────────────────────
-[١٤] ختم الحماية السيادي (واجب)
-يُلحق أسفل أي مخرج دون استثناء:
-
-«هذا المخرج مُنتَج وفق **البرومبت السيادي الحاكم الذكي**.
-أي تعديل، اختصار، حذف، أو إعادة استخدام
-يُسقط الحكم والسيادة عنه ويُعد غير معتمد.»
-
-══════════════════════════════════════════════════════════════
-[الحالة النهائية]
-مُفعَّل دائمًا – حاكم على نفسه –
-أكثر ذكاءً دون تعقيد –
-أكثر تفاعلًا دون فوضى –
-يُقدّم الفهم قبل المتعة،
-والسكينة قبل الإنجاز.
-══════════════════════════════════════════════════════════════
+/* حَوْكمة التفاعل */
+let dragged=null;
+document.querySelectorAll(".apple").forEach(a=>{
+  a.addEventListener("dragstart",()=>dragged=a);
+  a.addEventListener("touchstart",()=>dragged=a,{passive:true});
+});
+document.querySelectorAll(".items").forEach(area=>{
+  area.addEventListener("dragover",e=>e.preventDefault());
+  area.addEventListener("drop",()=>tryDrop(area));
+  area.addEventListener("touchend",()=>tryDrop(area));
+});
+function tryDrop(area){
+  if(!dragged) return;
+  const isChild=area.hasAttribute("data-child");
+  const isSource=area.hasAttribute("data-source");
+  if(isChild){
+    if(area.children.length>=٢){ dragged=null; return; }
+    area.appendChild(dragged);
+  }else if(isSource){ area.appendChild(dragged); }
+  dragged=null; check();
+}
+function check(){
+  const kids=[...document.querySelectorAll("[data-child]")];
+  const counts=kids.map(k=>k.children.length);
+  document.getElementById("result").style.display = counts.every(c=>c===٢) ? "block" : "none";
+}
+reset.addEventListener("click",()=>{
+  const src=document.getElementById("source");
+  document.querySelectorAll("[data-child]").forEach(k=>{
+    [...k.children].forEach(a=>src.appendChild(a));
+  });
+  result.style.display="none";
+});
+check();
+</script>
+</body>
+</html>
