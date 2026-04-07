@@ -6,62 +6,131 @@
 <title>قصة تفاعلية حاكمة — مفهوم القِسمة</title>
 
 <style>
+/* ===================== الأساس ===================== */
 :root{
-  --primary:#١e٤٠af; --danger:#dc٢٦٢٦; --bg:#f٤f٦f٨; --ink:#٠٠٠;
+  --primary:#١e٤٠af;
+  --danger:#dc٢٦٢٦;
+  --bg:#f٤f٦f٨;
+  --ink:#٠٠٠;
+  --soft:#e٠f٢fe;
+  --sand:#fde٦٨a;
 }
 *{box-sizing:border-box}
 body{
-  margin:٠; padding:٠; background:var(--bg);
-  font-family:"Tahoma","Arial",sans-serif; text-align:center; user-select:none;
+  margin:٠; padding:٠;
+  background:var(--bg);
+  font-family:"Tahoma","Arial",sans-serif;
+  text-align:center;
+  user-select:none;
 }
-header{background:var(--primary); color:#fff; padding:١٦px; font-size:٢em; font-weight:bold}
+header{
+  background:var(--primary);
+  color:#fff;
+  padding:١٦px;
+  font-size:٢em;
+  font-weight:bold;
+  position:sticky; top:٠; z-index:١٠;
+}
 main{max-width:٩٦٠px; margin:٠ auto; padding:٢٠px}
 
-/* شريط حركة هادئة (بديل فيديو صامت) */
-.motion{position:relative; height:٥٦px; border:٣px solid var(--ink);
-  border-radius:١٢px; background:#fff; overflow:hidden; margin:٠ auto ١٦px}
-.dot{position:absolute; top:١٦px; width:٢٤px; height:٢٤px; border-radius:٥٠%;
-  background:var(--primary); animation:glide ٤s linear infinite}
+/* ===================== شريط الأزرار الحاكمة ===================== */
+.toolbar{
+  display:flex; justify-content:center; gap:١٢px;
+  margin:١٢px auto;
+}
+button{
+  padding:٨px ١٦px;
+  border:٣px solid var(--ink);
+  border-radius:١٢px;
+  background:#fff;
+  font-size:١em;
+  cursor:pointer;
+}
+button:active{transform:scale(٠.٩٨)}
+
+/* ===================== حركة هادئة (بديل فيديو صامت) ===================== */
+.motion{
+  position:relative; height:٥٦px; margin:٠ auto ١٦px;
+  border:٣px solid var(--ink); border-radius:١٢px;
+  background:#fff; overflow:hidden;
+}
+.dot{
+  position:absolute; top:١٦px; width:٢٤px; height:٢٤px; border-radius:٥٠%;
+  background:var(--primary); animation:glide ٤s linear infinite;
+}
+.paused .dot{animation-play-state:paused}
 @keyframes glide{from{right:-٣٢px} to{right:calc(١٠٠% + ٣٢px)}}
 
 .hint{font-size:١.٣em; color:#٣٣٣; margin:١٢px ٠ ٢٠px}
 
-/* المشهد القصصي */
-.scene{position:relative; background:#fff; border:٣px solid var(--ink);
-  border-radius:١٢px; padding:٢٠px; margin-bottom:٢٠px}
-.character{position:absolute; bottom:٨px; width:٨٠px; height:١٢٠px;
-  border-radius:١٥px; background:#fde٦٨a; display:flex; align-items:flex-end;
-  justify-content:center; font-size:٢em}
-#sara{right:٢٠px} #kids{left:٢٠px}
+/* ===================== المشهد القصصي ===================== */
+.scene{
+  position:relative; background:#fff; border:٣px solid var(--ink);
+  border-radius:١٢px; padding:٢٠px; margin-bottom:٢٠px;
+}
+.character{
+  position:absolute; bottom:٨px; width:٨٠px; height:١٢٠px;
+  border-radius:١٥px; background:var(--sand);
+  display:flex; align-items:flex-end; justify-content:center; font-size:٢em;
+}
+#sara{right:٢٠px}
+#kids{left:٢٠px}
 
-.bubble{position:absolute; bottom:١٣٠px; background:#e٠f٢fe; border:٢px solid var(--ink);
-  border-radius:١٢px; padding:٨px ١٢px; width:٢٢٠px; font-size:١.١em; display:none}
-#bSara{right:١٠px} #bKids{left:١٠px}
+/* فقاعة الكلام */
+.bubble{
+  position:absolute; bottom:١٣٠px; background:var(--soft);
+  border:٢px solid var(--ink); border-radius:١٢px;
+  padding:٨px ١٢px; width:٢٢٠px; font-size:١.١em; display:none;
+}
+#bSara{right:١٠px}
+#bKids{left:١٠px}
 
-/* التفاعل */
-.sceneInteract{display:flex; justify-content:center; gap:٤٠px; flex-wrap:wrap}
-.box{width:١٢٠px; min-height:١٦٠px; border:٣px solid var(--ink);
-  border-radius:١٢px; padding:٨px; background:#fff}
+/* ===================== التفاعل ===================== */
+.sceneInteract{
+  display:flex; justify-content:center; gap:٤٠px; flex-wrap:wrap;
+}
+.box{
+  width:١٢٠px; min-height:١٦٠px;
+  border:٣px solid var(--ink); border-radius:١٢px;
+  padding:٨px; background:#fff;
+}
 .box-title{font-weight:bold; margin-bottom:٨px}
-.items{display:flex; flex-wrap:wrap; justify-content:center; gap:٦px; min-height:٨٠px}
+.items{
+  display:flex; flex-wrap:wrap; justify-content:center;
+  gap:٦px; min-height:٨٠px;
+}
+.apple{
+  width:٤٠px; height:٤٠px; line-height:٤٠px;
+  border-radius:٥٠%; background:var(--danger); color:#fff;
+  font-size:١.٤em; cursor:grab; touch-action:none;
+}
 
-.apple{width:٤٠px; height:٤٠px; line-height:٤٠px; border-radius:٥٠%;
-  background:var(--danger); color:#fff; font-size:١.٤em; cursor:grab; touch-action:none}
-
-#result{display:none; font-size:١.٨em; font-weight:bold; color:var(--primary); margin-top:١٢px}
+/* ===================== النتيجة والتثبيت ===================== */
+#result{
+  display:none; font-size:١.٨em; font-weight:bold;
+  color:var(--primary); margin-top:١٢px;
+}
 footer{font-size:١.٣em; font-weight:bold; margin-top:١٦px}
-
-.controls{margin-top:١٢px}
-button{padding:٨px ١٦px; border:٣px solid var(--ink); border-radius:١٠px; background:#fff}
-button:active{transform:scale(٠.٩٨)}
 </style>
 </head>
 
 <body>
 <header>قصة تفاعلية حاكمة — مفهوم القِسمة</header>
-<main>
 
-<div class="motion" aria-hidden="true"><span class="dot"></span></div>
+<main id="app">
+
+<!-- شريط الأزرار -->
+<div class="toolbar">
+  <button id="fsBtn">ملء الشاشة</button>
+  <button id="resetBtn">إعادة المشهد</button>
+  <button id="pauseBtn">إيقاف الحركة</button>
+</div>
+
+<!-- حركة صامتة هادئة -->
+<div class="motion" id="motionBar" aria-hidden="true">
+  <span class="dot"></span>
+</div>
+
 <div class="hint">ابدأ التوزيع حتى يحصل الجميع على العدد نفسه.</div>
 
 <!-- المشهد القصصي -->
@@ -74,6 +143,7 @@ button:active{transform:scale(٠.٩٨)}
 
   <div style="height:١٢٠px"></div>
 
+  <!-- التفاعل -->
   <div class="sceneInteract">
     <div class="box">
       <div class="box-title">التفاحات</div>
@@ -91,20 +161,40 @@ button:active{transform:scale(٠.٩٨)}
     <div class="box"><div class="box-title">طفل</div><div class="items" data-child></div></div>
   </div>
 
-  <div id="result">➑ ÷ ➃ = ➋</div>
-  <footer>القِسمة = توزيع متساوٍ</footer>
+  <div id="result">➑ ÷ ➃ = ➋<br>القِسمة = توزيع متساوٍ</div>
+  <footer>توقّف لحظة… لاحِظ كيف عرفت.</footer>
 </div>
-
-<div class="controls"><button id="reset">إعادة المشهد</button></div>
 
 </main>
 
 <script>
-/* توقيت القصة */
+/* ===== القصة (توقيت ذكي) ===== */
 setTimeout(()=>bSara.style.display="block",٥٠٠);
 setTimeout(()=>bKids.style.display="block",٢٥٠٠);
 
-/* حَوْكمة التفاعل */
+/* ===== ملء الشاشة دائمًا ===== */
+const fsBtn=document.getElementById("fsBtn");
+fsBtn.addEventListener("click",()=>{
+  const el=document.documentElement;
+  if(!document.fullscreenElement){
+    el.requestFullscreen?.();
+    fsBtn.textContent="إنهاء ملء الشاشة";
+  }else{
+    document.exitFullscreen?.();
+    fsBtn.textContent="ملء الشاشة";
+  }
+});
+
+/* ===== إيقاف/تشغيل الحركة الهادئة ===== */
+const motion=document.getElementById("motionBar");
+const pauseBtn=document.getElementById("pauseBtn");
+pauseBtn.addEventListener("click",()=>{
+  motion.classList.toggle("paused");
+  pauseBtn.textContent = motion.classList.contains("paused") ?
+    "تشغيل الحركة" : "إيقاف الحركة";
+});
+
+/* ===== الحَوْكمة التفاعلية ===== */
 let dragged=null;
 document.querySelectorAll(".apple").forEach(a=>{
   a.addEventListener("dragstart",()=>dragged=a);
@@ -120,17 +210,21 @@ function tryDrop(area){
   const isChild=area.hasAttribute("data-child");
   const isSource=area.hasAttribute("data-source");
   if(isChild){
-    if(area.children.length>=٢){ dragged=null; return; }
+    if(area.children.length>=٢){dragged=null;return;}
     area.appendChild(dragged);
-  }else if(isSource){ area.appendChild(dragged); }
+  }else if(isSource){
+    area.appendChild(dragged);
+  }
   dragged=null; check();
 }
 function check(){
   const kids=[...document.querySelectorAll("[data-child]")];
   const counts=kids.map(k=>k.children.length);
-  document.getElementById("result").style.display = counts.every(c=>c===٢) ? "block" : "none";
+  result.style.display = counts.every(c=>c===٢) ? "block" : "none";
 }
-reset.addEventListener("click",()=>{
+
+/* ===== إعادة المشهد ===== */
+resetBtn.addEventListener("click",()=>{
   const src=document.getElementById("source");
   document.querySelectorAll("[data-child]").forEach(k=>{
     [...k.children].forEach(a=>src.appendChild(a));
@@ -139,5 +233,6 @@ reset.addEventListener("click",()=>{
 });
 check();
 </script>
+
 </body>
 </html>
