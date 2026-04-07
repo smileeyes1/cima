@@ -6,117 +6,196 @@
 <title>قصة العدل</title>
 
 <style>
+:root{
+  --tap: 56px;
+  --plate: 90px;
+  --apple: 32px;
+}
+
 body{
   margin:0;
-  font-family:system-ui;
-  background:#ffffff;
+  font-family: system-ui;
+  background:#fff;
 }
+
 main{
   min-height:100vh;
   display:flex;
   flex-direction:column;
   justify-content:space-between;
-  padding:١٢px;
+  padding:12px;
   box-sizing:border-box;
 }
 
-.top{
+/* STORY ZONE */
+.story-zone{
   text-align:center;
 }
 .character{
-  font-size:٣.٥rem;
+  width:80px;
+  height:80px;
+  margin:0 auto;
+  border-radius:50%;
+  background:#f2d6b3;
+  position:relative;
 }
-.story{
-  margin-top:٨px;
-  padding:٨px;
-  border:٢px solid #000;
-  border-radius:١٢px;
-  font-size:١.١rem;
+.character::before{
+  content:"";
+  position:absolute;
+  top:24px; left:20px;
+  width:12px; height:12px;
+  background:#000; border-radius:50%;
+}
+.character::after{
+  content:"";
+  position:absolute;
+  top:24px; right:20px;
+  width:12px; height:12px;
+  background:#000; border-radius:50%;
+}
+.mouth{
+  width:30px; height:8px;
+  border-bottom:3px solid #000;
+  border-radius:0 0 30px 30px;
+  margin:40px auto 0;
+}
+
+.story-text{
+  margin-top:8px;
+  padding:8px;
+  border:2px solid #000;
+  border-radius:12px;
+}
+
+/* ACTION ZONE */
+.action-zone{
+  flex-grow:1;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-around;
+  align-items:center;
 }
 
 .plates{
+  width:100%;
   display:flex;
   justify-content:space-around;
-  margin:١٢px ٠;
 }
 .plate{
-  width:٦٥px;
-  height:٦٥px;
-  border:٢px solid #000;
-  border-radius:٥٠%;
+  width:var(--plate);
+  height:var(--plate);
+  border:3px solid #000;
+  border-radius:50%;
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:٢rem;
+  font-size:calc(var(--plate) / 3);
 }
 
-.apple-area{
-  text-align:center;
-  font-size:٢.٥rem;
-  min-height:٣rem;
+.apple-source{
+  display:flex;
+  gap:6px;
+  justify-content:center;
+  min-height:var(--apple);
+}
+.apple{
+  font-size:var(--apple);
+  transition:transform .5s ease;
 }
 
-.controls{
+/* CONTROL ZONE */
+.control-zone{
   display:flex;
   justify-content:center;
-  margin-bottom:٨px;
 }
 button{
-  min-height:٥٦px;
-  padding:٠ ٢٤px;
-  font-size:١.١rem;
-  border:٢px solid #000;
+  min-height:var(--tap);
+  padding:0 28px;
+  border:3px solid #000;
   background:#fff;
+  font-size:1.1rem;
 }
-.hidden{display:none;}
+button:disabled{
+  opacity:.5;
+}
 </style>
 </head>
 
 <body>
 <main>
 
-<div class="top">
-  <div class="character">🧒</div>
-  <div class="story" id="text">لدينا تفاح…</div>
+<!-- STORY -->
+<div class="story-zone">
+  <div class="character">
+    <div class="mouth"></div>
+  </div>
+  <div class="story-text" id="story">
+    لدينا تفاح.
+  </div>
 </div>
 
-<div class="plates">
-  <div class="plate" id="p1">🍽️</div>
-  <div class="plate" id="p2">🍽️</div>
-  <div class="plate" id="p3">🍽️</div>
-  <div class="plate" id="p4">🍽️</div>
+<!-- ACTION -->
+<div class="action-zone">
+
+  <div class="plates">
+    <div class="plate" id="p0"></div>
+    <div class="plate" id="p1"></div>
+    <div class="plate" id="p2"></div>
+    <div class="plate" id="p3"></div>
+  </div>
+
+  <div class="apple-source" id="apples">
+    <div class="apple">🍎</div><div class="apple">🍎</div><div class="apple">🍎</div><div class="apple">🍎</div>
+    <div class="apple">🍎</div><div class="apple">🍎</div><div class="apple">🍎</div><div class="apple">🍎</div>
+  </div>
+
 </div>
 
-<div class="apple-area" id="apples">🍎 🍎 🍎 🍎 🍎 🍎 🍎 🍎</div>
-
-<div class="controls">
-  <button onclick="step()">ضع تفاحة</button>
+<!-- CONTROL -->
+<div class="control-zone">
+  <button onclick="next()">ضع تفاحة</button>
 </div>
 
 </main>
 
 <script>
-let stepCount = ٠;
-let plates = [p1,p2,p3,p4];
-let applesLeft = ٨;
+let step = 0;
+let apples = Array.from(document.querySelectorAll('.apple'));
+let plates = [p0,p1,p2,p3];
+let btn = document.querySelector('button');
 
-function step(){
-  if(applesLeft === ٠) return;
-
-  plates[stepCount % 4].textContent += "🍎";
-  applesLeft--;
-  apples.textContent = "🍎 ".repeat(applesLeft);
-
-  stepCount++;
-
-  if(stepCount === ١){
-    text.textContent = "تفاحة هنا… وتفاحة هناك…";
+function next(){
+  if(step >= 8){
+    btn.disabled = true;
+    return;
   }
-  if(stepCount === ٤){
-    text.textContent = "هل هذا عادل؟";
+
+  // move apple
+  let a = apples[step];
+  let target = plates[step % 4];
+  let r1 = a.getBoundingClientRect();
+  let r2 = target.getBoundingClientRect();
+
+  let dx = r2.left - r1.left + (r2.width/2);
+  let dy = r2.top - r1.top;
+
+  a.style.transform = `translate(${dx}px, ${dy}px) scale(.8)`;
+
+  setTimeout(()=>{
+    target.textContent += "🍎";
+    a.style.visibility = "hidden";
+  },400);
+
+  step++;
+
+  if(step === 1){
+    story.textContent = "نضع التفاح...";
   }
-  if(stepCount === ٨){
-    text.textContent = "✅ الآن أصبح التوزيع عادلًا";
+  if(step === 4){
+    story.textContent = "هل هذا عادل؟";
+  }
+  if(step === 8){
+    story.textContent = "✅ الآن هذا عادل";
   }
 }
 </script>
