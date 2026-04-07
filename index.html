@@ -83,7 +83,7 @@ main{
   border:2px solid #000;
   border-radius:50%;
   opacity:0;
-  transition:opacity .4s ease;
+  transition:opacity .3s ease;
 }
 
 /* CONTROL ZONE */
@@ -107,7 +107,7 @@ button:disabled{
 <body>
 <main>
 
-<!-- STORY ZONE -->
+<!-- STORY -->
 <div class="story-zone">
   <div class="character">
     <div class="mouth"></div>
@@ -115,12 +115,12 @@ button:disabled{
   <div class="story-text" id="story">أمشي عشر خطوات كل مرة.</div>
 </div>
 
-<!-- ACTION ZONE -->
+<!-- ACTION -->
 <div class="action-zone">
   <div class="path" id="path"></div>
 </div>
 
-<!-- CONTROL ZONE -->
+<!-- CONTROL -->
 <div class="control-zone">
   <button id="btn" onclick="next()">امشِ مرة أخرى</button>
 </div>
@@ -128,63 +128,58 @@ button:disabled{
 </main>
 
 <script>
-const path = document.getElementById("path");
 const story = document.getElementById("story");
+const path = document.getElementById("path");
 const btn = document.getElementById("btn");
 
-let state = 0;
-let groups = 0;
+let state = 0;      // ٠ إلى ٥
+let groups = 0;     // عدد مرات المشي المنفذة
 
-// prepare empty steps
-function showSteps(){
+function drawTenSteps(){
+  path.innerHTML = "";
   for(let i=0;i<10;i++){
     const s = document.createElement("div");
     s.className = "step";
     path.appendChild(s);
-    setTimeout(()=>{s.style.opacity = 1;}, i*80);
+    setTimeout(()=>{ s.style.opacity = 1; }, i*70);
   }
 }
 
-// clear path
-function clearPath(){
-  path.innerHTML = "";
+function clearSteps(){
+  setTimeout(()=>{ path.innerHTML = ""; }, 1000);
 }
 
 function next(){
-  // STATE ١-٣: مشي متكرر
-  if(state >=1 && state <=3){
-    showSteps();
+
+  // STATES 1–3: المشي المتكرر
+  if(state >= 0 && state <= 2){
+    drawTenSteps();
     groups++;
     state++;
+    clearSteps();
+
+    // بعد ثلاث مرات ننتقل للحكم
+    if(groups === 3){
+      setTimeout(()=>{ state = 3; }, 1100);
+    }
     return;
   }
 
-  if(state === 0){
-    state = 1;
-    showSteps();
-    return;
-  }
-
-  // STATE ٤: الحكم
-  if(state === 4){
+  // STATE 4: الحكم
+  if(state === 3){
     story.textContent = "كل مرة عشر.";
+    state = 4;
+    return;
+  }
+
+  // STATE 5: التسمية والتوقف
+  if(state === 4){
+    story.textContent = "١٠ × ٣ = ٣٠";
     btn.disabled = true;
-    setTimeout(()=>{
-      story.textContent = "١٠ × ٣ = ٣٠";
-    }, 800);
     state = 5;
     return;
   }
 }
-
-// transition handling
-// after each group, prepare next
-path.addEventListener("transitionend", ()=>{
-  clearPath();
-  if(groups === 1) state = 2;
-  if(groups === 2) state = 3;
-  if(groups === 3) state = 4;
-});
 </script>
 
 </body>
