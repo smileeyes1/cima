@@ -2,121 +2,162 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<title>مفهوم القسمة – صف ثاني</title>
+<title>مفهوم القسمة – الصف الثاني</title>
+
 <style>
 body{
-    font-family: "Tahoma", Arial, sans-serif;
-    background:#f4f7fb;
-    margin:0;
-    padding:0;
+  margin:0;
+  font-family:"Arial", sans-serif;
+  background:#eef5f3;
 }
-.container{
-    max-width:800px;
-    margin:auto;
-    background:#ffffff;
-    padding:٢٠px;
-    border-radius:١٢px;
-    margin-top:٢٠px;
+
+/* ===== واجهة الطالب ===== */
+.stage{
+  max-width:٨٠٠px;
+  margin:٣٠px auto;
+  background:#ffffff;
+  border-radius:١٦px;
+  padding:٣٠px;
+  text-align:center;
 }
-h1{
-    text-align:center;
-    color:#١f٤a٨a;
+
+.scene{
+  margin-top:٤٠px;
 }
-.instructions{
-    background:#e8f٠fe;
-    padding:١٥px;
-    border-radius:٨px;
-    margin-bottom:٢٠px;
+
+.apple{
+  font-size:٧٠px;
+  margin-bottom:٢٠px;
 }
-.activity{
-    text-align:center;
-}
-.items{
-    font-size:٣٠px;
-    margin:١٠px;
-}
+
 .plates{
-    display:flex;
-    justify-content:space-around;
-    margin-top:٢٠px;
+  display:flex;
+  justify-content:space-between;
+  margin-top:٢٠px;
 }
+
 .plate{
-    width:١٤٠px;
-    height:١٤٠px;
-    border:٢px solid #١f٤a٨a;
-    border-radius:١٢px;
-    padding:٥px;
-    background:#fafafa;
+  width:١٤٠px;
+  height:١٠٠px;
+  border:٣px solid #4caf50;
+  border-radius:١٢px;
+  font-size:٤٠px;
+  line-height:٨٠px;
 }
-.plate h3{
-    margin:٥px ٠;
+
+/* زر التقدّم – غير دلالي */
+.next-area{
+  margin-top:٤٠px;
 }
-.result{
-    margin-top:٢٠px;
-    font-size:٢٠px;
-    color:#٢d٧a٢d;
-    display:none;
+
+.next-btn{
+  width:١٠٠px;
+  height:١٠٠px;
+  border-radius:٥٠%;
+  border:none;
+  background:#cfe8ff;
+  opacity:0.6;
+  font-size:٣٦px;
 }
-button{
-    margin-top:٢٠px;
-    padding:١٠px ٢٠px;
-    font-size:١٨px;
-    background:#١f٤a٨a;
-    color:white;
-    border:none;
-    border-radius:٨px;
-    cursor:pointer;
-}
-button:hover{
-    background:#١٧٣٨٦a;
+
+/* ===== لوحة المعلّم ===== */
+.teacher-panel{
+  display:none;
+  max-width:٨٠٠px;
+  margin:٣٠px auto;
+  background:#fff3e0;
+  border:٣px solid #ff9800;
+  border-radius:١٦px;
+  padding:٢٤px;
+  font-size:١٨px;
+  line-height:١.٨;
 }
 </style>
 </head>
 
 <body>
-<div class="container">
 
-<h1>مفهوم القسمة</h1>
+<!-- ===== واجهة الطالب ===== -->
+<div class="stage">
 
-<div class="instructions">
-<p><strong>هيا نتعلّم معًا:</strong></p>
-<p>لدينا <strong>٨ تفّاحات</strong> ونريد توزيعها بالتساوي على <strong>٤ صحون</strong>.</p>
-<p>فكّر: كم تفاحة في كل صحن؟</p>
+  <div class="scene">
+    <div class="apple" id="apple">🍎</div>
+
+    <div class="plates">
+      <div class="plate" id="p0"></div>
+      <div class="plate" id="p1"></div>
+      <div class="plate" id="p2"></div>
+      <div class="plate" id="p3"></div>
+    </div>
+  </div>
+
+  <div class="next-area">
+    <button class="next-btn" onclick="nextStep()">▶</button>
+  </div>
+
 </div>
 
-<div class="activity">
-<div class="items">
-🍎 🍎 🍎 🍎 🍎 🍎 🍎 🍎
-</div>
+<!-- ===== لوحة المعلّم ===== -->
+<div class="teacher-panel" id="teacherPanel">
 
-<div class="plates">
-<div class="plate"><h3>صحن ١</h3><div class="content"></div></div>
-<div class="plate"><h3>صحن ٢</h3><div class="content"></div></div>
-<div class="plate"><h3>صحن ٣</h3><div class="content"></div></div>
-<div class="plate"><h3>صحن ٤</h3><div class="content"></div></div>
-</div>
+الدرس: مفهوم القسمة  
+الصف: الثاني الأساسي  
+المرجع: كتاب الرياضيات – وزارة التربية والتعليم الفلسطينية (غزة)
 
-<button onclick="divide()">قسّم بالتساوي</button>
+────────────
+الهدف:
+تقسيم مجموعة إلى مجموعات متساوية.
 
-<div class="result" id="result">
-✨ أحسنت!  
-<p>٨ ÷ ٤ = ٢</p>
-<p>في كل صحن <strong>تفاحتان</strong>.</p>
-</div>
-</div>
+────────────
+السيناريو الزمني:
+وجاهي: ٤٠ دقيقة  
+Teams: ٦٠ دقيقة
+
+────────────
+كلام المعلّم (حرفيًا):
+- انظر إلى التفاحة.
+- إلى أي صحن ستذهب؟
+- هل كل صحن أخذ تفاحة؟
+
+────────────
+استشعار وتصحيح:
+١) وضع تفاحتين في صحن واحد → إزالة واحدة فورًا.  
+٢) نسيان صحن → عدّ الصحون بصوت جماعي.  
+٣) استعجال النتيجة → العودة للحركة البطيئة.
+
+────────────
+الإغلاق:
+٦ مكعبات ÷ ٣ مجموعات = ٢
 
 </div>
 
 <script>
-function divide(){
-    const plates=document.querySelectorAll('.plate .content');
-    plates.forEach(p=>p.innerHTML="");
+let apples = ٨;
+let plates = [0,0,0,0];
+let index = 0;
+let pressCount = 0;
+let sequenceCount = 0;
 
-    for(let i=٠;i<plates.length;i++){
-        plates[i].innerHTML="🍎 🍎";
-    }
+function nextStep(){
+  // عدّ الضغطات لدخول المعلّم
+  pressCount++;
+  if(pressCount === ٧){
+    document.getElementById("teacherPanel").style.display = "block";
+  }
 
-    document.getElementById("result").style.display="block";
+  // منطق القسمة
+  if(apples > 0){
+    document.getElementById("p"+index).innerHTML += "🍎";
+    plates[index]++;
+    apples--;
+    index = (index + 1) % ٤;
+  }else{
+    document.getElementById("apple").innerHTML = "٨ ÷ ٤ = ٢";
+  }
+
+  // إعادة ضبط العدّ إذا توقّف التتابع
+  clearTimeout(window.resetTimer);
+  window.resetTimer = setTimeout(() => { pressCount = 0; }, ٢٠٠٠);
 }
 </script>
 
