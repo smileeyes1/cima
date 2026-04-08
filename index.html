@@ -1,74 +1,124 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <title>الجمع ضمن ١٨ — للطلاب</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <style>
-    body{
-      margin:0;
-      font-family:system-ui, Arial, sans-serif;
-      background:#f4f6f8;
-      color:#111;
-    }
-    .container{
-      max-width:720px;
-      margin:0 auto;
-      padding:16px;
-    }
-    section{
-      background:#ffffff;
-      border-radius:12px;
-      padding:16px;
-      margin-bottom:12px;
-    }
-    h3{
-      margin:0 0 8px 0;
-      font-size:18px;
-    }
-    p{
-      margin:0;
-      font-size:16px;
-      line-height:1.6;
-    }
-    button{
-      width:100%;
-      padding:14px;
-      border:0;
-      border-radius:12px;
-      background:#0aa37f;
-      color:#ffffff;
-      font-size:16px;
-    }
-  </style>
+<meta charset="UTF-8">
+<title>مفهوم القسمة – صف ثاني</title>
+<style>
+body{
+    font-family: "Tahoma", Arial, sans-serif;
+    background:#f4f7fb;
+    margin:0;
+    padding:0;
+}
+.container{
+    max-width:800px;
+    margin:auto;
+    background:#ffffff;
+    padding:٢٠px;
+    border-radius:١٢px;
+    margin-top:٢٠px;
+}
+h1{
+    text-align:center;
+    color:#١f٤a٨a;
+}
+.instructions{
+    background:#e8f٠fe;
+    padding:١٥px;
+    border-radius:٨px;
+    margin-bottom:٢٠px;
+}
+.activity{
+    text-align:center;
+}
+.items{
+    font-size:٣٠px;
+    margin:١٠px;
+}
+.plates{
+    display:flex;
+    justify-content:space-around;
+    margin-top:٢٠px;
+}
+.plate{
+    width:١٤٠px;
+    height:١٤٠px;
+    border:٢px solid #١f٤a٨a;
+    border-radius:١٢px;
+    padding:٥px;
+    background:#fafafa;
+}
+.plate h3{
+    margin:٥px ٠;
+}
+.result{
+    margin-top:٢٠px;
+    font-size:٢٠px;
+    color:#٢d٧a٢d;
+    display:none;
+}
+button{
+    margin-top:٢٠px;
+    padding:١٠px ٢٠px;
+    font-size:١٨px;
+    background:#١f٤a٨a;
+    color:white;
+    border:none;
+    border-radius:٨px;
+    cursor:pointer;
+}
+button:hover{
+    background:#١٧٣٨٦a;
+}
+</style>
 </head>
+
 <body>
+<div class="container">
 
-  <main class="container">
+<h1>مفهوم القسمة</h1>
 
-    <!-- القسم الأول -->
-    <section>
-      <h3>هدف واحد</h3>
-      <p>تكوين جملة جمع صحيحة ضمن العدد ١٨ بهدوء.</p>
-    </section>
+<div class="instructions">
+<p><strong>هيا نتعلّم معًا:</strong></p>
+<p>لدينا <strong>٨ تفّاحات</strong> ونريد توزيعها بالتساوي على <strong>٤ صحون</strong>.</p>
+<p>فكّر: كم تفاحة في كل صحن؟</p>
+</div>
 
-    <!-- القسم الثاني -->
-    <section>
-      <h3>مهمة واحدة</h3>
-      <p>أُكوِّن عشرة أولًا، ثم أُضيف الباقي خطوة خطوة.</p>
-    </section>
+<div class="activity">
+<div class="items">
+🍎 🍎 🍎 🍎 🍎 🍎 🍎 🍎
+</div>
 
-    <!-- القسم الثالث -->
-    <section>
-      <h3>إغلاق</h3>
-      <p>بعد إكمال جملة جمع واحدة فقط، أتوقّف.</p>
-    </section>
+<div class="plates">
+<div class="plate"><h3>صحن ١</h3><div class="content"></div></div>
+<div class="plate"><h3>صحن ٢</h3><div class="content"></div></div>
+<div class="plate"><h3>صحن ٣</h3><div class="content"></div></div>
+<div class="plate"><h3>صحن ٤</h3><div class="content"></div></div>
+</div>
 
-    <button onclick="void(0)">ابدأ بهدوء</button>
+<button onclick="divide()">قسّم بالتساوي</button>
 
-  </main>
+<div class="result" id="result">
+✨ أحسنت!  
+<p>٨ ÷ ٤ = ٢</p>
+<p>في كل صحن <strong>تفاحتان</strong>.</p>
+</div>
+</div>
 
-  <div style="display:none">HTML FAIL‑CLOSED VALIDATOR</div>
+</div>
+
+<script>
+function divide(){
+    const plates=document.querySelectorAll('.plate .content');
+    plates.forEach(p=>p.innerHTML="");
+
+    for(let i=٠;i<plates.length;i++){
+        plates[i].innerHTML="🍎 🍎";
+    }
+
+    document.getElementById("result").style.display="block";
+}
+</script>
 
 </body>
 </html>
