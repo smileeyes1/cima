@@ -1,163 +1,123 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar">
 <head>
-<meta charset="UTF-8">
-<title>مفهوم القسمة – الصف الثاني</title>
+  <meta charset="UTF-8">
+  <title>محاكاة حصص رياضيات الصف الأول</title>
 
-<style>
-body{
-  margin:0;
-  font-family:"Arial", sans-serif;
-  background:#eef5f3;
-}
+  <!-- مكتبة ZIP -->
+  https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.jsscript>
+  <!-- مكتبة حفظ الملفات -->
+  https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.jsscript>
 
-/* ===== واجهة الطالب ===== */
-.stage{
-  max-width:٨٠٠px;
-  margin:٣٠px auto;
-  background:#ffffff;
-  border-radius:١٦px;
-  padding:٣٠px;
-  text-align:center;
-}
-
-.scene{
-  margin-top:٤٠px;
-}
-
-.apple{
-  font-size:٧٠px;
-  margin-bottom:٢٠px;
-}
-
-.plates{
-  display:flex;
-  justify-content:space-between;
-  margin-top:٢٠px;
-}
-
-.plate{
-  width:١٤٠px;
-  height:١٠٠px;
-  border:٣px solid #4caf50;
-  border-radius:١٢px;
-  font-size:٤٠px;
-  line-height:٨٠px;
-}
-
-/* زر التقدّم – غير دلالي */
-.next-area{
-  margin-top:٤٠px;
-}
-
-.next-btn{
-  width:١٠٠px;
-  height:١٠٠px;
-  border-radius:٥٠%;
-  border:none;
-  background:#cfe8ff;
-  opacity:0.6;
-  font-size:٣٦px;
-}
-
-/* ===== لوحة المعلّم ===== */
-.teacher-panel{
-  display:none;
-  max-width:٨٠٠px;
-  margin:٣٠px auto;
-  background:#fff3e0;
-  border:٣px solid #ff9800;
-  border-radius:١٦px;
-  padding:٢٤px;
-  font-size:١٨px;
-  line-height:١.٨;
-}
-</style>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      direction: rtl;
+      text-align: right;
+      padding: 20px;
+      background-color: #f4f6f7;
+    }
+    h2 {
+      color: #2e7d32;
+    }
+    button {
+      font-size: 18px;
+      padding: 14px 24px;
+      background-color: #2e7d32;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #1b5e20;
+    }
+    p {
+      margin-bottom: 16px;
+    }
+  </style>
 </head>
 
 <body>
 
-<!-- ===== واجهة الطالب ===== -->
-<div class="stage">
+<h2>📘 محاكاة حصص رياضيات (1)</h2>
+<p>خطة واقعية كاملة لكل دروس الصف الأول – مناسبة للمعلم الفلسطيني</p>
 
-  <div class="scene">
-    <div class="apple" id="apple">🍎</div>
-
-    <div class="plates">
-      <div class="plate" id="p0"></div>
-      <div class="plate" id="p1"></div>
-      <div class="plate" id="p2"></div>
-      <div class="plate" id="p3"></div>
-    </div>
-  </div>
-
-  <div class="next-area">
-    <button class="next-btn" onclick="nextStep()">▶</button>
-  </div>
-
-</div>
-
-<!-- ===== لوحة المعلّم ===== -->
-<div class="teacher-panel" id="teacherPanel">
-
-الدرس: مفهوم القسمة  
-الصف: الثاني الأساسي  
-المرجع: كتاب الرياضيات – وزارة التربية والتعليم الفلسطينية (غزة)
-
-────────────
-الهدف:
-تقسيم مجموعة إلى مجموعات متساوية.
-
-────────────
-السيناريو الزمني:
-وجاهي: ٤٠ دقيقة  
-Teams: ٦٠ دقيقة
-
-────────────
-كلام المعلّم (حرفيًا):
-- انظر إلى التفاحة.
-- إلى أي صحن ستذهب؟
-- هل كل صحن أخذ تفاحة؟
-
-────────────
-استشعار وتصحيح:
-١) وضع تفاحتين في صحن واحد → إزالة واحدة فورًا.  
-٢) نسيان صحن → عدّ الصحون بصوت جماعي.  
-٣) استعجال النتيجة → العودة للحركة البطيئة.
-
-────────────
-الإغلاق:
-٦ مكعبات ÷ ٣ مجموعات = ٢
-
-</div>
+<button onclick="generateZip()">إنشاء وتنزيل ملف ZIP</button>
 
 <script>
-let apples = ٨;
-let plates = [0,0,0,0];
-let index = 0;
-let pressCount = 0;
-let sequenceCount = 0;
+function lessonTemplate(title) {
+  return `
+# ${title}
 
-function nextStep(){
-  // عدّ الضغطات لدخول المعلّم
-  pressCount++;
-  if(pressCount === ٧){
-    document.getElementById("teacherPanel").style.display = "block";
+## الهدف السلوكي
+أن يتعرّف الطالب على مفهوم الدرس ويطبّقه في مواقف حياتية بسيطة من واقعه.
+
+## التمهيد
+حوار قصير من البيئة الفلسطينية (الصف، البيت، الشارع، الأسرة).
+
+## خطوات الشرح
+1. مناقشة شفوية بأسئلة بسيطة.
+2. استخدام المحسوسات (الأصابع، الحجارة، الأقلام).
+3. تطبيق جماعي مع الطلاب.
+
+## نشاط صفّي
+نشاط حركي أو تمثيلي لا يحتاج وسائل أو أوراق.
+
+## التقويم
+سؤال شفوي + مثال تطبيقي سريع.
+
+## واجب منزلي
+مهمة خفيفة من واقع حياة الطالب اليومية.
+`;
+}
+
+function generateZip() {
+  const zip = new JSZip();
+  let lessonNo = 1;
+
+  const units = {
+    "الوحدة_الأولى": [
+      "العدد واحد","العدد اثنان","العدد ثلاثة","العدد أربعة","العدد خمسة",
+      "العدد ستة","العدد سبعة","العدد ثمانية","العدد تسعة",
+      "مقارنة عددين","الترتيب التصاعدي","الترتيب التنازلي",
+      "العدد التالي","العدد السابق","العدد الترتيبي"
+    ],
+    "الوحدة_الثانية": [
+      "الصفر","مكونات الأعداد (أولاً)","مكونات الأعداد (ثانياً)",
+      "الجمع ضمن 9","الطرح ضمن 9","العلاقة بين الجمع والطرح",
+      "العدد 10","الأعداد 11–19","العدد 20"
+    ],
+    "الوحدة_الثالثة": [
+      "العدد التالي","العدد السابق","المقارنة بين عددين",
+      "الترتيب التصاعدي","الترتيب التنازلي",
+      "القيمة المنزلية","الصورة الموسعة",
+      "الجمع ضمن 10","الجمع ضمن 18 (أولاً)","الجمع ضمن 18 (ثانياً)"
+    ],
+    "الوحدة_الرابعة": [
+      "الطرح ضمن 10","الطرح ضمن 18 (أولاً)","الطرح ضمن 18 (ثانياً)","الطرح ضمن 18 (ثالثاً)",
+      "الأعداد 21–29","تمثيل الأعداد","الأعداد 30–99",
+      "مضاعفات العشرة","الخط المستقيم والمنحني",
+      "الأشكال الهندسية","المجسمات","أجزاء الشكل (نصف – ربع)"
+    ]
+  };
+
+  for (const unit in units) {
+    const folder = zip.folder(unit);
+    units[unit].forEach(title => {
+      folder.file(`درس_${lessonNo}_${title}.md`, lessonTemplate(title));
+      lessonNo++;
+    });
   }
 
-  // منطق القسمة
-  if(apples > 0){
-    document.getElementById("p"+index).innerHTML += "🍎";
-    plates[index]++;
-    apples--;
-    index = (index + 1) % ٤;
-  }else{
-    document.getElementById("apple").innerHTML = "٨ ÷ ٤ = ٢";
-  }
+  zip.file(
+    "README.md",
+    "محاكاة صفية كاملة لجميع دروس رياضيات الصف الأول وفق المنهاج الفلسطيني."
+  );
 
-  // إعادة ضبط العدّ إذا توقّف التتابع
-  clearTimeout(window.resetTimer);
-  window.resetTimer = setTimeout(() => { pressCount = 0; }, ٢٠٠٠);
+  zip.generateAsync({type:"blob"}).then(blob => {
+    saveAs(blob, "Math1_All_Lessons_Simulation.zip");
+  });
 }
 </script>
 
