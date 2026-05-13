@@ -1,100 +1,225 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>تصحيح اتجاه النص</title>
+
+<title>مصحح النص العربي للطباعة</title>
 
 <style>
-body{
-    font-family: Arial;
-    background:#0f0f0f;
-    color:#fff;
-    margin:0;
-    padding:15px;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
+*{
+    box-sizing:border-box;
 }
 
-h2{
-    margin-bottom:10px;
-    color:#00ffc8;
+body{
+    margin:0;
+    padding:20px;
+    background:#101114;
+    color:white;
+    font-family:Arial,sans-serif;
+}
+
+.container{
+    max-width:900px;
+    margin:auto;
+}
+
+h1{
+    text-align:center;
+    color:#00ffd0;
+    margin-bottom:20px;
 }
 
 textarea{
-    width:95%;
-    height:160px;
-    font-size:18px;
-    padding:10px;
-    direction:rtl;
-    text-align:right;
-    border-radius:10px;
+    width:100%;
+    height:250px;
+    resize:none;
     border:none;
     outline:none;
+    border-radius:14px;
+    padding:15px;
+    font-size:20px;
+    line-height:1.8;
+    background:#1b1d22;
+    color:white;
+    direction:rtl;
+    text-align:right;
+}
+
+.buttons{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-top:15px;
 }
 
 button{
-    margin-top:10px;
-    padding:10px 15px;
+    flex:1;
+    min-width:140px;
+    padding:14px;
     border:none;
-    border-radius:8px;
-    background:#00ffc8;
-    color:#000;
+    border-radius:12px;
+    font-size:16px;
     font-weight:bold;
     cursor:pointer;
+    transition:0.2s;
+}
+
+button:hover{
+    transform:scale(1.02);
+}
+
+.fix{
+    background:#00ffd0;
+    color:black;
+}
+
+.copy{
+    background:#3a86ff;
+    color:white;
+}
+
+.print{
+    background:#ffb703;
+    color:black;
+}
+
+.clear{
+    background:#ef233c;
+    color:white;
 }
 
 .output{
-    width:95%;
-    min-height:120px;
-    margin-top:10px;
-    background:#1e1e1e;
-    padding:10px;
-    border-radius:10px;
+    margin-top:20px;
+    background:#1b1d22;
+    border-radius:14px;
+    padding:20px;
+    min-height:220px;
+    font-size:20px;
+    line-height:1.9;
     direction:rtl;
     text-align:right;
     white-space:pre-wrap;
+    overflow-wrap:break-word;
 }
 
-.small{
-    font-size:12px;
+.info{
+    text-align:center;
+    margin-top:15px;
     opacity:0.7;
-    margin-top:5px;
+    font-size:14px;
+}
+
+@media print{
+
+    body{
+        background:white;
+        color:black;
+    }
+
+    textarea,
+    .buttons,
+    .info,
+    h1{
+        display:none;
+    }
+
+    .output{
+        background:white;
+        color:black;
+        border:none;
+        box-shadow:none;
+        font-size:22px;
+        line-height:2;
+    }
 }
 </style>
 </head>
 
 <body>
 
-<h2>أداة تصحيح اتجاه النص العربي</h2>
+<div class="container">
 
-<textarea id="input" placeholder="اكتب أو الصق النص هنا..."></textarea>
+<h1>مصحح النص العربي للطباعة</h1>
 
-<button onclick="fixText()">تصحيح</button>
-<button onclick="copyText()">نسخ</button>
+<textarea id="input"
+placeholder="الصق النص هنا..."></textarea>
+
+<div class="buttons">
+
+<button class="fix" onclick="fixText()">
+تصحيح النص
+</button>
+
+<button class="copy" onclick="copyText()">
+نسخ
+</button>
+
+<button class="print" onclick="printText()">
+تحويل للطباعة
+</button>
+
+<button class="clear" onclick="clearAll()">
+مسح
+</button>
+
+</div>
 
 <div class="output" id="output"></div>
 
-<div class="small">تعمل بدون إنترنت بعد الفتح</div>
+<div class="info">
+جاهز للطباعة المباشرة بصيغة RTL عربية صحيحة
+</div>
+
+</div>
 
 <script>
-function fixText(){
-    let text = document.getElementById("input").value;
 
-    const RTL = "\u200F"; // علامة RTL
+function fixText(){
+
+    let text =
+    document.getElementById("input").value;
+
+    const RTL = "\u200F";
 
     let fixed = RTL + text;
-    fixed = fixed.replace(/\n/g, "\n" + RTL);
 
-    document.getElementById("output").innerText = fixed;
+    fixed =
+    fixed.replace(/\n/g,"\n"+RTL);
+
+    fixed =
+    fixed.replace(/ +/g," ");
+
+    document.getElementById("output")
+    .innerText = fixed;
 }
 
 function copyText(){
-    let text = document.getElementById("output").innerText;
+
+    let text =
+    document.getElementById("output")
+    .innerText;
+
     navigator.clipboard.writeText(text);
+
     alert("تم النسخ");
 }
+
+function printText(){
+
+    fixText();
+
+    setTimeout(()=>{
+        window.print();
+    },300);
+}
+
+function clearAll(){
+
+    document.getElementById("input").value="";
+    document.getElementById("output").innerText="";
+}
+
 </script>
 
 </body>
