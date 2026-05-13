@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>مصحح النص العربي</title>
+<title>لوحة تحكم Gemini</title>
 
 <style>
 
@@ -17,7 +17,7 @@ body{
 }
 
 .container{
-    max-width:900px;
+    max-width:800px;
     margin:auto;
 }
 
@@ -49,7 +49,7 @@ textarea{
 
 button{
     flex:1;
-    min-width:140px;
+    min-width:150px;
     padding:12px;
     border:none;
     border-radius:10px;
@@ -57,49 +57,21 @@ button{
     cursor:pointer;
 }
 
-.fix{background:#00ffd0;color:black;}
-.copy{background:#3a86ff;color:white;}
-.share{background:#8338ec;color:white;}
-.print{background:#ffb703;color:black;}
-.clear{background:#ef233c;color:white;}
-
-/* 🔷 منطقة الورقة (المصدر الوحيد للنسخ والطباعة) */
-#printArea{
-    margin-top:20px;
-    padding:15px;
-    background:#1c1f26;
-    border-radius:12px;
-    min-height:150px;
-    white-space:pre-wrap;
-    direction:rtl;
-    text-align:right;
+.send{
+    background:#00ffd0;
+    color:black;
 }
 
-/* 🔷 طباعة نظيفة */
-@media print {
+.clear{
+    background:#ef233c;
+    color:white;
+}
 
-    body{
-        background:white !important;
-        color:black !important;
-    }
-
-    h1,
-    textarea,
-    .buttons{
-        display:none !important;
-    }
-
-    #printArea{
-        background:white !important;
-        color:black !important;
-        border:none !important;
-        font-size:22px;
-        line-height:2.2;
-    }
-
-    @page{
-        margin:1.5cm;
-    }
+.info{
+    margin-top:15px;
+    text-align:center;
+    opacity:0.7;
+    font-size:14px;
 }
 
 </style>
@@ -109,84 +81,48 @@ button{
 
 <div class="container">
 
-<h1>مصحح النص العربي</h1>
+<h1>لوحة تحكم Gemini</h1>
 
-<textarea id="input" placeholder="اكتب أو الصق النص هنا..."></textarea>
+<textarea id="input" placeholder="اكتب تعليماتك أو نصك هنا..."></textarea>
 
 <div class="buttons">
 
-<button class="fix" onclick="fixText()">تصحيح</button>
-<button class="copy" onclick="copyText()">نسخ</button>
-<button class="share" onclick="shareText()">مشاركة</button>
-<button class="print" onclick="printText()">طباعة</button>
-<button class="clear" onclick="clearAll()">مسح</button>
+<button class="send" onclick="sendToGemini()">
+إرسال إلى Gemini
+</button>
+
+<button class="clear" onclick="clearText()">
+مسح
+</button>
 
 </div>
 
-<div id="printArea"></div>
+<div class="info">
+سيتم نسخ النص تلقائيًا وفتح Gemini
+</div>
 
 </div>
 
 <script>
 
-function fixText(){
+function sendToGemini(){
 
     let text = document.getElementById("input").value;
 
     if(!text){
-        alert("أدخل نص أولاً");
+        alert("اكتب شيئًا أولاً");
         return;
     }
 
-    const RTL = "\u200F";
-
-    let fixed = RTL + text;
-    fixed = fixed.replace(/\n/g, "\n" + RTL);
-
-    document.getElementById("printArea").innerText = fixed;
-}
-
-function copyText(){
-
-    let text = document.getElementById("printArea").innerText;
-
-    if(!text){
-        alert("لا يوجد نص");
-        return;
-    }
-
+    // نسخ النص
     navigator.clipboard.writeText(text);
-    alert("تم النسخ");
+
+    // فتح Gemini
+    window.open("https://gemini.google.com", "_blank");
 }
 
-function shareText(){
-
-    let text = document.getElementById("printArea").innerText;
-
-    if(!text){
-        alert("لا يوجد نص للمشاركة");
-        return;
-    }
-
-    if(navigator.share){
-
-        navigator.share({
-            title: "نص مصحح",
-            text: text
-        });
-
-    }else{
-        alert("المشاركة غير مدعومة");
-    }
-}
-
-function printText(){
-    window.print();
-}
-
-function clearAll(){
+function clearText(){
     document.getElementById("input").value = "";
-    document.getElementById("printArea").innerText = "";
 }
 
 </script>
