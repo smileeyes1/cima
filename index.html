@@ -7,6 +7,7 @@
 <title>مصحح النص العربي</title>
 
 <style>
+
 body{
     margin:0;
     padding:20px;
@@ -58,8 +59,8 @@ button{
 
 .fix{background:#00ffd0;color:black;}
 .copy{background:#3a86ff;color:white;}
-.print{background:#ffb703;color:black;}
 .share{background:#8338ec;color:white;}
+.print{background:#ffb703;color:black;}
 .clear{background:#ef233c;color:white;}
 
 .output{
@@ -71,6 +72,29 @@ button{
     white-space:pre-wrap;
     direction:rtl;
     text-align:right;
+}
+
+/* 🔷 طباعة نظيفة */
+@media print {
+
+    body{
+        background:white !important;
+        color:black !important;
+    }
+
+    h1,
+    textarea,
+    .buttons{
+        display:none !important;
+    }
+
+    .output{
+        background:white !important;
+        color:black !important;
+        border:none !important;
+        font-size:22px;
+        line-height:2;
+    }
 }
 
 </style>
@@ -107,17 +131,21 @@ function fixText(){
     const RTL = "\u200F";
 
     let fixed = RTL + text;
-    fixed = fixed.replace(/\n/g,"\n"+RTL);
+    fixed = fixed.replace(/\n/g, "\n" + RTL);
 
     document.getElementById("output").innerText = fixed;
 }
 
 function copyText(){
 
-    navigator.clipboard.writeText(
-        document.getElementById("output").innerText
-    );
+    let text = document.getElementById("output").innerText;
 
+    if(!text){
+        alert("لا يوجد نص");
+        return;
+    }
+
+    navigator.clipboard.writeText(text);
     alert("تم النسخ");
 }
 
@@ -130,7 +158,6 @@ function shareText(){
         return;
     }
 
-    // مشاركة النظام (Android / iOS / WebView)
     if(navigator.share){
 
         navigator.share({
@@ -139,19 +166,25 @@ function shareText(){
         });
 
     }else{
-
-        alert("المشاركة غير مدعومة في هذا المتصفح");
-
+        alert("المشاركة غير مدعومة");
     }
 }
 
 function printText(){
+
+    let text = document.getElementById("output").innerText;
+
+    if(!text){
+        alert("لا يوجد نص للطباعة");
+        return;
+    }
+
     window.print();
 }
 
 function clearAll(){
-    document.getElementById("input").value="";
-    document.getElementById("output").innerText="";
+    document.getElementById("input").value = "";
+    document.getElementById("output").innerText = "";
 }
 
 </script>
