@@ -63,7 +63,8 @@ button{
 .print{background:#ffb703;color:black;}
 .clear{background:#ef233c;color:white;}
 
-.output{
+/* 🔷 منطقة الورقة (المصدر الوحيد للنسخ والطباعة) */
+#printArea{
     margin-top:20px;
     padding:15px;
     background:#1c1f26;
@@ -88,12 +89,16 @@ button{
         display:none !important;
     }
 
-    .output{
+    #printArea{
         background:white !important;
         color:black !important;
         border:none !important;
         font-size:22px;
-        line-height:2;
+        line-height:2.2;
+    }
+
+    @page{
+        margin:1.5cm;
     }
 }
 
@@ -118,7 +123,7 @@ button{
 
 </div>
 
-<div class="output" id="output"></div>
+<div id="printArea"></div>
 
 </div>
 
@@ -128,17 +133,22 @@ function fixText(){
 
     let text = document.getElementById("input").value;
 
+    if(!text){
+        alert("أدخل نص أولاً");
+        return;
+    }
+
     const RTL = "\u200F";
 
     let fixed = RTL + text;
     fixed = fixed.replace(/\n/g, "\n" + RTL);
 
-    document.getElementById("output").innerText = fixed;
+    document.getElementById("printArea").innerText = fixed;
 }
 
 function copyText(){
 
-    let text = document.getElementById("output").innerText;
+    let text = document.getElementById("printArea").innerText;
 
     if(!text){
         alert("لا يوجد نص");
@@ -151,7 +161,7 @@ function copyText(){
 
 function shareText(){
 
-    let text = document.getElementById("output").innerText;
+    let text = document.getElementById("printArea").innerText;
 
     if(!text){
         alert("لا يوجد نص للمشاركة");
@@ -171,20 +181,12 @@ function shareText(){
 }
 
 function printText(){
-
-    let text = document.getElementById("output").innerText;
-
-    if(!text){
-        alert("لا يوجد نص للطباعة");
-        return;
-    }
-
     window.print();
 }
 
 function clearAll(){
     document.getElementById("input").value = "";
-    document.getElementById("output").innerText = "";
+    document.getElementById("printArea").innerText = "";
 }
 
 </script>
