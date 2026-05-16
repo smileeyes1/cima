@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>محرك أوراق العمل الفلسطيني - الجيل الاحترافي</title>
+<title>مولد أوراق العمل</title>
 
 <style>
 
@@ -21,107 +21,83 @@ body{
   background:#eef2f1;
 }
 
-/* إجبار الطباعة على إظهار كل شيء */
-*{
-  -webkit-print-color-adjust: exact !important;
-  print-color-adjust: exact !important;
-}
-
 /* =========================
-   لوحة التحكم (لا تطبع)
+   لوحة التحكم (تظهر دائمًا)
 ========================= */
 
 .panel{
-  position:fixed;
-  right:0;
-  top:0;
-  width:330px;
-  height:100vh;
-  background:#fff;
+  background:#ffffff;
   padding:15px;
-  overflow:auto;
-  box-shadow:-4px 0 15px rgba(0,0,0,0.12);
+  border-bottom:3px solid #2e7d32;
 }
 
 .panel h2{
-  margin-top:0;
+  margin:0 0 10px 0;
   color:#1b5e20;
-  font-size:18px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
 }
 
 label{
-  display:block;
-  margin-top:10px;
+  font-size:12px;
   font-weight:bold;
-  font-size:13px;
+  display:block;
+  margin-top:8px;
 }
 
 input,select{
   width:100%;
-  padding:9px;
-  margin-top:5px;
-  border-radius:8px;
+  padding:8px;
   border:1px solid #ccc;
+  border-radius:8px;
+}
+
+/* أزرار */
+.actions{
+  display:flex;
+  gap:10px;
+  margin-top:12px;
 }
 
 button{
-  width:100%;
-  margin-top:10px;
-  padding:11px;
+  flex:1;
+  padding:10px;
   border:none;
   border-radius:10px;
   font-weight:bold;
   cursor:pointer;
 }
 
-.gen{background:#2e7d32;color:#fff;}
-.prt{background:#1565c0;color:#fff;}
+.print{
+  background:#1565c0;
+  color:white;
+}
+
+.generate{
+  background:#2e7d32;
+  color:white;
+}
 
 /* =========================
-   صفحة A4 (نظام ثابت)
+   صفحة A4
 ========================= */
 
 .page{
   width:210mm;
   min-height:297mm;
+  margin:20px auto;
   background:white;
-  margin:10px auto;
-  margin-right:350px;
   padding:10mm;
-  position:relative;
-  overflow:hidden;
-}
-
-/* هوية خفيفة */
-.page::before,
-.page::after{
-  content:"";
-  position:absolute;
-  border-radius:50%;
-  opacity:0.05;
-}
-
-.page::before{
-  width:180px;height:180px;
-  background:#2e7d32;
-  top:-60px;left:-60px;
-}
-
-.page::after{
-  width:200px;height:200px;
-  background:#1565c0;
-  bottom:-70px;right:-70px;
+  box-shadow:0 0 10px rgba(0,0,0,0.1);
 }
 
 /* =========================
-   الترويسة (مضغوطة احترافية)
+   الترويسة
 ========================= */
-
-.header{
-  border-bottom:2px solid #2e7d32;
-  padding-bottom:6px;
-  margin-bottom:10px;
-}
 
 .title{
   text-align:center;
@@ -135,7 +111,7 @@ button{
   grid-template-columns:repeat(3,1fr);
   gap:6px;
   font-size:11px;
-  margin-top:8px;
+  margin-top:10px;
 }
 
 .meta div{
@@ -146,27 +122,32 @@ button{
 }
 
 /* =========================
-   السؤال
+   الأسئلة
 ========================= */
 
 .q{
   border:1px solid #cfd8dc;
   padding:8px;
+  margin-top:10px;
   border-radius:10px;
-  margin-top:8px;
-  page-break-inside:avoid;
 }
 
-.qn{
-  font-size:12px;
-  font-weight:bold;
-  color:#1565c0;
+.math{
+  display:flex;
+  justify-content:center;
+  gap:8px;
+  font-size:18px;
+  margin-top:6px;
 }
 
-/* =========================
-   أشكال مضمونة الطباعة
-========================= */
+.answer{
+  width:45px;
+  height:30px;
+  border:2px dashed #555;
+  border-radius:6px;
+}
 
+/* أشكال مضمونة الطباعة */
 .dot{
   width:14px;
   height:14px;
@@ -176,35 +157,8 @@ button{
   margin:2px;
 }
 
-.box{
-  width:12px;
-  height:12px;
-  border:2px solid #90caf9;
-  display:inline-block;
-  margin:2px;
-}
-
 /* =========================
-   معادلة
-========================= */
-
-.math{
-  display:flex;
-  justify-content:center;
-  gap:6px;
-  font-size:18px;
-  margin-top:6px;
-}
-
-.answer{
-  width:45px;
-  height:32px;
-  border:2px dashed #555;
-  border-radius:6px;
-}
-
-/* =========================
-   الطباعة (فصل كامل)
+   الطباعة (هنا الحل الحقيقي)
 ========================= */
 
 @media print{
@@ -214,13 +168,11 @@ button{
   }
 
   body{
-    margin:0;
+    background:white;
   }
 
   .page{
     margin:0;
-    width:210mm;
-    min-height:297mm;
     box-shadow:none;
   }
 }
@@ -236,51 +188,65 @@ button{
 <body>
 
 <!-- =========================
-   لوحة التحكم (إدخال فقط)
+   لوحة التحكم (أساسية)
 ========================= -->
 
 <div class="panel">
 
 <h2>لوحة التحكم</h2>
 
+<div class="grid">
+
+<div>
 <label>اسم الدرس</label>
 <input id="lesson" value="الجمع ضمن ١٠">
+</div>
 
-<label>اسم المدرسة</label>
-<input id="school" value="مدرسة فلسطين الأساسية">
+<div>
+<label>المدرسة</label>
+<input id="school" value="مدرسة فلسطين">
+</div>
 
+<div>
 <label>المديرية</label>
 <input id="directorate" value="مديرية نابلس">
+</div>
 
+<div>
 <label>الصف</label>
 <select id="grade">
 <option>الأول</option>
 <option selected>الثاني</option>
 <option>الثالث</option>
 </select>
+</div>
 
-<label>اسم المعلم</label>
+<div>
+<label>المعلم</label>
 <input id="teacher" value="الأستاذ محمد">
+</div>
 
+<div>
 <label>عدد الأسئلة</label>
-<input id="count" type="number" value="12" min="4" max="20">
+<input id="count" type="number" value="10">
+</div>
 
-<button class="gen" onclick="generate()">توليد الورقة</button>
-<button class="prt" onclick="window.print()">طباعة</button>
+</div>
+
+<div class="actions">
+<button class="generate" onclick="generate()">توليد</button>
+<button class="print" onclick="window.print()">طباعة</button>
+</div>
 
 </div>
 
 <!-- =========================
-   مخرج الورقة
+   الورقة
 ========================= -->
 
 <div id="out"></div>
 
 <script>
-
-/* =========================
-   أرقام شرقية
-========================= */
 
 function ar(n){
   return n.toString().replace(/[0-9]/g,d=>
@@ -288,33 +254,23 @@ function ar(n){
   );
 }
 
-/* =========================
-   عشوائي
-========================= */
-
 function r(a,b){
   return Math.floor(Math.random()*(b-a+1))+a;
 }
-
-/* =========================
-   سؤال تربوي
-========================= */
 
 function q(i){
 
   let a=r(0,10);
   let b=r(0,10-a);
 
-  let dotsA = Array(a).fill('<span class="dot"></span>').join('');
-  let dotsB = Array(b).fill('<span class="box"></span>').join('');
-
   return `
   <div class="q">
 
-    <div class="qn">السؤال ${ar(i)}</div>
+    <b>السؤال ${ar(i)}</b>
 
-    <div>${dotsA}</div>
-    <div>${dotsB}</div>
+    <div style="text-align:center;margin-top:6px">
+      ${Array(a).fill('<span class="dot"></span>').join('')}
+    </div>
 
     <div class="math">
       <span>${ar(a)}</span>
@@ -328,10 +284,6 @@ function q(i){
   `;
 }
 
-/* =========================
-   توليد الورقة (Model داخل دالة)
-========================= */
-
 function generate(){
 
   const lesson=document.getElementById("lesson").value;
@@ -344,21 +296,15 @@ function generate(){
   let html=`
   <div class="page">
 
-    <div class="header">
+    <div class="title">${lesson}</div>
 
-      <div class="title">${lesson}</div>
-
-      <div class="meta">
-
-        <div>المدرسة: ${school}</div>
-        <div>المديرية: ${directorate}</div>
-        <div>الصف: ${grade}</div>
-        <div>المعلم: ${teacher}</div>
-        <div>الهدف: مهارة الجمع</div>
-        <div>الزمن: 40 دقيقة</div>
-
-      </div>
-
+    <div class="meta">
+      <div>المدرسة: ${school}</div>
+      <div>المديرية: ${directorate}</div>
+      <div>الصف: ${grade}</div>
+      <div>المعلم: ${teacher}</div>
+      <div>هدف: مهارة الجمع</div>
+      <div>زمن: 40 دقيقة</div>
     </div>
   `;
 
@@ -371,7 +317,6 @@ function generate(){
   document.getElementById("out").innerHTML=html;
 }
 
-/* تشغيل افتراضي */
 generate();
 
 </script>
