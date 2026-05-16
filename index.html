@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>نظام أوراق العمل المدرسي المتكامل</title>
+<title>نظام أوراق العمل المدرسي النهائي</title>
 
 <style>
 
@@ -12,7 +12,6 @@
   --bg:#f6f8fc;
   --border:#e0e3e7;
   --soft:#f1f3f4;
-  --text:#1f1f1f;
   --muted:#5f6368;
 }
 
@@ -52,6 +51,16 @@ input,select{
   border-radius:10px;
 }
 
+button{
+  margin-top:10px;
+  padding:10px 14px;
+  border:none;
+  border-radius:10px;
+  background:var(--primary);
+  color:white;
+  cursor:pointer;
+}
+
 /* ================= الصفحة ================= */
 
 .page{
@@ -62,20 +71,15 @@ input,select{
   padding:16mm;
 }
 
-/* ================= السؤال ================= */
-
-.q{
-  margin-top:14px;
-  padding:14px;
-  border:1px solid var(--border);
-  border-radius:12px;
-}
+/* ================= العنوان ================= */
 
 .title{
   text-align:center;
   font-size:22px;
   font-weight:600;
 }
+
+/* ================= الهيدر ================= */
 
 .meta{
   display:grid;
@@ -91,11 +95,26 @@ input,select{
   font-size:11px;
 }
 
+/* ================= الطالب ================= */
+
 .student{
   margin-top:10px;
   padding:10px;
   background:var(--soft);
   border-radius:10px;
+  display:grid;
+  grid-template-columns:2fr 1fr 1fr 1fr;
+  gap:8px;
+  font-size:11px;
+}
+
+/* ================= السؤال ================= */
+
+.q{
+  margin-top:14px;
+  padding:14px;
+  border:1px solid var(--border);
+  border-radius:12px;
 }
 
 .qh{
@@ -128,12 +147,36 @@ input,select{
   border-radius:8px;
 }
 
-/* ================= الطباعة ================= */
+/* ================= الطباعة (Compact Header) ================= */
 
 @media print{
+
   .panel{display:none;}
   body{background:white;}
   .page{margin:0;border:none;}
+
+  .title{
+    font-size:16px;
+    margin:0;
+  }
+
+  .meta{
+    grid-template-columns:repeat(5,1fr);
+    gap:4px;
+    margin-top:6px;
+  }
+
+  .meta div{
+    padding:4px;
+    font-size:10px;
+  }
+
+  .student{
+    grid-template-columns:2fr 1fr 1fr 1fr;
+    padding:6px;
+    margin-top:6px;
+    font-size:10px;
+  }
 }
 
 @page{
@@ -150,7 +193,7 @@ input,select{
 
 <div class="panel">
 
-<h3>نظام أوراق العمل المدرسي المتكامل</h3>
+<h3>النظام المدرسي النهائي لأوراق العمل</h3>
 
 <div class="grid">
 
@@ -195,7 +238,9 @@ input,select{
 <div><label>اسم المعلم</label><input id="teacher"></div>
 <div><label>اسم المدرسة</label><input id="school"></div>
 <div><label>المديرية</label><input id="directorate"></div>
-<div><label>الصف</label>
+
+<div>
+<label>الصف</label>
 <select id="grade">
 <option value="1">الأول</option>
 <option value="2">الثاني</option>
@@ -332,7 +377,7 @@ function visual(d,l){
 
   if(l==1){
     if(d.type==="count") return "🍎 ".repeat(Math.min(d.a,15));
-    if(d.type==="add") return "🍎🍎🍎 + 🍌🍌";
+    if(d.type==="add") return "🍎🍎 + 🍌🍌";
     if(d.type==="sub") return "🍎🍎🍎 - 🍎🍎";
   }
 
@@ -366,7 +411,7 @@ function render(d,i,l){
     math=`${ar(d.a)} <span class="box"></span> ${ar(d.b)}`;
 
   if(d.type==="order")
-    math=`${ar(d.a)} , ${ar(d.b)} , ${ar(d.c)}<br><br>□ □ □`;
+    math=`${ar(d.a)} , ${ar(d.b)} , ${ar(d.c)}<br>□ □ □`;
 
   if(d.type==="count")
     math=`كم العدد؟ <span class="box"></span>`;
@@ -423,9 +468,9 @@ function build(){
 
     <div class="student">
       <div>اسم الطالب: ____________________</div>
-      <div style="margin-top:6px">
-        الصف: ${grade} | الشعبة: ${section} | التاريخ: ${date}
-      </div>
+      <div>الصف: ${grade}</div>
+      <div>الشعبة: ${section}</div>
+      <div>التاريخ: ${date}</div>
     </div>
   `;
 
