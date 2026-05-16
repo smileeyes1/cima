@@ -204,17 +204,23 @@
         background: white;
       }
 
-      .panel {
-        display: none;
+      .panel,
+      header {
+        display: none !important;
       }
 
       .container {
-        grid-template-columns: 1fr;
+        display: block;
         margin: 0;
+        padding: 0;
         max-width: 100%;
       }
 
       .worksheet {
+        width: 210mm;
+        min-height: 297mm;
+        margin: 0;
+        padding: 12mm;
         box-shadow: none;
         border-radius: 0;
       }
