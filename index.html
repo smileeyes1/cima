@@ -3,14 +3,24 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>محرك منهج الرياضيات - الصفوف الأولى</title>
+<title>منهج الرياضيات التفاعلي</title>
 
 <style>
 
-*{box-sizing:border-box;font-family:"Cairo","Tahoma",sans-serif;}
-body{margin:0;background:#eef2f3;}
+/* ================= الأساس ================= */
 
-/* لوحة التحكم */
+*{
+  box-sizing:border-box;
+  font-family:"Cairo","Tahoma",sans-serif;
+}
+
+body{
+  margin:0;
+  background:#eaf2f3;
+}
+
+/* ================= لوحة التحكم ================= */
+
 .panel{
   background:#fff;
   padding:15px;
@@ -23,8 +33,17 @@ body{margin:0;background:#eef2f3;}
   gap:10px;
 }
 
-label{font-size:12px;font-weight:bold;display:block;margin-top:6px;}
-input,select{width:100%;padding:8px;border-radius:8px;border:1px solid #ccc;}
+label{
+  font-size:12px;
+  font-weight:bold;
+}
+
+input,select{
+  width:100%;
+  padding:8px;
+  border-radius:8px;
+  border:1px solid #ccc;
+}
 
 button{
   margin-top:10px;
@@ -32,12 +51,14 @@ button{
   border:none;
   border-radius:10px;
   font-weight:bold;
+  cursor:pointer;
 }
 
 .gen{background:#2e7d32;color:white;}
 .prt{background:#1565c0;color:white;}
 
-/* الصفحة */
+/* ================= الصفحة ================= */
+
 .page{
   width:210mm;
   min-height:297mm;
@@ -46,66 +67,106 @@ button{
   padding:12mm;
 }
 
+/* العنوان */
 .title{
   text-align:center;
-  font-size:22px;
-  font-weight:bold;
+  font-size:24px;
   color:#1b5e20;
+  font-weight:bold;
 }
 
+.subtitle{
+  text-align:center;
+  font-size:12px;
+  color:#666;
+}
+
+/* بيانات */
 .meta{
   display:grid;
   grid-template-columns:repeat(3,1fr);
   gap:6px;
-  font-size:11px;
   margin-top:10px;
+  font-size:11px;
 }
 
 .meta div{
-  border:1px solid #ddd;
   padding:6px;
   border-radius:6px;
-  background:#fafafa;
+  background:#f7f7f7;
+  border:1px solid #ddd;
 }
 
-.student-box{
+/* الطالب */
+.student{
   margin-top:10px;
   padding:10px;
-  border:2px dashed #999;
+  border:2px dashed #888;
   border-radius:10px;
+  font-size:13px;
 }
 
-.line{display:inline-block;width:200px;border-bottom:1px solid #000;}
+.line{
+  display:inline-block;
+  width:180px;
+  border-bottom:1px solid #000;
+}
 
-/* السؤال */
+/* ================= بصريات السؤال ================= */
+
 .q{
+  margin-top:12px;
+  padding:12px;
+  border-radius:14px;
   border:1px solid #d0d7de;
-  padding:10px;
-  margin-top:10px;
-  border-radius:12px;
+  background:linear-gradient(180deg,#ffffff,#f8fafb);
+}
+
+.q-header{
+  font-size:13px;
+  font-weight:bold;
+  color:#2e7d32;
+  margin-bottom:6px;
+}
+
+.visual{
+  text-align:center;
+  font-size:18px;
+  margin:6px 0;
 }
 
 .math{
   display:flex;
   justify-content:center;
   gap:8px;
-  font-size:20px;
-  margin-top:8px;
+  font-size:22px;
+  align-items:center;
 }
 
 .answer{
-  width:50px;height:32px;
+  width:55px;
+  height:34px;
   border:2px dashed #444;
   border-radius:6px;
 }
 
+/* أيقونات */
+.icon{
+  font-size:18px;
+  margin:2px;
+}
+
+/* طباعة */
 @media print{
   .panel{display:none;}
   body{background:white;}
   .page{margin:0;}
 }
 
-@page{size:A4;margin:0;}
+@page{
+  size:A4;
+  margin:0;
+}
 
 </style>
 </head>
@@ -114,7 +175,7 @@ button{
 
 <div class="panel">
 
-<h3>محرك منهج الرياضيات الفلسطيني</h3>
+<h3>منهج الرياضيات التفاعلي (صفوف أولى)</h3>
 
 <div class="row">
 
@@ -127,7 +188,7 @@ button{
 </div>
 
 <div>
-<label>الوحدة / المهارة</label>
+<label>المهارة</label>
 <select id="skill">
 
 <option value="count">العدّ</option>
@@ -135,10 +196,11 @@ button{
 <option value="order">الترتيب</option>
 <option value="add">الجمع</option>
 <option value="sub">الطرح</option>
-<option value="word">مسائل لفظية</option>
+<option value="word">مسألة لفظية</option>
 <option value="place">القيمة المكانية</option>
 
 </select>
+
 </div>
 
 <div>
@@ -200,52 +262,54 @@ function ar(n){
   );
 }
 
-function rand(max){return Math.floor(Math.random()*(max+1));}
+function rand(max){
+  return Math.floor(Math.random()*(max+1));
+}
 
-/* ================= محرك منهج كامل ================= */
+/* ================= محرك ذكي ================= */
 
 function generate(skill,limit){
 
-  let a,b;
+  let a,b,c;
 
   switch(skill){
 
     case "count":
-      return {text:"عدّ الأعداد", a:rand(limit), b:""};
+      return {type:"count", a:rand(limit)};
 
     case "compare":
-      a=rand(limit); b=rand(limit);
-      return {text:"قارن بين", a:a, b:b};
+      return {type:"compare", a:rand(limit), b:rand(limit)};
 
     case "order":
-      return {text:"رتب الأعداد", a:rand(limit), b:rand(limit), c:rand(limit)};
+      return {type:"order", a:rand(limit), b:rand(limit), c:rand(limit)};
 
     case "add":
-      do{a=rand(limit); b=rand(limit);}while(a+b>limit);
-      return {text:"جمع", a:a, b:b};
+      do{
+        a=rand(limit); b=rand(limit);
+      }while(a+b>limit);
+      return {type:"add", a,b};
 
     case "sub":
       a=rand(limit); b=rand(a);
-      return {text:"طرح", a:a, b:b};
+      return {type:"sub", a,b};
 
     case "word":
       a=rand(limit); b=rand(limit);
-      return {text:"مسألة لفظية", a:a, b:b};
+      return {type:"word", a,b};
 
     case "place":
-      return {text:"قيمة مكانية", a:rand(limit), b:rand(limit)};
-
+      return {type:"place", a:rand(limit), b:rand(limit)};
   }
 }
 
-/* ================= سؤال ================= */
+/* ================= السؤال ================= */
 
-function q(i,data,skill){
+function render(i,data){
 
-  if(skill=="compare"){
+  if(data.type==="compare"){
     return `
     <div class="q">
-      <b>السؤال ${ar(i)}: قارن</b>
+      <div class="q-header">قارن بين العددين</div>
       <div class="math">
         <span>${ar(data.a)}</span>
         <span>___</span>
@@ -254,10 +318,24 @@ function q(i,data,skill){
     </div>`;
   }
 
-  if(skill=="add"){
+  if(data.type==="order"){
     return `
     <div class="q">
-      <b>السؤال ${ar(i)}</b>
+      <div class="q-header">رتب الأعداد</div>
+      <div class="visual">🔢</div>
+      <div class="math">
+        <span>${ar(data.a)}</span>
+        <span>${ar(data.b)}</span>
+        <span>${ar(data.c)}</span>
+      </div>
+    </div>`;
+  }
+
+  if(data.type==="add"){
+    return `
+    <div class="q">
+      <div class="q-header">عملية جمع</div>
+      <div class="visual">🍎➕🍌</div>
       <div class="math">
         <span>${ar(data.a)}</span>
         <span>+</span>
@@ -268,10 +346,11 @@ function q(i,data,skill){
     </div>`;
   }
 
-  if(skill=="sub"){
+  if(data.type==="sub"){
     return `
     <div class="q">
-      <b>السؤال ${ar(i)}</b>
+      <div class="q-header">عملية طرح</div>
+      <div class="visual">🍎➖🍌</div>
       <div class="math">
         <span>${ar(data.a)}</span>
         <span>-</span>
@@ -282,29 +361,25 @@ function q(i,data,skill){
     </div>`;
   }
 
-  if(skill=="order"){
+  if(data.type==="count"){
     return `
     <div class="q">
-      <b>السؤال ${ar(i)}: رتب تصاعدياً</b>
+      <div class="q-header">عدّ الأعداد</div>
+      <div class="visual">⭐ ⭐ ⭐</div>
       <div class="math">
-        <span>${ar(data.a)}</span>
-        <span>${ar(data.b)}</span>
-        <span>${ar(data.c)}</span>
+        <span>كم العدد؟</span>
+        <span class="answer"></span>
       </div>
     </div>`;
   }
 
   return `
   <div class="q">
-    <b>السؤال ${ar(i)}</b>
-    <div class="math">
-      <span>${ar(data.a)}</span>
-      <span>${ar(data.b)}</span>
-    </div>
+    <div class="q-header">سؤال</div>
   </div>`;
 }
 
-/* ================= بناء الورقة ================= */
+/* ================= بناء ================= */
 
 function build(){
 
@@ -319,6 +394,7 @@ function build(){
   <div class="page">
 
     <div class="title">${lesson}</div>
+    <div class="subtitle">منهج الرياضيات التفاعلي - الصفوف الأولى</div>
 
     <div class="meta">
       <div>المعلم: ${teacher}</div>
@@ -326,14 +402,14 @@ function build(){
       <div>الحد: ${ar(limit)}</div>
     </div>
 
-    <div class="student-box">
+    <div class="student">
       اسم الطالب: <span class="line"></span>
     </div>
   `;
 
   for(let i=1;i<=count;i++){
     let data=generate(skill,limit);
-    html+=q(i,data,skill);
+    html+=render(i,data);
   }
 
   html+=`</div>`;
