@@ -3,24 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>محرك أوراق العمل الذكي</title>
+<title>محرك منهج الرياضيات - الصفوف الأولى</title>
 
 <style>
 
-*{
-  box-sizing:border-box;
-  font-family:"Cairo","Tahoma",sans-serif;
-}
+*{box-sizing:border-box;font-family:"Cairo","Tahoma",sans-serif;}
+body{margin:0;background:#eef2f3;}
 
-body{
-  margin:0;
-  background:#eef2f3;
-}
-
-/* ================= لوحة التحكم ================= */
-
+/* لوحة التحكم */
 .panel{
-  background:white;
+  background:#fff;
   padding:15px;
   border-bottom:3px solid #2e7d32;
 }
@@ -31,19 +23,8 @@ body{
   gap:10px;
 }
 
-label{
-  font-size:12px;
-  font-weight:bold;
-  margin-top:6px;
-  display:block;
-}
-
-input,select{
-  width:100%;
-  padding:8px;
-  border-radius:8px;
-  border:1px solid #ccc;
-}
+label{font-size:12px;font-weight:bold;display:block;margin-top:6px;}
+input,select{width:100%;padding:8px;border-radius:8px;border:1px solid #ccc;}
 
 button{
   margin-top:10px;
@@ -51,14 +32,12 @@ button{
   border:none;
   border-radius:10px;
   font-weight:bold;
-  cursor:pointer;
 }
 
 .gen{background:#2e7d32;color:white;}
 .prt{background:#1565c0;color:white;}
 
-/* ================= الصفحة ================= */
-
+/* الصفحة */
 .page{
   width:210mm;
   min-height:297mm;
@@ -89,7 +68,6 @@ button{
   background:#fafafa;
 }
 
-/* اسم الطالب */
 .student-box{
   margin-top:10px;
   padding:10px;
@@ -97,20 +75,7 @@ button{
   border-radius:10px;
 }
 
-.line{
-  display:inline-block;
-  width:200px;
-  border-bottom:1px solid #000;
-}
-
-/* الهدف */
-.objectives{
-  margin-top:10px;
-  padding:8px;
-  background:#f1f8e9;
-  border-right:4px solid #43a047;
-  font-size:12px;
-}
+.line{display:inline-block;width:200px;border-bottom:1px solid #000;}
 
 /* السؤال */
 .q{
@@ -118,11 +83,6 @@ button{
   padding:10px;
   margin-top:10px;
   border-radius:12px;
-}
-
-.emoji{
-  font-size:18px;
-  margin:2px;
 }
 
 .math{
@@ -134,33 +94,27 @@ button{
 }
 
 .answer{
-  width:50px;
-  height:32px;
+  width:50px;height:32px;
   border:2px dashed #444;
   border-radius:6px;
 }
 
-/* طباعة */
 @media print{
   .panel{display:none;}
   body{background:white;}
   .page{margin:0;}
 }
 
-@page{
-  size:A4;
-  margin:0;
-}
+@page{size:A4;margin:0;}
 
 </style>
 </head>
 
 <body>
 
-<!-- لوحة التحكم -->
 <div class="panel">
 
-<h3>محرك أوراق العمل الذكي</h3>
+<h3>محرك منهج الرياضيات الفلسطيني</h3>
 
 <div class="row">
 
@@ -168,25 +122,31 @@ button{
 <label>الصف</label>
 <select id="grade">
 <option value="1">الأول</option>
-<option value="2" selected>الثاني</option>
+<option value="2">الثاني</option>
 </select>
 </div>
 
 <div>
-<label>نوع الدرس</label>
-<select id="type">
+<label>الوحدة / المهارة</label>
+<select id="skill">
+
+<option value="count">العدّ</option>
+<option value="compare">المقارنة</option>
+<option value="order">الترتيب</option>
 <option value="add">الجمع</option>
 <option value="sub">الطرح</option>
-<option value="mix">مختلط</option>
+<option value="word">مسائل لفظية</option>
+<option value="place">القيمة المكانية</option>
+
 </select>
 </div>
 
 <div>
 <label>الحد العددي</label>
 <select id="limit">
-<option value="10" selected>ضمن 10</option>
+<option value="10">ضمن 10</option>
 <option value="20">ضمن 20</option>
-<option value="30">ضمن 30</option>
+<option value="100">ضمن 100</option>
 </select>
 </div>
 
@@ -200,12 +160,12 @@ button{
 <div class="row">
 
 <div>
-<label>اسم الدرس الكامل</label>
-<input id="lesson" value="الجمع والطرح ضمن العدد 10">
+<label>اسم الدرس</label>
+<input id="lesson" value="رياضيات">
 </div>
 
 <div>
-<label>اسم المعلم</label>
+<label>المعلم</label>
 <input id="teacher" value="المعلم">
 </div>
 
@@ -215,7 +175,7 @@ button{
 </div>
 
 <div>
-<label>إظهار الإجابات</label>
+<label>إجابات</label>
 <select id="answers">
 <option value="no">لا</option>
 <option value="yes">نعم</option>
@@ -224,7 +184,7 @@ button{
 
 </div>
 
-<button class="gen" onclick="build()">توليد الورقة</button>
+<button class="gen" onclick="build()">توليد</button>
 <button class="prt" onclick="window.print()">طباعة</button>
 
 </div>
@@ -233,93 +193,114 @@ button{
 
 <script>
 
-/* ================= أرقام شرقية ================= */
-
+/* أرقام شرقية */
 function ar(n){
   return String(n).replace(/[0-9]/g,d=>
     ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'][d]
   );
 }
 
-/* ================= رموز ================= */
+function rand(max){return Math.floor(Math.random()*(max+1));}
 
-function emojis(){
-  return ["🍎","🍌","⭐","📘","🟢"];
-}
+/* ================= محرك منهج كامل ================= */
 
-/* ================= محرك القيود ================= */
-
-function rand(max){
-  return Math.floor(Math.random()*(max+1));
-}
-
-function generatePair(limit,type){
+function generate(skill,limit){
 
   let a,b;
 
-  if(type==="add"){
+  switch(skill){
 
-    do{
-      a = rand(limit);
-      b = rand(limit);
-    }while(a + b > limit);
+    case "count":
+      return {text:"عدّ الأعداد", a:rand(limit), b:""};
+
+    case "compare":
+      a=rand(limit); b=rand(limit);
+      return {text:"قارن بين", a:a, b:b};
+
+    case "order":
+      return {text:"رتب الأعداد", a:rand(limit), b:rand(limit), c:rand(limit)};
+
+    case "add":
+      do{a=rand(limit); b=rand(limit);}while(a+b>limit);
+      return {text:"جمع", a:a, b:b};
+
+    case "sub":
+      a=rand(limit); b=rand(a);
+      return {text:"طرح", a:a, b:b};
+
+    case "word":
+      a=rand(limit); b=rand(limit);
+      return {text:"مسألة لفظية", a:a, b:b};
+
+    case "place":
+      return {text:"قيمة مكانية", a:rand(limit), b:rand(limit)};
 
   }
-
-  else if(type==="sub"){
-
-    a = rand(limit);
-    b = rand(a);
-
-  }
-
-  else if(type==="mix"){
-
-    if(Math.random()>0.5){
-
-      do{
-        a = rand(limit);
-        b = rand(limit);
-      }while(a + b > limit);
-
-    }else{
-      a = rand(limit);
-      b = rand(a);
-    }
-  }
-
-  return {a,b};
 }
 
 /* ================= سؤال ================= */
 
-function question(i,a,b,type,em,showAns){
+function q(i,data,skill){
 
-  let op = type==="sub" ? "-" : "+";
-  let res = type==="sub" ? (a-b) : (a+b);
+  if(skill=="compare"){
+    return `
+    <div class="q">
+      <b>السؤال ${ar(i)}: قارن</b>
+      <div class="math">
+        <span>${ar(data.a)}</span>
+        <span>___</span>
+        <span>${ar(data.b)}</span>
+      </div>
+    </div>`;
+  }
 
-  let icons = Array(Math.min(a,5))
-    .fill(`<span class="emoji">${em}</span>`)
-    .join('');
+  if(skill=="add"){
+    return `
+    <div class="q">
+      <b>السؤال ${ar(i)}</b>
+      <div class="math">
+        <span>${ar(data.a)}</span>
+        <span>+</span>
+        <span>${ar(data.b)}</span>
+        <span>=</span>
+        <span class="answer"></span>
+      </div>
+    </div>`;
+  }
+
+  if(skill=="sub"){
+    return `
+    <div class="q">
+      <b>السؤال ${ar(i)}</b>
+      <div class="math">
+        <span>${ar(data.a)}</span>
+        <span>-</span>
+        <span>${ar(data.b)}</span>
+        <span>=</span>
+        <span class="answer"></span>
+      </div>
+    </div>`;
+  }
+
+  if(skill=="order"){
+    return `
+    <div class="q">
+      <b>السؤال ${ar(i)}: رتب تصاعدياً</b>
+      <div class="math">
+        <span>${ar(data.a)}</span>
+        <span>${ar(data.b)}</span>
+        <span>${ar(data.c)}</span>
+      </div>
+    </div>`;
+  }
 
   return `
   <div class="q">
-
     <b>السؤال ${ar(i)}</b>
-
-    <div style="text-align:center;margin-top:6px">
-      ${icons}
-    </div>
-
     <div class="math">
-      <span>${ar(a)}</span>
-      <span>${op}</span>
-      <span>${ar(b)}</span>
-      <span>=</span>
-      <span class="answer"></span>
-      ${showAns ? `<span style="font-size:12px;color:green">(${ar(res)})</span>` : ""}
+      <span>${ar(data.a)}</span>
+      <span>${ar(data.b)}</span>
     </div>
-
   </div>`;
 }
 
@@ -327,15 +308,12 @@ function question(i,a,b,type,em,showAns){
 
 function build(){
 
-  let limit = parseInt(document.getElementById("limit").value);
-  let type = document.getElementById("type").value;
-  let count = parseInt(document.getElementById("count").value);
-  let teacher = document.getElementById("teacher").value;
-  let school = document.getElementById("school").value;
-  let lesson = document.getElementById("lesson").value;
-  let showAns = document.getElementById("answers").value==="yes";
-
-  let em = emojis();
+  let skill=document.getElementById("skill").value;
+  let limit=parseInt(document.getElementById("limit").value);
+  let count=parseInt(document.getElementById("count").value);
+  let lesson=document.getElementById("lesson").value;
+  let teacher=document.getElementById("teacher").value;
+  let school=document.getElementById("school").value;
 
   let html=`
   <div class="page">
@@ -345,35 +323,22 @@ function build(){
     <div class="meta">
       <div>المعلم: ${teacher}</div>
       <div>المدرسة: ${school}</div>
-      <div>الحد العددي: ${ar(limit)}</div>
+      <div>الحد: ${ar(limit)}</div>
     </div>
 
     <div class="student-box">
       اسم الطالب: <span class="line"></span>
     </div>
-
-    <div class="objectives">
-      الهدف: تنمية مهارات الحساب ضمن المجال العددي المحدد مع التدرج والفهم.
-    </div>
   `;
 
   for(let i=1;i<=count;i++){
-
-    let pair = generatePair(limit,type);
-
-    html += question(
-      i,
-      pair.a,
-      pair.b,
-      type,
-      em[i%em.length],
-      showAns
-    );
+    let data=generate(skill,limit);
+    html+=q(i,data,skill);
   }
 
-  html += `</div>`;
+  html+=`</div>`;
 
-  document.getElementById("out").innerHTML = html;
+  document.getElementById("out").innerHTML=html;
 }
 
 build();
