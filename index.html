@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>نظام أوراق العمل المطوّر</title>
+<title>نظام أوراق العمل المدرسي المتكامل</title>
 
 <style>
 
@@ -26,7 +26,7 @@ body{
   background:var(--bg);
 }
 
-/* ===== لوحة التحكم ===== */
+/* ================= لوحة التحكم ================= */
 
 .panel{
   background:white;
@@ -52,7 +52,7 @@ input,select{
   border-radius:10px;
 }
 
-/* ===== الصفحة ===== */
+/* ================= الصفحة ================= */
 
 .page{
   width:210mm;
@@ -62,7 +62,7 @@ input,select{
   padding:16mm;
 }
 
-/* ===== السؤال ===== */
+/* ================= السؤال ================= */
 
 .q{
   margin-top:14px;
@@ -128,7 +128,7 @@ input,select{
   border-radius:8px;
 }
 
-/* ===== الطباعة ===== */
+/* ================= الطباعة ================= */
 
 @media print{
   .panel{display:none;}
@@ -150,7 +150,7 @@ input,select{
 
 <div class="panel">
 
-<h3>نظام أوراق العمل المطوّر</h3>
+<h3>نظام أوراق العمل المدرسي المتكامل</h3>
 
 <div class="grid">
 
@@ -176,7 +176,7 @@ input,select{
 </div>
 
 <div>
-<label>الحد</label>
+<label>الحد العددي</label>
 <select id="limit">
 <option value="10">10</option>
 <option value="20">20</option>
@@ -190,7 +190,26 @@ input,select{
 
 </div>
 
-<button onclick="build()">توليد</button>
+<div class="grid">
+
+<div><label>اسم المعلم</label><input id="teacher"></div>
+<div><label>اسم المدرسة</label><input id="school"></div>
+<div><label>المديرية</label><input id="directorate"></div>
+<div><label>الصف</label>
+<select id="grade">
+<option value="1">الأول</option>
+<option value="2">الثاني</option>
+</select>
+</div>
+
+<div><label>الشعبة</label><input id="section"></div>
+<div><label>التاريخ</label><input id="date" type="date"></div>
+<div><label>عنوان الدرس</label><input id="lessonTitle"></div>
+
+</div>
+
+<button onclick="build()">توليد الورقة</button>
+<button onclick="window.print()">طباعة</button>
 
 </div>
 
@@ -198,15 +217,13 @@ input,select{
 
 <script>
 
-/* ================= أرقام عربية ================= */
+/* ================= أدوات ================= */
 
 function ar(n){
   return String(n).replace(/[0-9]/g,d=>
     ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'][d]
   );
 }
-
-/* ================= rand (إصلاح منع الصفر) ================= */
 
 function rand(max,allowZero=true){
   let n=Math.floor(Math.random()*(max+1));
@@ -227,8 +244,8 @@ function norm(a,b){
 function generate(skill,limit){
 
   if(skill==="mix"){
-    let pool=["add","sub","compare","order","count"];
-    skill=pool[rand(pool.length-1)];
+    let p=["add","sub","compare","order","count"];
+    skill=p[rand(p.length-1)];
   }
 
   if(skill==="add"){
@@ -249,9 +266,7 @@ function generate(skill,limit){
   if(skill==="compare"){
     let a=rand(limit,false);
     let b=rand(limit,false);
-
     if(a===b) b=Math.min(limit,b+1);
-
     return {type:"compare",a,b};
   }
 
@@ -264,11 +279,11 @@ function generate(skill,limit){
   }
 
   if(skill==="count"){
-    return {type:"count",a:rand(limit)};
+    return {type:"count",a:rand(15)};
   }
 }
 
-/* ================= منع التكرار الحقيقي ================= */
+/* ================= منع التكرار ================= */
 
 function isDup(d){
 
@@ -311,22 +326,18 @@ function step(l){
   return l==1?"محسوس":l==2?"بصري":"مجرد";
 }
 
-/* ================= تمثيل بصري محسّن ================= */
+/* ================= بصري ================= */
 
-function repeat(icon,n){
-  return icon.repeat(Math.min(n,15));
-}
+function visual(d,l){
 
-function visual(d,level){
-
-  if(level==1){
-    if(d.type==="count") return repeat("🍎 ",d.a);
-    if(d.type==="add") return repeat("🍎 ",d.a)+" + "+repeat("🍌 ",d.b);
-    if(d.type==="sub") return repeat("🍎 ",d.a)+" - "+repeat("🍎 ",d.b);
+  if(l==1){
+    if(d.type==="count") return "🍎 ".repeat(Math.min(d.a,15));
+    if(d.type==="add") return "🍎🍎🍎 + 🍌🍌";
+    if(d.type==="sub") return "🍎🍎🍎 - 🍎🍎";
   }
 
-  if(level==2){
-    if(d.type==="count") return repeat("⭐ ",d.a);
+  if(l==2){
+    if(d.type==="count") return "⭐ ".repeat(Math.min(d.a,15));
     if(d.type==="add") return `🍎 ${d.a} + 🍌 ${d.b}`;
     if(d.type==="sub") return `🍎 ${d.a} - 🍌 ${d.b}`;
   }
@@ -334,11 +345,11 @@ function visual(d,level){
   return "";
 }
 
-/* ================= عرض السؤال ================= */
+/* ================= عرض ================= */
 
-function render(d,i,level){
+function render(d,i,l){
 
-  let ins=
+  let ins =
     d.type==="compare"?"ضع (> < =)" :
     d.type==="order"?"رتب من الأصغر إلى الأكبر" :
     d.type==="count"?"عدّ العناصر":"أوجد الناتج";
@@ -355,7 +366,7 @@ function render(d,i,level){
     math=`${ar(d.a)} <span class="box"></span> ${ar(d.b)}`;
 
   if(d.type==="order")
-    math=`${ar(d.a)} , ${ar(d.b)} , ${ar(d.c)} <br><br> □ □ □`;
+    math=`${ar(d.a)} , ${ar(d.b)} , ${ar(d.c)}<br><br>□ □ □`;
 
   if(d.type==="count")
     math=`كم العدد؟ <span class="box"></span>`;
@@ -364,9 +375,9 @@ function render(d,i,level){
   <div class="q">
 
     <div class="qh">السؤال ${ar(i)}</div>
-    <div class="step">التدرج: ${step(level)}</div>
+    <div class="step">التدرج: ${step(l)}</div>
 
-    <div class="visual">${visual(d,level)}</div>
+    <div class="visual">${visual(d,l)}</div>
 
     <div style="text-align:center;font-weight:600;margin:6px 0">
       ${ins}
@@ -388,19 +399,33 @@ function build(){
   let limit=parseInt(document.getElementById("limit").value);
   let count=parseInt(document.getElementById("count").value);
 
+  let teacher=document.getElementById("teacher").value;
+  let school=document.getElementById("school").value;
+  let directorate=document.getElementById("directorate").value;
+  let grade=document.getElementById("grade").value;
+  let section=document.getElementById("section").value;
+  let date=document.getElementById("date").value;
+  let lessonTitle=document.getElementById("lessonTitle").value;
+
   let html=`
   <div class="page">
 
-    <div class="title">ورقة عمل رياضيات</div>
+    <div class="title">${lessonTitle || "ورقة عمل رياضيات"}</div>
 
     <div class="meta">
-      <div>المعلم</div>
-      <div>المدرسة</div>
-      <div>المستوى: ${step(level)}</div>
+      <div>المعلم: ${teacher}</div>
+      <div>المدرسة: ${school}</div>
+      <div>المديرية: ${directorate}</div>
+      <div>الصف: ${grade}</div>
+      <div>الشعبة: ${section}</div>
+      <div>التاريخ: ${date}</div>
     </div>
 
     <div class="student">
-      اسم الطالب: ____________________
+      <div>اسم الطالب: ____________________</div>
+      <div style="margin-top:6px">
+        الصف: ${grade} | الشعبة: ${section} | التاريخ: ${date}
+      </div>
     </div>
   `;
 
