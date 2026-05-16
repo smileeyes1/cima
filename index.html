@@ -17,8 +17,7 @@ body{
   background:#eef2f3;
 }
 
-/* ================= لوحة التحكم ================= */
-
+/* لوحة التحكم */
 .panel{
   background:white;
   padding:15px;
@@ -34,8 +33,8 @@ body{
 label{
   font-size:12px;
   font-weight:bold;
-  margin-top:6px;
   display:block;
+  margin-top:6px;
 }
 
 input,select{
@@ -57,8 +56,7 @@ button{
 .gen{background:#2e7d32;color:white;}
 .prt{background:#1565c0;color:white;}
 
-/* ================= الصفحة ================= */
-
+/* الصفحة */
 .page{
   width:210mm;
   min-height:297mm;
@@ -67,7 +65,6 @@ button{
   padding:12mm;
 }
 
-/* العنوان */
 .title{
   text-align:center;
   font-size:22px;
@@ -75,7 +72,7 @@ button{
   color:#1b5e20;
 }
 
-/* معلومات عامة */
+/* معلومات */
 .meta{
   display:grid;
   grid-template-columns:repeat(3,1fr);
@@ -143,7 +140,7 @@ button{
   border-radius:6px;
 }
 
-/* الطباعة */
+/* طباعة */
 @media print{
   .panel{display:none;}
   body{background:white;}
@@ -160,7 +157,6 @@ button{
 
 <body>
 
-<!-- لوحة التحكم -->
 <div class="panel">
 
 <h3>نظام أوراق العمل الذكي</h3>
@@ -227,26 +223,35 @@ button{
 
 </div>
 
-<button class="gen" onclick="build()">توليد الورقة</button>
+<button class="gen" onclick="build()">توليد</button>
 <button class="prt" onclick="window.print()">طباعة</button>
 
 </div>
 
-<!-- الناتج -->
 <div id="out"></div>
 
 <script>
 
+/* تحويل الأرقام إلى شرقية */
+function ar(n){
+  return String(n).replace(/[0-9]/g,d=>
+    ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'][d]
+  );
+}
+
+/* رموز */
 function emojis(){
   return ["🍎","🍌","⭐","📘"];
 }
 
+/* أرقام حسب المستوى */
 function rand(level){
   if(level==1) return Math.floor(Math.random()*6);
   if(level==2) return Math.floor(Math.random()*10);
   return Math.floor(Math.random()*20);
 }
 
+/* سؤال */
 function q(i,a,b,type,em,showAns){
 
   let op = type=="sub" ? "-" : "+";
@@ -259,27 +264,28 @@ function q(i,a,b,type,em,showAns){
   return `
   <div class="q">
 
-    <b>السؤال ${i}</b>
+    <b>السؤال ${ar(i)}</b>
 
     <div style="text-align:center;margin-top:6px">
       ${icons}
     </div>
 
     <div class="math">
-      <span>${a}</span>
+      <span>${ar(a)}</span>
       <span>${op}</span>
-      <span>${b}</span>
+      <span>${ar(b)}</span>
       <span>=</span>
       <span class="answer"></span>
-      ${showAns ? `<span style="font-size:12px;color:green">(${res})</span>` : ""}
+      ${showAns ? `<span style="font-size:12px;color:green">(${ar(res)})</span>` : ""}
     </div>
 
   </div>`;
 }
 
+/* بناء الورقة */
 function build(){
 
-  let g=document.getElementById("grade").value;
+  let g=ar(document.getElementById("grade").value);
   let type=document.getElementById("type").value;
   let level=document.getElementById("level").value;
   let count=parseInt(document.getElementById("count").value);
@@ -301,13 +307,12 @@ function build(){
       <div>المدرسة: ${school}</div>
     </div>
 
-    <!-- اسم الطالب -->
     <div class="student-box">
       اسم الطالب: <span class="line"></span>
     </div>
 
     <div class="objectives">
-      الهدف: تنمية مهارات الحساب الأساسية بطريقة بسيطة وممتعة.
+      الهدف: تنمية مهارات الحساب الأساسية بطريقة ممتعة وتدرّجية.
     </div>
   `;
 
