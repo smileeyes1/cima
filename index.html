@@ -39,7 +39,7 @@
     .panel {
       background: white;
       border-radius: 16px;
-      padding: 18px;
+      padding: 10px;
       box-shadow: 0 2px 10px rgba(0,0,0,0.08);
     }
 
@@ -94,8 +94,9 @@
 
     .worksheet {
       background: white;
-      min-height: 1000px;
-      padding: 35px;
+      width: 210mm;
+      min-height: 297mm;
+      padding: 18mm;
       border-radius: 18px;
       box-shadow: 0 2px 10px rgba(0,0,0,0.08);
     }
@@ -108,7 +109,7 @@
 
     .worksheet-title {
       text-align: center;
-      font-size: 32px;
+      font-size: 24px;
       font-weight: bold;
       color: #1b5e20;
       margin-bottom: 10px;
@@ -137,10 +138,10 @@
     }
 
     .question-box {
-      border: 2px solid #d9d9d9;
+      border: 2px solid #cfd8dc;
       border-radius: 16px;
-      padding: 18px;
-      margin-bottom: 18px;
+      padding: 10px;
+      margin-bottom: 10px;
       background: #fff;
       page-break-inside: avoid;
     }
@@ -159,13 +160,13 @@
       gap: 12px;
       flex-wrap: wrap;
       margin-top: 12px;
-      font-size: 32px;
+      font-size: 24px;
       font-weight: bold;
     }
 
     .answer-box {
-      width: 90px;
-      height: 55px;
+      width: 70px;
+      height: 42px;
       border: 2px dashed #777;
       border-radius: 12px;
       display: inline-block;
@@ -294,6 +295,9 @@
   }
 
   function generateAddition(max, count) {
+
+    count = Math.min(count, 10);
+
     let html = '';
 
     for (let i = 1; i <= count; i++) {
@@ -324,6 +328,9 @@
   }
 
   function generateSubtraction(max, count) {
+
+    count = Math.min(count, 10);
+
     let html = '';
 
     for (let i = 1; i <= count; i++) {
@@ -352,6 +359,9 @@
   }
 
   function generateShapesQuestions(count) {
+
+    count = Math.min(count, 8);
+
 
     const shapes = [
       'دائرة',
@@ -424,7 +434,7 @@
       <div class="worksheet-header">
 
         <div class="worksheet-title">
-          ${title}
+          🌿 ${title}
         </div>
 
         <div class="worksheet-info">
@@ -461,13 +471,13 @@
       </div>
 
       <div class="section-title">
-        حلّ الأسئلة التالية:
+        نشاط تدريبي تفاعلي
       </div>
 
       ${content}
 
       <div class="footer-note">
-        تم إنشاء الورقة تلقائياً مع دعم كامل للعربية والأعداد الشرقية
+        صُممت الورقة لتناسب الطباعة المباشرة على صفحة A4 واحدة
       </div>
     `;
   }
