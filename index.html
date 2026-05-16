@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>محرك منهج الرياضيات الذكي - مطوّر</title>
+<title>محرك منهج الرياضيات الذكي - النسخة النهائية</title>
 
 <style>
 
@@ -48,6 +48,7 @@ button{
   border:none;
   border-radius:10px;
   font-weight:bold;
+  cursor:pointer;
 }
 
 .gen{background:#2e7d32;color:white;}
@@ -147,7 +148,10 @@ button{
   .page{margin:0;}
 }
 
-@page{size:A4;margin:0;}
+@page{
+  size:A4;
+  margin:0;
+}
 
 </style>
 </head>
@@ -156,7 +160,7 @@ button{
 
 <div class="panel">
 
-<h3>محرك المنهج الذكي (نسخة مطوّرة)</h3>
+<h3>محرك منهج الرياضيات الذكي (نهائي)</h3>
 
 <div class="row">
 
@@ -207,7 +211,7 @@ button{
 </div>
 
 <div>
-<label>إجابات</label>
+<label>إظهار الإجابات</label>
 <select id="answers">
 <option value="no">لا</option>
 <option value="yes">نعم</option>
@@ -227,18 +231,43 @@ button{
 
 <script>
 
-/* أرقام شرقية */
+/* ================= أرقام شرقية ================= */
+
 function ar(n){
   return String(n).replace(/[0-9]/g,d=>
     ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'][d]
   );
 }
 
+/* ================= أدوات أساسية ================= */
+
 function rand(max){
   return Math.floor(Math.random()*(max+1));
 }
 
-/* ================= توليد ================= */
+/* ================= منع التكرار ================= */
+
+let used = new Set();
+
+function key(a,b){
+  return a <= b ? `${a}-${b}` : `${b}-${a}`;
+}
+
+/* ================= التحقق ================= */
+
+function validate(d,skill,limit){
+
+  if(skill==="add" && d.a + d.b > limit) return false;
+  if(skill==="sub" && d.b > d.a) return false;
+
+  if(skill==="order"){
+    if(d.a===d.b || d.b===d.c || d.a===d.c) return false;
+  }
+
+  return true;
+}
+
+/* ================= توليد ذكي محسّن ================= */
 
 function generate(skill,limit){
 
@@ -249,23 +278,29 @@ function generate(skill,limit){
   }
 
   if(skill==="compare"){
-    return {type:"compare",a:rand(limit),b:rand(limit)};
+    a=rand(limit); b=rand(limit);
+    if(a===b) b=(b+1)%(limit+1);
+    return {type:"compare",a,b};
   }
 
   if(skill==="order"){
-    return {type:"order",a:rand(limit),b:rand(limit),c:rand(limit)};
+    do{
+      a=rand(limit); b=rand(limit); c=rand(limit);
+    }while(a===b || b===c || a===c);
+    return {type:"order",a,b,c};
   }
 
   if(skill==="add"){
     do{
       a=rand(limit); b=rand(limit);
-    }while(a+b>limit);
+    }while(a+b>limit || a===0 || b===0);
     return {type:"add",a,b};
   }
 
   if(skill==="sub"){
     a=rand(limit);
     b=rand(a);
+    if(a===0) a=1;
     return {type:"sub",a,b};
   }
 
@@ -278,101 +313,113 @@ function generate(skill,limit){
   }
 }
 
-/* ================= تحقق متعدد الطبقات ================= */
-
-function validate(data,skill,limit){
-
-  if(skill==="add" && data.a + data.b > limit) return false;
-  if(skill==="sub" && data.b > data.a) return false;
-
-  if(skill==="order"){
-    if(data.a===data.b || data.b===data.c || data.a===data.c) return false;
-  }
-
-  return true;
-}
-
-/* ================= حلقة الاستقرار ================= */
+/* ================= توليد مستقر (محمي بالكامل) ================= */
 
 function stableGenerate(skill,limit){
 
-  let data;
+  let d;
   let tries = 0;
 
-  while(tries < 20){
+  while(tries < 30){
 
-    data = generate(skill,limit);
+    d = generate(skill,limit);
 
-    if(validate(data,skill,limit)){
-      return data;
+    if(!validate(d,skill,limit)){
+      tries++;
+      continue;
     }
 
-    tries++;
+    if(d.a !== undefined && d.b !== undefined){
+
+      let k = key(d.a,d.b);
+
+      if(used.has(k)){
+        tries++;
+        continue;
+      }
+
+      used.add(k);
+    }
+
+    return d;
   }
 
-  // حالة طوارئ آمنة
-  return {type:"count",a:1};
+  return fallback(skill);
 }
 
-/* ================= عرض السؤال ================= */
+/* ================= fallback آمن ================= */
 
-function render(i,data){
+function fallback(skill){
 
-  if(data.type==="add"){
+  switch(skill){
+    case "add": return {type:"add",a:1,b:1};
+    case "sub": return {type:"sub",a:2,b:1};
+    case "compare": return {type:"compare",a:1,b:2};
+    case "order": return {type:"order",a:1,b:2,c:3};
+    case "count": return {type:"count",a:1};
+    default: return {type:"count",a:1};
+  }
+}
+
+/* ================= عرض ================= */
+
+function render(d){
+
+  if(d.type==="add"){
     return `
     <div class="q">
       <div class="q-header">جمع</div>
       <div class="visual">🍎➕🍌</div>
       <div class="math">
-        <span>${ar(data.a)}</span>
+        <span>${ar(d.a)}</span>
         <span>+</span>
-        <span>${ar(data.b)}</span>
+        <span>${ar(d.b)}</span>
         <span>=</span>
         <span class="answer"></span>
       </div>
     </div>`;
   }
 
-  if(data.type==="sub"){
+  if(d.type==="sub"){
     return `
     <div class="q">
       <div class="q-header">طرح</div>
       <div class="visual">🍎➖🍌</div>
       <div class="math">
-        <span>${ar(data.a)}</span>
+        <span>${ar(d.a)}</span>
         <span>-</span>
-        <span>${ar(data.b)}</span>
+        <span>${ar(d.b)}</span>
         <span>=</span>
         <span class="answer"></span>
       </div>
     </div>`;
   }
 
-  if(data.type==="compare"){
+  if(d.type==="compare"){
     return `
     <div class="q">
       <div class="q-header">قارن</div>
       <div class="math">
-        <span>${ar(data.a)}</span>
+        <span>${ar(d.a)}</span>
         <span>___</span>
-        <span>${ar(data.b)}</span>
+        <span>${ar(d.b)}</span>
       </div>
     </div>`;
   }
 
-  if(data.type==="order"){
+  if(d.type==="order"){
     return `
     <div class="q">
       <div class="q-header">رتب</div>
       <div class="math">
-        <span>${ar(data.a)}</span>
-        <span>${ar(data.b)}</span>
-        <span>${ar(data.c)}</span>
+        <span>${ar(d.a)}</span>
+        <span>${ar(d.b)}</span>
+        <span>${ar(d.c)}</span>
       </div>
     </div>`;
   }
 
-  if(data.type==="count"){
+  if(d.type==="count"){
     return `
     <div class="q">
       <div class="q-header">عدّ</div>
@@ -383,12 +430,14 @@ function render(i,data){
     </div>`;
   }
 
-  return `<div class="q"><div class="q-header">سؤال</div></div>`;
+  return `<div class="q"></div>`;
 }
 
-/* ================= بناء ================= */
+/* ================= بناء الورقة ================= */
 
 function build(){
+
+  used.clear();
 
   let skill=document.getElementById("skill").value;
   let limit=parseInt(document.getElementById("limit").value);
@@ -401,7 +450,7 @@ function build(){
   <div class="page">
 
     <div class="title">${lesson}</div>
-    <div class="subtitle">محرك منهج رياضيات ذكي - الصفوف الأولى</div>
+    <div class="subtitle">محرك منهج الرياضيات الذكي - النسخة النهائية</div>
 
     <div class="meta">
       <div>المعلم: ${teacher}</div>
@@ -415,8 +464,8 @@ function build(){
   `;
 
   for(let i=1;i<=count;i++){
-    let data = stableGenerate(skill,limit);
-    html += render(i,data);
+    let d = stableGenerate(skill,limit);
+    html += render(d);
   }
 
   html += `</div>`;
