@@ -2,254 +2,123 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>نظام زيتونة المدرسي الكامل</title>
+<title>منصة زيتونة التعليمية - نظام مدرسي متكامل</title>
 <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Noto+Naskh+Arabic:wght@400;700&display=swap" rel="stylesheet">
 <style>
-    body{margin:0;font-family:'Noto Naskh Arabic','Amiri',serif;background:#eef2f6;color:#000}.app{display:flex;height:100vh}
-
-/* SIDEBAR */
-.sidebar{
-    width:320px;
-    background:#0f172a;
-    color:#fff;
-    padding:15px;
-    overflow-y:auto;
-}
-
+body{margin:0;font-family:'Noto Naskh Arabic','Amiri',serif;background:#eef2f6;color:#000}
+.app{display:flex;height:100vh}
+.sidebar{width:320px;background:#0f172a;color:#fff;padding:15px;overflow-y:auto}
 h2{font-size:18px;margin:5px 0}
-
-input,select,textarea,button{
-    width:100%;
-    margin:5px 0;
-    padding:8px;
-    border-radius:6px;
-    border:none;
-    font-family:inherit;
-}
-
+input,select,textarea,button{width:100%;margin:5px 0;padding:8px;border-radius:6px;border:none;font-family:inherit;direction:rtl}
 button{cursor:pointer}
-
 .btn1{background:#22c55e;color:#fff}
 .btn2{background:#2563eb;color:#fff}
 .btn3{background:#334155;color:#fff}
 .btnDanger{background:#ef4444;color:#fff}
-
 .section{margin-top:10px;padding-top:10px;border-top:1px solid #334155}
-
-.item{
-    background:#1e293b;
-    padding:8px;
-    margin-top:5px;
-    border-radius:6px;
-    cursor:pointer;
-    font-size:13px;
-}
-
-/* MAIN */
+.item{background:#1e293b;padding:8px;margin-top:5px;border-radius:6px;cursor:pointer;font-size:13px;direction:rtl}
 .main{flex:1;padding:15px;overflow:auto}
-
 .topbar{display:flex;gap:10px;margin-bottom:10px}
-
-.card{
-    background:#fff;
-    padding:15px;
-    border-radius:12px;
-    box-shadow:0 2px 10px rgba(0,0,0,0.08)
-}
-
+.card{background:#fff;padding:15px;border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,0.08)}
 .title{text-align:center;font-size:20px;font-weight:bold;margin:5px 0}
-
-.stage{
-    border:1px dashed #555;
-    padding:10px;
-    margin-top:10px;
-    border-radius:8px;
-}
-
-.q{
-    border:1px solid #aaa;
-    padding:8px;
-    border-radius:6px;
-    margin-top:5px;
-    min-height:40px;
-}
-
-.grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:10px;
-}
-
-@media print{
-    .sidebar,.topbar{display:none}
-    body{background:#fff}
-    .main{padding:0}
-    .card{box-shadow:none}
-}
-
+.stage{border:1px dashed #555;padding:10px;margin-top:10px;border-radius:8px;direction:rtl}
+.q{border:1px solid #aaa;padding:8px;border-radius:6px;margin-top:5px;min-height:40px;direction:rtl}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media print{.sidebar,.topbar{display:none}body{background:#fff}.main{padding:0}.card{box-shadow:none}}
 </style>
 </head>
-<body><div class="app"><!-- SIDEBAR --><div class="sidebar">
-    <h2>🏫 زيتونة - النظام الكامل</h2><div class="section">
-    <input id="user" placeholder="اسم المعلم">
-    <select id="role">
-        <option value="teacher">معلم</option>
-        <option value="admin">مدير</option>
-    </select>
-    <button class="btn3" onclick="login()">دخول</button>
-    <div id="status"></div>
-</div>
+<body><div class="app"><div class="sidebar">
+<h2>🏫 منصة زيتونة</h2><input id="user" placeholder="اسم المعلم">
+<select id="role">
+<option value="teacher">معلم</option>
+<option value="admin">مدير</option>
+</select>
+<button class="btn3" onclick="login()">دخول</button><input id="className" placeholder="اسم الصف">
+<input id="lesson" placeholder="اسم الدرس"><select id="grade">
+<option value="١">الصف الأول</option>
+<option value="٢">الصف الثاني</option>
+</select><button class="btn1" onclick="generateLocal()">توليد ورقة</button> <button class="btn2" onclick="generateAI()">ذكاء اصطناعي</button>
 
-<div class="section">
-    <input id="className" placeholder="اسم الصف / الشعبة">
-    <input id="lesson" placeholder="اسم الدرس">
-    <select id="grade">
-        <option value="1">الصف الأول</option>
-        <option value="2">الصف الثاني</option>
-    </select>
-    <button class="btn1" onclick="generateLocal()">توليد ورقة</button>
-    <button class="btn2" onclick="generateAI()">ذكاء اصطناعي</button>
+<textarea id="apiKey" placeholder="مفتاح API"></textarea><textarea id="apiUrl" placeholder="رابط API"></textarea><h3>السجل</h3>
+<div id="history"></div>
+</div><div class="main">
+<div class="topbar">
+<button class="btn3" onclick="window.print()">طباعة</button>
+</div><div class="card">
+<div class="title" id="header">---</div>
+<div id="content"></div>
 </div>
-
-<div class="section">
-    <textarea id="apiKey" placeholder="API KEY"></textarea>
-    <textarea id="apiUrl" placeholder="API URL"></textarea>
-</div>
-
-<div class="section">
-    <h3>📁 السجل</h3>
-    <div id="history"></div>
-</div>
-
-<div class="section">
-    <button class="btnDanger" onclick="resetAll()">إعادة ضبط النظام</button>
-</div>
-
-</div><!-- MAIN --><div class="main"><div class="topbar">
-    <button class="btn3" onclick="window.print()">طباعة</button>
-</div>
-
-<div class="card">
-    <div class="title" id="header">نظام جاهز</div>
-    <div id="content"></div>
-</div>
-
 </div></div><script>
+function toArabic(n){
+return n.toString()
+.replace(/0/g,'٠').replace(/1/g,'١').replace(/2/g,'٢')
+.replace(/3/g,'٣').replace(/4/g,'٤').replace(/5/g,'٥')
+.replace(/6/g,'٦').replace(/7/g,'٧').replace(/8/g,'٨').replace(/9/g,'٩');
+}
 
-let DB = JSON.parse(localStorage.getItem("zaitoon_full")||"[]");
-let SESSION = null;
+function clean(t){return toArabic(t||"");}
+
+let DB=JSON.parse(localStorage.getItem("zaitoon_full")||"[]");
+let SESSION=null;
 
 function login(){
-    const user = document.getElementById("user").value;
-    const role = document.getElementById("role").value;
-
-    if(!user){alert("ادخل الاسم");return;}
-
-    SESSION = {user, role};
-    document.getElementById("status").innerHTML =
-        "✔ مرحباً " + user + " (" + role + ")";
+const user=document.getElementById("user").value;
+const role=document.getElementById("role").value;
+if(!user){alert("أدخل الاسم");return;}
+SESSION={user,role};alert("تم الدخول");
 }
 
-function save(title, content){
-    DB.unshift({title,content,user:SESSION?.user||"غير معروف"});
-    localStorage.setItem("zaitoon_full", JSON.stringify(DB));
-    renderHistory();
-}
+function save(title,content){
+DB.unshift({title,content});localStorage.setItem("zaitoon_full",JSON.stringify(DB));renderHistory();}
 
 function renderHistory(){
-    const box=document.getElementById("history");
-    box.innerHTML="";
-    DB.slice(0,8).forEach((d,i)=>{
-        box.innerHTML+=`<div class='item' onclick='load(${i})'>${d.title}</div>`;
-    });
+const box=document.getElementById("history");box.innerHTML="";
+DB.slice(0,8).forEach((d,i)=>{box.innerHTML+=`<div class='item' onclick='load(${i})'>${d.title}</div>`;});
 }
 
 function load(i){
-    document.getElementById("header").innerText = DB[i].title;
-    document.getElementById("content").innerHTML = DB[i].content;
+document.getElementById("header").innerText=DB[i].title;
+document.getElementById("content").innerHTML=DB[i].content;
 }
 
-function detect(t){
-    if(t.includes("جمع")) return "add";
-    if(t.includes("طرح")) return "sub";
-    return "gen";
+function detect(t){if(t.includes("جمع"))return"add";if(t.includes("طرح"))return"sub";return"gen";}
+
+function build(type,grade){
+let n=grade=="١"?٥:١٠;
+let a=Math.floor(Math.random()*n)+١;
+let b=Math.floor(Math.random()*n/٢)+١;
+if(type=="add")return["🟢 محسوس","🟡 شبه محسوس: "+toArabic(a)+"+"+toArabic(b),"🔵 مجرد","🟣 تطبيق","⚫ تحليل"];
+if(type=="sub")return["🟢 محسوس","🟡 شبه محسوس","🔵 مجرد","🟣 تطبيق","⚫ تحقق"];
+return["فهم","تطبيق"];
 }
 
-function build(type, grade){
-    let n = grade=="1"?5:10;
-    let a = Math.floor(Math.random()*n)+1;
-    let b = Math.floor(Math.random()*n/2)+1;
-
-    if(type=="add"){
-        return [
-            "🟢 محسوس: استخدم أدوات",
-            `🟡 شبه محسوس: ${a}+${b}`,
-            `🔵 مجرد: ${a}+${b} = ....`,
-            "🟣 تطبيق: موقف حياتي",
-            "⚫ تحليل: كيف عرفت الناتج؟"
-        ];
-    }
-
-    if(type=="sub"){
-        return [
-            "🟢 محسوس",
-            `🟡 شبه محسوس: ${a+b}-${b}`,
-            `🔵 مجرد: ${a+b}-${b} = ....`,
-            "🟣 تطبيق",
-            "⚫ تحقق من الإجابة بطريقتين"
-        ];
-    }
-
-    return ["فهم","تطبيق","تفسير"];
-}
-
-function render(title, items){
-    document.getElementById("header").innerText = title;
-    let html="";
-    items.forEach(x=>{
-        html+=`<div class='stage'><div class='q'>${x}</div></div>`;
-    });
-    document.getElementById("content").innerHTML=html;
-    save(title,html);
+function render(title,items){
+document.getElementById("header").innerText=clean(title);
+let html="";
+items.forEach(x=>{html+=`<div class='stage'><div class='q'>${clean(x)}</div></div>`;});
+document.getElementById("content").innerHTML=html;
+save(title,html);
 }
 
 function generateLocal(){
-    const title=document.getElementById("lesson").value;
-    const grade=document.getElementById("grade").value;
-    const type=detect(title);
-    render(title,build(type,grade));
+const title=document.getElementById("lesson").value;
+const grade=document.getElementById("grade").value;
+const type=detect(title);
+render(title,build(type,grade));
 }
 
 async function generateAI(){
-    const title=document.getElementById("lesson").value;
-    const apiKey=document.getElementById("apiKey").value;
-    const apiUrl=document.getElementById("apiUrl").value;
-
-    const prompt=`أنشئ ورقة عمل للصف ${document.getElementById("grade").value} لدرس ${title} تشمل محسوس شبه محسوس مجرد تطبيق تحليل.`;
-
-    try{
-        const res=await fetch(apiUrl,{
-            method:"POST",
-            headers:{"Content-Type":"application/json","Authorization":"Bearer "+apiKey},
-            body:JSON.stringify({model:"gpt-4o-mini",messages:[{role:"user",content:prompt}]})
-        });
-
-        const data=await res.json();
-        const text=data.choices?.[0]?.message?.content||"خطأ";
-        const items=text.split("\n").filter(x=>x.trim());
-        render(title,items);
-
-    }catch(e){
-        render("خطأ",["فشل الاتصال"]);
-    }
-}
-
-function resetAll(){
-    localStorage.clear();
-    DB=[];
-    renderHistory();
-    document.getElementById("content").innerHTML="";
-    document.getElementById("header").innerText="تمت إعادة الضبط";
+const title=document.getElementById("lesson").value;
+const apiKey=document.getElementById("apiKey").value;
+const apiUrl=document.getElementById("apiUrl").value;
+const prompt="أنشئ ورقة عمل باللغة العربية فقط وبأرقام شرقية فقط لدرس: "+title;
+try{
+const res=await fetch(apiUrl,{method:"POST",headers:{"Content-Type":"application/json","Authorization":"Bearer "+apiKey},body:JSON.stringify({model:"gpt-4o-mini",messages:[{role:"user",content:prompt}]})});
+const data=await res.json();
+const text=data.choices?.[0]?.message?.content||"خطأ";
+const items=text.split("\n").filter(x=>x.trim());
+render(title,items);
+}catch(e){render("خطأ",["فشل الاتصال"]);}
 }
 
 renderHistory();
