@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<title>النظام الذكي لأوراق العمل</title>
+<title>ورقة عمل الرياضيات الذكية المطورة</title>
 
 <style>
 :root{
@@ -14,7 +14,7 @@
 
 *{
   box-sizing:border-box;
-  font-family:"Cairo","Tahoma";
+  font-family:"Cairo","Tahoma",sans-serif;
 }
 
 body{
@@ -25,29 +25,35 @@ body{
 /* لوحة التحكم */
 .panel{
   background:#fff;
-  padding:12px;
+  padding:15px;
   border-bottom:1px solid var(--border);
 }
 
 .grid{
   display:grid;
-  grid-template-columns:repeat(6,1fr);
-  gap:8px;
+  grid-template-columns:repeat(auto-fit, minmax(150px, 1fr));
+  gap:10px;
 }
 
 input,select{
-  padding:8px;
+  padding:10px;
   border-radius:8px;
   border:1px solid var(--border);
+  font-size:14px;
 }
 
 button{
-  padding:10px;
+  padding:10px 20px;
   border:none;
   border-radius:8px;
   background:var(--primary);
   color:white;
   cursor:pointer;
+  font-weight:bold;
+}
+
+button.print-btn {
+  background:#202124;
 }
 
 /* الصفحة */
@@ -57,87 +63,82 @@ button{
   background:#fff;
   margin:15px auto;
   padding:15mm;
+  box-shadow: 0 0 10px rgba(0,0,0,0.05);
 }
 
-/* عنوان */
+.header{text-align:center; margin-bottom: 15px;}
 .title{
-  text-align:center;
-  font-size:22px;
+  font-size:26px;
   font-weight:bold;
+  color:#1a73e8;
 }
 
-/* هدف */
 .goal{
-  text-align:center;
-  margin-top:6px;
   font-size:13px;
-  color:#444;
+  color:#555;
+  margin-top:5px;
 }
 
-/* بيانات */
 .meta{
   display:grid;
-  grid-template-columns:repeat(3,1fr);
+  grid-template-columns:repeat(4,1fr);
   gap:6px;
   margin-top:10px;
 }
 
 .meta div{
   background:var(--soft);
-  padding:6px;
-  font-size:12px;
+  padding:8px;
+  font-size:13px;
   border-radius:6px;
+  text-align:center;
 }
 
 .student{
   margin-top:10px;
-  padding:10px;
+  padding:12px;
   background:var(--soft);
   border-radius:8px;
+  font-weight:bold;
 }
 
-/* سؤال */
 .q{
-  margin-top:12px;
-  padding:12px;
+  margin-top:15px;
+  padding:15px;
   border:1px solid var(--border);
-  border-radius:10px;
+  border-radius:12px;
+  page-break-inside: avoid;
+  break-inside: avoid;
 }
 
 .inst{
-  font-size:12px;
-  color:#666;
+  font-size:14px;
+  color:#333;
+  font-weight:bold;
+  margin-bottom:8px;
 }
 
 .level{
   text-align:center;
-  margin-top:6px;
-  font-size:16px;
+  margin-top:8px;
+  font-size:20px;
+  letter-spacing: 2px;
 }
 
-/* مربع إجابة */
 .box{
   display:inline-block;
-  width:60px;
-  height:26px;
+  width:70px;
+  height:35px;
   border:2px dashed #666;
-  border-radius:6px;
+  border-radius:8px;
+  margin:2px;
+  vertical-align: middle;
 }
 
-/* أزرار مقارنة */
-.choice button{
-  margin:3px;
-  padding:6px 10px;
-  border-radius:6px;
-  border:1px solid #ccc;
-  background:#fff;
-  color:#000;
-}
-
-/* طباعة */
 @media print{
-  .panel{display:none;}
-  body{background:#fff;}
+  .panel{display:none}
+  body{background:#fff}
+  .page{margin:0; padding:10mm; box-shadow:none; width:100%;}
 }
 </style>
 </head>
@@ -146,8 +147,8 @@ button{
 
 <div class="panel">
 <div class="grid">
-
 <input id="student" placeholder="اسم الطالب">
+<input id="value-theme" placeholder="قيمة الأسبوع (مثال: بر الوالدين)">
 
 <select id="grade">
 <option value="1">الصف الأول</option>
@@ -161,210 +162,204 @@ button{
 </select>
 
 <select id="skill">
-<option value="mix">مختلط</option>
+<option value="mix">مهارات مختلطة</option>
 <option value="add">جمع</option>
 <option value="sub">طرح</option>
 <option value="compare">مقارنة</option>
-<option value="order">ترتيب</option>
-<option value="count">عد</option>
+<option value="order">ترتيب الأعداد</option>
+<option value="count">عد العناصر</option>
 </select>
 
-<input id="count" type="number" value="10" min="1" max="25">
-
+<input id="count" type="number" value="10" min="1" max="25" title="عدد الأسئلة">
 </div>
 
 <br>
-
-<button onclick="build()">توليد الورقة</button>
-<button onclick="window.print()">طباعة</button>
-
+<button onclick="build()">توليد ورقة العمل</button>
+<button class="print-btn" onclick="window.print()">طباعة</button>
 </div>
 
 <div id="out"></div>
 
 <script>
 
-/* أرقام عربية */
+/* تحويل آمن للأرقام إلى العربية */
 function ar(n){
-  return String(n).replace(/[0-9]/g,d=>
-  ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'][d]);
+  return String(n).replace(/[0-9]/g,d=>"٠١٢٣٤٥٦٧٨٩"[d]);
 }
 
-/* عشوائي */
-const rand = (max)=> Math.floor(Math.random()*(max+1));
+/* منع الثغرات وتطهير النصوص */
+function escapeHtml(str){
+  return String(str)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+}
 
-const symbols = ["🍎","⭐","🔵","🔺","🟢"];
-const pick = arr => arr[Math.floor(Math.random()*arr.length)];
+const rand = max => Math.floor(Math.random() * (max + 1));
 
+/* التمثيل البصري للمحسوسات - مجموعات خماسية متباعدة لسهولة العد */
 function show(n){
-  return pick(symbols).repeat(Math.min(n,10));
-}
-
-/* مفتاح منع التكرار المنطقي */
-function key(d){
-  if(d.type==="add" || d.type==="compare"){
-    return d.type + ":" + [Math.min(d.a,d.b),Math.max(d.a,d.b)].join("-");
+  if(n === 0) return "—";
+  let dots = "";
+  for(let i = 1; i <= n; i++){
+    dots += "● ";
+    if(i % 5 === 0 && i !== n) dots += "&nbsp;&nbsp;&nbsp;";
   }
-  if(d.type==="sub"){
-    return d.type + ":" + d.a + "-" + d.b;
+  return dots;
+}
+
+/* حدود الأرقام حسب الصف والمستوى */
+function limit(level, grade){
+  if(grade === "1") {
+    if(level === "easy") return 5;
+    if(level === "mid") return 10;
+    return 15;
+  } else {
+    if(level === "easy") return 10;
+    if(level === "mid") return 20;
+    return 30;
   }
-  if(d.type==="order"){
-    return d.type + ":" + [d.a,d.b,d.c].sort((x,y)=>x-y).join("-");
+}
+
+/* بنك التعليمات */
+function inst(type){
+  const map={
+    add:["اجمع الأعداد التالية:", "عد العناصر ثم اكتب ناتج الجمع:"],
+    sub:["احسب ناتج الطرح:", "أوجد الفرق بين العددين:"],
+    compare:["ضع الإشارة المناسبة ( > ، < ، = ) داخل المربع:"],
+    order:["رتب الأعداد التالية من الأصغر إلى الأكبر:"],
+    count:["عد العناصر واكتب العدد الصحيح:"]
+  };
+  let arr = map[type] || ["أجب عن السؤال التالي:"];
+  return arr[rand(arr.length - 1)];
+}
+
+/* توليد الأسئلة بذكاء وأمان */
+function gen(skill, lim){
+  if(skill === "mix"){
+    const arr=["add","sub","compare","order","count"];
+    skill = arr[rand(arr.length-1)];
   }
-  return JSON.stringify(d);
+
+  if(skill === "add"){
+    let a = rand(lim);
+    let b = rand(lim - a);
+    return {type:"add", a, b};
+  }
+
+  if(skill === "sub"){
+    let a = rand(lim);
+    let b = rand(a);
+    return {type:"sub", a, b};
+  }
+
+  if(skill === "compare"){
+    let a = rand(lim);
+    let b = rand(lim);
+    return {type:"compare", a, b};
+  }
+
+  if(skill === "order"){
+    let nums = new Set();
+    let safeLim = Math.max(lim, 6); 
+    while(nums.size < 3){
+      nums.add(rand(safeLim));
+    }
+    return {type:"order", nums:[...nums]};
+  }
+
+  if(skill === "count"){
+    return {type:"count", a:Math.max(1, rand(lim))};
+  }
+
+  return {type:"count", a:1};
 }
 
-/* مستوى */
-function limitByLevel(level,grade){
-  let base = grade==="1"?10:20;
-  if(level==="easy") return Math.min(10,base);
-  if(level==="mid") return Math.min(20,base);
-  return base;
-}
-
-/* توليد */
-function generate(skill,limit){
-
- if(skill==="mix"){
-   skill = pick(["add","sub","compare","order","count"]);
- }
-
- if(skill==="add"){
-   let a,b;
-   do{
-     a=rand(limit);
-     b=rand(limit);
-   }while(a+b>limit);
-   return {type:"add",a,b};
- }
-
- if(skill==="sub"){
-   let a=rand(limit);
-   let b=rand(a);
-   return {type:"sub",a,b};
- }
-
- if(skill==="compare"){
-   let a=rand(limit),b=rand(limit);
-   if(a===b) b++;
-   return {type:"compare",a,b};
- }
-
- if(skill==="order"){
-   return {
-     type:"order",
-     a:rand(limit),
-     b:rand(limit),
-     c:rand(limit)
-   };
- }
-
- if(skill==="count"){
-   return {type:"count",a:rand(limit)};
- }
-}
-
-/* عرض */
-function render(d,i){
-
- let html = `<div class="q">
- <strong>السؤال ${ar(i)}</strong>`;
+/* بناء وتصميم هيكل السؤال */
+function draw(d, i){
+ let h = `<div class="q">
+ <div><b>السؤال ${ar(i)}:</b></div>
+ <div class="inst">${inst(d.type)}</div>`;
 
  if(d.type==="add"){
- html+=`
- <div class="inst">اجمع باستخدام العدّ</div>
- <div class="level">${show(d.a)} + ${show(d.b)}</div>
- <div class="level">${ar(d.a)} + ${ar(d.b)} = <span class="box"></span></div>`;
+  h+=`<div class="level" style="color:#666; font-size:16px;" dir="ltr">${show(d.a)} &nbsp;&nbsp;+&nbsp;&nbsp; ${show(d.b)}</div>
+  <div class="level">${ar(d.a)} + ${ar(d.b)} = <span class="box"></span></div>`;
  }
 
  if(d.type==="sub"){
- html+=`
- <div class="inst">اطرح باستخدام الإزالة</div>
- <div class="level">${show(d.a)} − ${show(d.b)}</div>
- <div class="level">${ar(d.a)} − ${ar(d.b)} = <span class="box"></span></div>`;
+  h+=`<div class="level" style="color:#666; font-size:16px;" dir="ltr">${show(d.a)} &nbsp;&nbsp;−&nbsp;&nbsp; ${show(d.b)}</div>
+  <div class="level">${ar(d.a)} − ${ar(d.b)} = <span class="box"></span></div>`;
  }
 
  if(d.type==="compare"){
- html+=`
- <div class="inst">اختر الإشارة الصحيحة</div>
- <div class="level">${ar(d.a)} ___ ${ar(d.b)}</div>
- <div class="choice">
- <button>></button>
- <button><</button>
- <button>=</button>
- </div>`;
+  h+=`<div class="level">${ar(d.a)} &nbsp; <span class="box"></span> &nbsp; ${ar(d.b)}</div>`;
  }
 
  if(d.type==="order"){
- html+=`
- <div class="inst">رتب تصاعديًا (اكتب الإجابة)</div>
- <div class="level">${ar(d.a)} ، ${ar(d.b)} ، ${ar(d.c)}</div>
- <div class="level">الإجابة: <span class="box"></span><span class="box"></span><span class="box"></span></div>`;
+  h+=`<div class="level" style="letter-spacing:8px;">${d.nums.map(ar).join(" ، ")}</div>
+  <div class="level" style="margin-top:12px;">
+    <span class="box"></span> &nbsp;ثم&nbsp; <span class="box"></span> &nbsp;ثم&nbsp; <span class="box"></span>
+  </div>`;
  }
 
  if(d.type==="count"){
- html+=`
- <div class="inst">عد واكتب العدد</div>
- <div class="level">${show(d.a)}</div>
- <div class="level"><span class="box"></span></div>`;
+  h+=`<div class="level" style="margin-bottom:10px;" dir="ltr">${show(d.a)}</div>
+  <div class="level">العدد: <span class="box"></span></div>`;
  }
 
- html+="</div>";
- return html;
+ return h + "</div>";
 }
 
-/* بناء */
+/* إنشاء الصفحة وتعبئة البيانات */
 function build(){
+ let student = escapeHtml(document.getElementById("student").value || "_____________________");
+ let valueTheme = escapeHtml(document.getElementById("value-theme").value || "طلب العلم والعمل الصالح");
+ let grade = document.getElementById("grade").value;
+ let level = document.getElementById("level").value;
+ let skill = document.getElementById("skill").value;
+ let count = Math.min(25, Math.max(1, parseInt(document.getElementById("count").value || 10)));
 
- let used = new Set();
+ let lim = limit(level, grade);
+ 
+ const gradeAr = grade === "1" ? "الأول" : "الثاني";
+ const levelAr = {"easy":"سهل", "mid":"متوسط", "hard":"متقدم"}[level];
 
- let student=document.getElementById("student").value || "________";
- let grade=document.getElementById("grade").value;
- let level=document.getElementById("level").value;
- let skill=document.getElementById("skill").value;
- let count=parseInt(document.getElementById("count").value);
-
- let limit = limitByLevel(level,grade);
-
- let html=`
+ let html = `
  <div class="page">
 
- <div class="title">ورقة عمل ذكية في الرياضيات</div>
-
- <div class="goal">المهارة المستهدفة: تنمية مهارات العدّ والجمع والطرح البصري</div>
-
- <div style="text-align:center;margin-top:5px;">
- مستوى: ${level} | الصف: ${grade}
+ <div class="header">
+ <div class="title">ورقة عمل الرياضيات الذكية</div>
+ <div class="goal">التدرج التربوي: محسوس ← بصري ← مجرد</div>
  </div>
 
  <div class="meta">
- <div>المعلم: ______</div>
- <div>المدرسة: ______</div>
- <div>التاريخ: ______</div>
+ <div>المعلم: ______________</div>
+ <div>المدرسة: ______________</div>
+ <div>التاريخ: ___ / ___ / ١٤٤٧هـ</div>
+ <div>قيمة الأسبوع: ${valueTheme}</div>
  </div>
 
- <div class="student">اسم الطالب: ${student}</div>
+ <div class="student">اسم الطالب/ة: ${student}</div>
+
+ <div style="text-align:center; margin-top:10px; font-weight:bold; color:#555;">
+ الصف: ${gradeAr} &nbsp;|&nbsp; مستوى التحدي: ${levelAr}
+ </div>
+ <hr style="border:0; border-top:1px dashed var(--border); margin-top:15px;">
  `;
 
- for(let i=1;i<=count;i++){
-
-   let d,tries=0;
-
-   do{
-     d=generate(skill,limit);
-     tries++;
-   }while(used.has(key(d)) && tries<50);
-
-   used.add(key(d));
-   html+=render(d,i);
+ for(let i=1; i<=count; i++){
+   html += draw(gen(skill, lim), i);
  }
 
- html+="</div>";
-
- document.getElementById("out").innerHTML=html;
+ html += "</div>";
+ document.getElementById("out").innerHTML = html;
 }
 
+// بناء أولي عند تحميل الصفحة
 build();
+
 </script>
 
 </body>
