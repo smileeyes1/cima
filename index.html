@@ -3,9 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>محرك الرياضيات الذكي - النسخة المعاد هندستها</title>
+<title>نظام أوراق العمل المطوّر</title>
 
 <style>
+
+:root{
+  --primary:#1a73e8;
+  --bg:#f6f8fc;
+  --border:#e0e3e7;
+  --soft:#f1f3f4;
+  --text:#1f1f1f;
+  --muted:#5f6368;
+}
 
 *{
   box-sizing:border-box;
@@ -14,167 +23,163 @@
 
 body{
   margin:0;
-  background:#e9f3f4;
+  background:var(--bg);
 }
+
+/* ===== لوحة التحكم ===== */
 
 .panel{
-  background:#fff;
-  padding:15px;
-  border-bottom:3px solid #1b5e20;
+  background:white;
+  padding:16px;
+  border-bottom:1px solid var(--border);
 }
 
-.row{
+.grid{
   display:grid;
   grid-template-columns:repeat(4,1fr);
   gap:10px;
 }
 
 label{
-  font-size:12px;
-  font-weight:bold;
+  font-size:11px;
+  color:var(--muted);
 }
 
 input,select{
   width:100%;
-  padding:8px;
-  border-radius:8px;
-  border:1px solid #ccc;
-}
-
-button{
-  margin-top:10px;
-  padding:10px;
-  border:none;
+  padding:9px;
+  border:1px solid var(--border);
   border-radius:10px;
-  font-weight:bold;
-  cursor:pointer;
 }
 
-.gen{background:#1b5e20;color:white;}
-.prt{background:#1565c0;color:white;}
+/* ===== الصفحة ===== */
 
 .page{
   width:210mm;
   min-height:297mm;
+  margin:20px auto;
   background:white;
-  margin:15px auto;
-  padding:12mm;
+  padding:16mm;
+}
+
+/* ===== السؤال ===== */
+
+.q{
+  margin-top:14px;
+  padding:14px;
+  border:1px solid var(--border);
+  border-radius:12px;
 }
 
 .title{
   text-align:center;
-  font-size:24px;
-  color:#1b5e20;
-  font-weight:bold;
-}
-
-.subtitle{
-  text-align:center;
-  font-size:12px;
-  color:#666;
+  font-size:22px;
+  font-weight:600;
 }
 
 .meta{
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  gap:6px;
+  gap:8px;
   margin-top:10px;
-  font-size:11px;
 }
 
 .meta div{
-  padding:6px;
-  border-radius:6px;
-  background:#f7f7f7;
-  border:1px solid #ddd;
+  background:var(--soft);
+  padding:8px;
+  border-radius:10px;
+  font-size:11px;
 }
 
 .student{
   margin-top:10px;
   padding:10px;
-  border:2px dashed #888;
+  background:var(--soft);
   border-radius:10px;
 }
 
-.line{
-  display:inline-block;
-  width:180px;
-  border-bottom:1px solid #000;
+.qh{
+  font-weight:600;
+  color:var(--primary);
 }
 
-.q{
-  margin-top:12px;
-  padding:12px;
-  border-radius:14px;
-  border:1px solid #d0d7d7;
-  background:linear-gradient(180deg,#fff,#f9fbfb);
-}
-
-.q-header{
-  font-size:13px;
-  font-weight:bold;
-  color:#1b5e20;
-  margin-bottom:6px;
+.step{
+  font-size:11px;
+  color:var(--muted);
 }
 
 .visual{
   text-align:center;
   font-size:18px;
-  margin:6px 0;
+  margin:10px 0;
 }
 
 .math{
   display:flex;
   justify-content:center;
-  gap:8px;
+  gap:10px;
   font-size:22px;
-  align-items:center;
 }
 
-.answer{
-  width:55px;
-  height:34px;
-  border:2px dashed #444;
-  border-radius:6px;
+.box{
+  width:60px;
+  height:36px;
+  border:2px dashed #666;
+  border-radius:8px;
 }
+
+/* ===== الطباعة ===== */
 
 @media print{
   .panel{display:none;}
   body{background:white;}
-  .page{margin:0;}
+  .page{margin:0;border:none;}
 }
 
-@page{size:A4;margin:0;}
+@page{
+  size:A4;
+  margin:12mm;
+}
 
 </style>
 </head>
 
 <body>
 
+<!-- ================= لوحة التحكم ================= -->
+
 <div class="panel">
 
-<h3>محرك الرياضيات الذكي - النسخة المعاد هندستها</h3>
+<h3>نظام أوراق العمل المطوّر</h3>
 
-<div class="row">
+<div class="grid">
 
 <div>
 <label>المهارة</label>
 <select id="skill">
 <option value="mix">مختلط</option>
-<option value="add">الجمع</option>
-<option value="sub">الطرح</option>
-<option value="compare">المقارنة</option>
-<option value="order">الترتيب</option>
-<option value="count">العدّ</option>
+<option value="add">جمع</option>
+<option value="sub">طرح</option>
+<option value="compare">مقارنة</option>
+<option value="order">ترتيب</option>
+<option value="count">عد</option>
 </select>
 </div>
 
 <div>
-<label>الحد العددي</label>
+<label>المستوى</label>
+<select id="level">
+<option value="1">محسوس</option>
+<option value="2">بصري</option>
+<option value="3">مجرد</option>
+</select>
+</div>
+
+<div>
+<label>الحد</label>
 <select id="limit">
-<option value="10">ضمن 10</option>
-<option value="20">ضمن 20</option>
-<option value="100">ضمن 100</option>
+<option value="10">10</option>
+<option value="20">20</option>
 </select>
 </div>
 
@@ -183,32 +188,9 @@ button{
 <input id="count" type="number" value="10">
 </div>
 
-<div>
-<label>اسم الدرس</label>
-<input id="lesson" value="رياضيات">
 </div>
 
-</div>
-
-<div class="row">
-
-<div>
-<label>المعلم</label>
-<input id="teacher" value="المعلم">
-</div>
-
-<div>
-<label>المدرسة</label>
-<input id="school" value="مدرسة">
-</div>
-
-<div></div>
-<div></div>
-
-</div>
-
-<button class="gen" onclick="build()">توليد</button>
-<button class="prt" onclick="window.print()">طباعة</button>
+<button onclick="build()">توليد</button>
 
 </div>
 
@@ -216,7 +198,7 @@ button{
 
 <script>
 
-/* ================= أدوات ================= */
+/* ================= أرقام عربية ================= */
 
 function ar(n){
   return String(n).replace(/[0-9]/g,d=>
@@ -224,220 +206,214 @@ function ar(n){
   );
 }
 
-function rand(max){
-  return Math.floor(Math.random()*(max+1));
+/* ================= rand (إصلاح منع الصفر) ================= */
+
+function rand(max,allowZero=true){
+  let n=Math.floor(Math.random()*(max+1));
+  if(!allowZero && n===0) return 1;
+  return n;
 }
 
-/* ================= بصمة السؤال (إغلاق التكرار الحقيقي) ================= */
+/* ================= منع التكرار ================= */
 
-let used = new Set();
+let used=new Set();
 
-function fingerprint(d){
-  return JSON.stringify(d);
+function norm(a,b){
+  return a>b ? `${b}-${a}` : `${a}-${b}`;
 }
 
-/* ================= توليد موحد ================= */
+/* ================= توليد ================= */
 
 function generate(skill,limit){
 
-  let a,b,c;
+  if(skill==="mix"){
+    let pool=["add","sub","compare","order","count"];
+    skill=pool[rand(pool.length-1)];
+  }
 
-  switch(skill){
+  if(skill==="add"){
+    let a,b;
+    do{
+      a=rand(limit,false);
+      b=rand(limit,false);
+    }while(a+b>limit);
+    return {type:"add",a,b};
+  }
 
-    case "add":
-      do{
-        a=rand(limit); b=rand(limit);
-      }while(a+b>limit || a===0 || b===0);
-      return {type:"add",a,b};
+  if(skill==="sub"){
+    let a=rand(limit,false);
+    let b=rand(a,false);
+    return {type:"sub",a,b};
+  }
 
-    case "sub":
-      a=rand(limit);
-      b=rand(a);
-      return {type:"sub",a,b};
+  if(skill==="compare"){
+    let a=rand(limit,false);
+    let b=rand(limit,false);
 
-    case "compare":
-      a=rand(limit); b=rand(limit);
-      if(a===b) b=(b+1)%(limit+1);
-      return {type:"compare",a,b};
+    if(a===b) b=Math.min(limit,b+1);
 
-    case "order":
-      do{
-        a=rand(limit); b=rand(limit); c=rand(limit);
-      }while(a===b || a===c || b===c);
-      return {type:"order",a,b,c};
+    return {type:"compare",a,b};
+  }
 
-    case "count":
-      a=Math.max(1,rand(limit));
-      return {type:"count",a};
+  if(skill==="order"){
+    let a=rand(limit),b=rand(limit),c=rand(limit);
+    while(a===b||a===c||b===c){
+      a=rand(limit);b=rand(limit);c=rand(limit);
+    }
+    return {type:"order",a,b,c};
+  }
 
-    case "mix":
-      let skills=["add","sub","compare","order","count"];
-      return generate(skills[rand(skills.length-1)],limit);
+  if(skill==="count"){
+    return {type:"count",a:rand(limit)};
   }
 }
 
-/* ================= تحقق ================= */
+/* ================= منع التكرار الحقيقي ================= */
 
-function validate(d,skill,limit){
-
-  if(skill==="add" && d.a + d.b > limit) return false;
-  if(skill==="sub" && d.b > d.a) return false;
-  if(skill==="order" && (d.a===d.b||d.b===d.c||d.a===d.c)) return false;
-
-  return true;
-}
-
-/* ================= fallback ذكي ================= */
-
-function fallback(skill){
-
-  return {
-    add:{type:"add",a:1,b:1},
-    sub:{type:"sub",a:2,b:1},
-    compare:{type:"compare",a:1,b:2},
-    order:{type:"order",a:1,b:2,c:3},
-    count:{type:"count",a:1},
-    mix:{type:"count",a:1}
-  }[skill] || {type:"count",a:1};
-}
-
-/* ================= توليد مستقر ================= */
-
-function stableGenerate(skill,limit){
-
-  let d;
-  let tries=0;
-
-  while(tries<40){
-
-    d=generate(skill,limit);
-
-    if(!validate(d,skill,limit)){
-      tries++;
-      continue;
-    }
-
-    let fp=fingerprint(d);
-
-    if(used.has(fp)){
-      tries++;
-      continue;
-    }
-
-    used.add(fp);
-    return d;
-  }
-
-  return fallback(skill);
-}
-
-/* ================= عرض ================= */
-
-function render(d){
+function isDup(d){
 
   if(d.type==="add"){
-    return `
-    <div class="q">
-      <div class="q-header">الجمع</div>
-      <div class="visual">🍎➕🍌</div>
-      <div class="math">
-        <span>${ar(d.a)}</span>
-        <span>+</span>
-        <span>${ar(d.b)}</span>
-        <span>=</span>
-        <span class="answer"></span>
-      </div>
-    </div>`;
+    let k=norm(d.a,d.b);
+    if(used.has("a:"+k)) return true;
+    used.add("a:"+k);
   }
 
   if(d.type==="sub"){
-    return `
-    <div class="q">
-      <div class="q-header">الطرح</div>
-      <div class="visual">🍎➖🍌</div>
-      <div class="math">
-        <span>${ar(d.a)}</span>
-        <span>-</span>
-        <span>${ar(d.b)}</span>
-        <span>=</span>
-        <span class="answer"></span>
-      </div>
-    </div>`;
+    let k=`${d.a}-${d.b}`;
+    if(used.has("s:"+k)) return true;
+    used.add("s:"+k);
   }
 
   if(d.type==="compare"){
-    return `
-    <div class="q">
-      <div class="q-header">قارن</div>
-      <div class="math">
-        <span>${ar(d.a)}</span>
-        <span>___</span>
-        <span>${ar(d.b)}</span>
-      </div>
-    </div>`;
+    let k=norm(d.a,d.b);
+    if(used.has("c:"+k)) return true;
+    used.add("c:"+k);
   }
 
   if(d.type==="order"){
-    return `
-    <div class="q">
-      <div class="q-header">رتب</div>
-      <div class="math">
-        <span>${ar(d.a)}</span>
-        <span>${ar(d.b)}</span>
-        <span>${ar(d.c)}</span>
-      </div>
-    </div>`;
+    let k=[d.a,d.b,d.c].sort().join(",");
+    if(used.has("o:"+k)) return true;
+    used.add("o:"+k);
   }
 
   if(d.type==="count"){
-    return `
-    <div class="q">
-      <div class="q-header">عدّ</div>
-      <div class="visual">
-        ${"⭐ ".repeat(Math.max(1,d.a))}
-      </div>
-      <div class="math">
-        <span class="answer"></span>
-      </div>
-    </div>`;
+    let k=d.a;
+    if(used.has("n:"+k)) return true;
+    used.add("n:"+k);
   }
 
-  return `<div class="q"></div>`;
+  return false;
 }
 
-/* ================= بناء ================= */
+/* ================= التدرج ================= */
+
+function step(l){
+  return l==1?"محسوس":l==2?"بصري":"مجرد";
+}
+
+/* ================= تمثيل بصري محسّن ================= */
+
+function repeat(icon,n){
+  return icon.repeat(Math.min(n,15));
+}
+
+function visual(d,level){
+
+  if(level==1){
+    if(d.type==="count") return repeat("🍎 ",d.a);
+    if(d.type==="add") return repeat("🍎 ",d.a)+" + "+repeat("🍌 ",d.b);
+    if(d.type==="sub") return repeat("🍎 ",d.a)+" - "+repeat("🍎 ",d.b);
+  }
+
+  if(level==2){
+    if(d.type==="count") return repeat("⭐ ",d.a);
+    if(d.type==="add") return `🍎 ${d.a} + 🍌 ${d.b}`;
+    if(d.type==="sub") return `🍎 ${d.a} - 🍌 ${d.b}`;
+  }
+
+  return "";
+}
+
+/* ================= عرض السؤال ================= */
+
+function render(d,i,level){
+
+  let ins=
+    d.type==="compare"?"ضع (> < =)" :
+    d.type==="order"?"رتب من الأصغر إلى الأكبر" :
+    d.type==="count"?"عدّ العناصر":"أوجد الناتج";
+
+  let math="";
+
+  if(d.type==="add")
+    math=`${ar(d.a)} + ${ar(d.b)} = <span class="box"></span>`;
+
+  if(d.type==="sub")
+    math=`${ar(d.a)} - ${ar(d.b)} = <span class="box"></span>`;
+
+  if(d.type==="compare")
+    math=`${ar(d.a)} <span class="box"></span> ${ar(d.b)}`;
+
+  if(d.type==="order")
+    math=`${ar(d.a)} , ${ar(d.b)} , ${ar(d.c)} <br><br> □ □ □`;
+
+  if(d.type==="count")
+    math=`كم العدد؟ <span class="box"></span>`;
+
+  return `
+  <div class="q">
+
+    <div class="qh">السؤال ${ar(i)}</div>
+    <div class="step">التدرج: ${step(level)}</div>
+
+    <div class="visual">${visual(d,level)}</div>
+
+    <div style="text-align:center;font-weight:600;margin:6px 0">
+      ${ins}
+    </div>
+
+    <div class="math">${math}</div>
+
+  </div>`;
+}
+
+/* ================= البناء ================= */
 
 function build(){
 
   used.clear();
 
   let skill=document.getElementById("skill").value;
+  let level=parseInt(document.getElementById("level").value);
   let limit=parseInt(document.getElementById("limit").value);
   let count=parseInt(document.getElementById("count").value);
-  let lesson=document.getElementById("lesson").value;
-  let teacher=document.getElementById("teacher").value;
-  let school=document.getElementById("school").value;
 
   let html=`
   <div class="page">
 
-    <div class="title">${lesson}</div>
-    <div class="subtitle">محرك تعليمي ذكي متوازن - النسخة النهائية</div>
+    <div class="title">ورقة عمل رياضيات</div>
 
     <div class="meta">
-      <div>المعلم: ${teacher}</div>
-      <div>المدرسة: ${school}</div>
-      <div>الحد: ${ar(limit)}</div>
+      <div>المعلم</div>
+      <div>المدرسة</div>
+      <div>المستوى: ${step(level)}</div>
     </div>
 
     <div class="student">
-      اسم الطالب: <span class="line"></span>
+      اسم الطالب: ____________________
     </div>
   `;
 
   for(let i=1;i<=count;i++){
-    let d=stableGenerate(skill,limit);
-    html+=render(d);
+
+    let d,tries=0;
+
+    do{
+      d=generate(skill,limit);
+      tries++;
+    }while(isDup(d)&&tries<40);
+
+    html+=render(d,i,level);
   }
 
   html+=`</div>`;
