@@ -2,14 +2,15 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<title>ورقة عمل الرياضيات الذكية المطورة</title>
+<title>ورقة عمل الرياضيات الاحترافية المطورة</title>
 
 <style>
 :root{
   --primary:#1a73e8;
   --bg:#f4f6fb;
-  --border:#e0e3e7;
-  --soft:#eef2f7;
+  --border:#bdc3c7;
+  --soft:#f8f9fa;
+  --dark:#2c3e50;
 }
 
 *{
@@ -20,125 +21,178 @@
 body{
   margin:0;
   background:var(--bg);
+  color: var(--dark);
 }
 
-/* لوحة التحكم */
+/* لوحة التحكم فوق المدونة */
 .panel{
   background:#fff;
-  padding:15px;
-  border-bottom:1px solid var(--border);
+  padding:20px;
+  border-bottom:2px solid var(--primary);
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
 }
 
 .grid{
   display:grid;
-  grid-template-columns:repeat(auto-fit, minmax(150px, 1fr));
-  gap:10px;
+  grid-template-columns:repeat(auto-fit, minmax(180px, 1fr));
+  gap:12px;
+}
+
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.field-group label {
+  font-size: 12px;
+  font-weight: bold;
+  color: #555;
 }
 
 input,select{
   padding:10px;
-  border-radius:8px;
+  border-radius:6px;
   border:1px solid var(--border);
   font-size:14px;
+  width: 100%;
+}
+
+input:focus, select:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.actions {
+  margin-top: 15px;
+  display: flex;
+  gap: 10px;
 }
 
 button{
-  padding:10px 20px;
+  padding:12px 24px;
   border:none;
-  border-radius:8px;
+  border-radius:6px;
   background:var(--primary);
   color:white;
   cursor:pointer;
   font-weight:bold;
+  font-size: 14px;
 }
 
 button.print-btn {
   background:#202124;
 }
 
-/* الصفحة */
+/* تصميم صفحة الطباعة القياسية A4 */
 .page{
   width:210mm;
   min-height:297mm;
   background:#fff;
-  margin:15px auto;
-  padding:15mm;
-  box-shadow: 0 0 10px rgba(0,0,0,0.05);
+  margin:20px auto;
+  padding:20mm;
+  box-shadow: 0 0 15px rgba(0,0,0,0.1);
+  position: relative;
+  border: 1px solid #ddd;
 }
 
-.header{text-align:center; margin-bottom: 15px;}
+/* الترويسة المدرسية الرسمية */
+.school-header {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr 1fr;
+  align-items: center;
+  border-bottom: 2px double #000;
+  padding-bottom: 10px;
+  margin-bottom: 15px;
+}
+
+.school-info {
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.main-title-area {
+  text-align: center;
+}
+
 .title{
-  font-size:26px;
+  font-size:24px;
   font-weight:bold;
-  color:#1a73e8;
+  color:#000;
+  margin: 0;
 }
 
 .goal{
-  font-size:13px;
-  color:#555;
+  font-size:12px;
+  color:#444;
   margin-top:5px;
+  font-style: italic;
 }
 
-.meta{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:6px;
+.student-bar{
   margin-top:10px;
-}
-
-.meta div{
+  padding:10px;
+  border:1px solid #000;
   background:var(--soft);
-  padding:8px;
-  font-size:13px;
-  border-radius:6px;
-  text-align:center;
-}
-
-.student{
-  margin-top:10px;
-  padding:12px;
-  background:var(--soft);
-  border-radius:8px;
+  border-radius:4px;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  font-size: 14px;
   font-weight:bold;
 }
 
+/* تنسيق الأسئلة */
 .q{
-  margin-top:15px;
+  margin-top:18px;
   padding:15px;
-  border:1px solid var(--border);
-  border-radius:12px;
+  border:1px solid #ccced0;
+  border-radius:8px;
   page-break-inside: avoid;
   break-inside: avoid;
 }
 
 .inst{
-  font-size:14px;
-  color:#333;
+  font-size:15px;
   font-weight:bold;
-  margin-bottom:8px;
+  margin-bottom:12px;
+  color: #000;
 }
 
-.level{
+.math-display{
   text-align:center;
-  margin-top:8px;
-  font-size:20px;
-  letter-spacing: 2px;
+  margin-top:10px;
+  font-size:22px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+
+/* إطار المجموعات البصرية المنظمة (إطار الخمسة) */
+.dot-frame {
+  display: inline-flex;
+  border: 1px solid #95a5a6;
+  border-radius: 4px;
+  padding: 4px 8px;
+  background: #fafafa;
+  margin: 0 4px;
+  letter-spacing: 3px;
+  font-size: 16px;
 }
 
 .box{
   display:inline-block;
-  width:70px;
-  height:35px;
-  border:2px dashed #666;
-  border-radius:8px;
-  margin:2px;
+  width:65px;
+  height:38px;
+  border:2px dashed #444;
+  border-radius:6px;
   vertical-align: middle;
 }
 
 @media print{
   .panel{display:none}
   body{background:#fff}
-  .page{margin:0; padding:10mm; box-shadow:none; width:100%;}
+  .page{margin:0; padding:12mm; box-shadow:none; width:100%; border:none;}
 }
 </style>
 </head>
@@ -147,217 +201,319 @@ button.print-btn {
 
 <div class="panel">
 <div class="grid">
-<input id="student" placeholder="اسم الطالب">
-<input id="value-theme" placeholder="قيمة الأسبوع (مثال: بر الوالدين)">
-
-<select id="grade">
-<option value="1">الصف الأول</option>
-<option value="2">الصف الثاني</option>
-</select>
-
-<select id="level">
-<option value="easy">سهل</option>
-<option value="mid">متوسط</option>
-<option value="hard">متقدم</option>
-</select>
-
-<select id="skill">
-<option value="mix">مهارات مختلطة</option>
-<option value="add">جمع</option>
-<option value="sub">طرح</option>
-<option value="compare">مقارنة</option>
-<option value="order">ترتيب الأعداد</option>
-<option value="count">عد العناصر</option>
-</select>
-
-<input id="count" type="number" value="10" min="1" max="25" title="عدد الأسئلة">
+  <div class="field-group">
+    <label>وزارة التربية والتعليم / المديرية</label>
+    <input id="dir-name" value="مديرية التربية والتعليم - طوباس">
+  </div>
+  <div class="field-group">
+    <label>اسم المدرسة</label>
+    <input id="school-name" value="مدرسة عاطوف الأساسية المختلطة">
+  </div>
+  <div class="field-group">
+    <label>اسم المعلم</label>
+    <input id="teacher-name" value="محمد وجيه غنام">
+  </div>
+  <div class="field-group">
+    <label>قيمة الأسبوع / القيمة التربوية</label>
+    <input id="value-theme" value="الأمانة والصدق في العمل">
+  </div>
+  <div class="field-group">
+    <label>اسم الطالب (اختياري للطباعة الفردية)</label>
+    <input id="student" placeholder="دعه فارغاً للطباعة الجماعية">
+  </div>
+  <div class="field-group">
+    <label>الصف الدراسي</label>
+    <select id="grade">
+      <option value="1">الصف الأول الأساسي</option>
+      <option value="2">الصف الثاني الأساسي</option>
+    </select>
+  </div>
+  <div class="field-group">
+    <label>مستوى التحدي التربوي</label>
+    <select id="level">
+      <option value="easy">سهل (دعم وتثبيت)</option>
+      <option value="mid" selected>متوسط (تمرن قياسي)</option>
+      <option value="hard">متقدم (قدرات عليا)</option>
+    </select>
+  </div>
+  <div class="field-group">
+    <label>المهارة المستهدفة</label>
+    <select id="skill">
+      <option value="mix">مهارات مختلطة (توزيع متوازن)</option>
+      <option value="count">عد العناصر وترسيخ المدلول</option>
+      <option value="add">عملية الجمع</option>
+      <option value="sub">عملية الطرح</option>
+      <option value="compare">المقارنة (أكبر، أصغر، يساوي)</option>
+      <option value="order">ترتيب الأعداد</option>
+    </select>
+  </div>
+  <div class="field-group">
+    <label>عدد الأسئلة المطلوبة</label>
+    <input id="count" type="number" value="8" min="1" max="20">
+  </div>
 </div>
 
-<br>
-<button onclick="build()">توليد ورقة العمل</button>
-<button class="print-btn" onclick="window.print()">طباعة</button>
+<div class="actions">
+  <button onclick="build()">توليد ورقة العمل التربوية</button>
+  <button class="print-btn" onclick="window.print()">طباعة ورقة العمل</button>
+</div>
 </div>
 
 <div id="out"></div>
 
 <script>
 
-/* تحويل آمن للأرقام إلى العربية */
+/* تحويل الأرقام إلى العربية الشرقية بشكل صارم ومستقر */
 function ar(n){
-  return String(n).replace(/[0-9]/g,d=>"٠١٢٣٤٥٦٧٨٩"[d]);
+  return String(n).replace(/[0-9]/g, d => "٠١٢٣٤٥٦٧٨٩"[d]);
 }
 
-/* منع الثغرات وتطهير النصوص */
 function escapeHtml(str){
-  return String(str)
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
+  return String(str).replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;");
 }
 
-const rand = max => Math.floor(Math.random() * (max + 1));
+const randRange = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
-/* التمثيل البصري للمحسوسات - مجموعات خماسية متباعدة لسهولة العد */
-function show(n){
+/* تمثيل بصري منظم قائم على "إطار الخمسة التربوي" لمنع التشتت */
+function showOrganizedDots(n){
   if(n === 0) return "—";
-  let dots = "";
-  for(let i = 1; i <= n; i++){
-    dots += "● ";
-    if(i % 5 === 0 && i !== n) dots += "&nbsp;&nbsp;&nbsp;";
+  let html = "";
+  let remaining = n;
+  
+  while(remaining > 0) {
+    let currentGroup = Math.min(remaining, 5);
+    html += `<span class="dot-frame">`;
+    html += "● ".repeat(currentGroup).trim();
+    html += `</span>`;
+    remaining -= currentGroup;
   }
-  return dots;
+  return html;
 }
 
-/* حدود الأرقام حسب الصف والمستوى */
-function limit(level, grade){
+/* ضبط حدود الأرقام بدقة بناءً على المناهج والمستويات */
+function getLimits(level, grade){
   if(grade === "1") {
-    if(level === "easy") return 5;
-    if(level === "mid") return 10;
-    return 15;
+    if(level === "easy") return { min: 1, max: 5 };
+    if(level === "mid") return { min: 1, max: 10 };
+    return { min: 5, max: 20 };
   } else {
-    if(level === "easy") return 10;
-    if(level === "mid") return 20;
-    return 30;
+    if(level === "easy") return { min: 5, max: 20 };
+    if(level === "mid") return { min: 10, max: 50 };
+    return { min: 20, max: 99 };
   }
 }
 
-/* بنك التعليمات */
-function inst(type){
-  const map={
-    add:["اجمع الأعداد التالية:", "عد العناصر ثم اكتب ناتج الجمع:"],
-    sub:["احسب ناتج الطرح:", "أوجد الفرق بين العددين:"],
-    compare:["ضع الإشارة المناسبة ( > ، < ، = ) داخل المربع:"],
-    order:["رتب الأعداد التالية من الأصغر إلى الأكبر:"],
-    count:["عد العناصر واكتب العدد الصحيح:"]
+/* التوليد الذكي للأهداف السلوكية */
+function generateEducationalGoal(skill, gradeAr, levelAr) {
+  const goals = {
+    count: `أن يربط الطالب بين المدلول البصري المنظم والرمز العددي الصحيح بدقة.`,
+    add: `أن يجد الطالب ناتج جمع عددين ضمن النطاق المستهدف بصورة صحيحة.`,
+    sub: `أن يستنتج الطالب ناتج الطرح دون خطأ محققاً مهارة الحساب الذهني.`,
+    compare: `أن يقارن الطالب بين قيم الأعداد مستخدماً الإشارات الرياضية المناسبة بشكل صحيح.`,
+    order: `أن يعيد الطالب ترتيب الأعداد ترتيباً منطقياً سليماً يظهر فهمه للتسلسل العددي.`,
+    mix: `تنمية وتمكين المهارات الرياضية الأساسية المتنوعة وفق التدرج المنطقي للمستوى وبناء شخصية الطالب المستقلة.`
   };
-  let arr = map[type] || ["أجب عن السؤال التالي:"];
-  return arr[rand(arr.length - 1)];
+  return goals[skill] || goals['mix'];
 }
 
-/* توليد الأسئلة بذكاء وأمان */
-function gen(skill, lim){
-  if(skill === "mix"){
-    const arr=["add","sub","compare","order","count"];
-    skill = arr[rand(arr.length-1)];
-  }
+/* بنك التعليمات الموجهة */
+function getInstruction(type, subtype = "") {
+  const map = {
+    add: ["جِدْ ناتج الجمع البصري والمجرد الآتي:", "احسب ناتج جمع الأعداد التالية مستعيناً بالنقاط:"],
+    sub: ["أوجد ناتج الطرح مستعيناً بالمجموعات البصرية:", "احسب الفرق بين الأعداد الآتية بدقة:"],
+    compare: ["ضع الإشارة المناسبة ( > ، < ، = ) داخل المربع لتصبح العبارة صحيحة:"],
+    order_asc: ["رتب الأعداد التالية ترتيباً تصاعدياً (من الأصغر إلى الأكبر):"],
+    order_desc: ["رتب الأعداد التالية ترتيباً تنازلياً (من الأكبر إلى الأصغر):"],
+    count: ["عُدّ المجموعات المنظمة التالية واكتب العدد المناسب داخل المربع:"]
+  };
+  let key = type;
+  if(type === "order") key = subtype === "asc" ? "order_asc" : "order_desc";
+  let arr = map[key] || ["أجب عن السؤال التالي بعناية:"];
+  return arr[Math.floor(Math.random() * arr.length)];
+}
 
-  if(skill === "add"){
-    let a = rand(lim);
-    let b = rand(lim - a);
-    return {type:"add", a, b};
-  }
+/* توليد الأسئلة الفريدة تربوياً ومنع الضعيف منها */
+function generateQuestion(skill, limits, usedQuestions) {
+  let attempts = 0;
+  while(attempts < 100) {
+    attempts++;
+    let q = null;
 
-  if(skill === "sub"){
-    let a = rand(lim);
-    let b = rand(a);
-    return {type:"sub", a, b};
-  }
-
-  if(skill === "compare"){
-    let a = rand(lim);
-    let b = rand(lim);
-    return {type:"compare", a, b};
-  }
-
-  if(skill === "order"){
-    let nums = new Set();
-    let safeLim = Math.max(lim, 6); 
-    while(nums.size < 3){
-      nums.add(rand(safeLim));
+    if(skill === "add") {
+      let a = randRange(limits.min, limits.max - 1);
+      let b = randRange(1, limits.max - a); // منع الجمع مع صفر لزيادة القيمة التربوية في المتوسط والمتقدم
+      q = { type: "add", a, b, id: `add-${a}-${b}` };
     }
-    return {type:"order", nums:[...nums]};
-  }
+    else if(skill === "sub") {
+      let a = randRange(limits.min + 1, limits.max);
+      let b = randRange(limits.min, a - 1); // ضمان عدم وجود ناتج صفر أو سالب لصفوف أولى بشكل متكرر وممل
+      q = { type: "sub", a, b, id: `sub-${a}-${b}` };
+    }
+    else if(skill === "compare") {
+      let a = randRange(limits.min, limits.max);
+      let b = randRange(limits.min, limits.max);
+      q = { type: "compare", a, b, id: `comp-${a}-${b}` };
+    }
+    else if(skill === "order") {
+      let nums = new Set();
+      while(nums.size < 3) {
+        nums.add(randRange(limits.min, limits.max));
+      }
+      let mode = Math.random() > 0.5 ? "asc" : "desc";
+      let sortedArr = [...nums];
+      q = { type: "order", nums: sortedArr, mode, id: `order-${sortedArr.sort().join('-')}-${mode}` };
+    }
+    else if(skill === "count") {
+      let a = randRange(limits.min, limits.max);
+      q = { type: "count", a, id: `count-${a}` };
+    }
 
-  if(skill === "count"){
-    return {type:"count", a:Math.max(1, rand(lim))};
+    if(q && !usedQuestions.has(q.id)) {
+      usedQuestions.add(q.id);
+      return q;
+    }
   }
-
-  return {type:"count", a:1};
+  // في حال استنفاد المحاولات (نطاق ضيق جداً) نرجع توليداً حراً
+  return { type: "count", a: randRange(limits.min, limits.max) };
 }
 
-/* بناء وتصميم هيكل السؤال */
-function draw(d, i){
- let h = `<div class="q">
- <div><b>السؤال ${ar(i)}:</b></div>
- <div class="inst">${inst(d.type)}</div>`;
-
- if(d.type==="add"){
-  h+=`<div class="level" style="color:#666; font-size:16px;" dir="ltr">${show(d.a)} &nbsp;&nbsp;+&nbsp;&nbsp; ${show(d.b)}</div>
-  <div class="level">${ar(d.a)} + ${ar(d.b)} = <span class="box"></span></div>`;
- }
-
- if(d.type==="sub"){
-  h+=`<div class="level" style="color:#666; font-size:16px;" dir="ltr">${show(d.a)} &nbsp;&nbsp;−&nbsp;&nbsp; ${show(d.b)}</div>
-  <div class="level">${ar(d.a)} − ${ar(d.b)} = <span class="box"></span></div>`;
- }
-
- if(d.type==="compare"){
-  h+=`<div class="level">${ar(d.a)} &nbsp; <span class="box"></span> &nbsp; ${ar(d.b)}</div>`;
- }
-
- if(d.type==="order"){
-  h+=`<div class="level" style="letter-spacing:8px;">${d.nums.map(ar).join(" ، ")}</div>
-  <div class="level" style="margin-top:12px;">
-    <span class="box"></span> &nbsp;ثم&nbsp; <span class="box"></span> &nbsp;ثم&nbsp; <span class="box"></span>
-  </div>`;
- }
-
- if(d.type==="count"){
-  h+=`<div class="level" style="margin-bottom:10px;" dir="ltr">${show(d.a)}</div>
-  <div class="level">العدد: <span class="box"></span></div>`;
- }
-
- return h + "</div>";
-}
-
-/* إنشاء الصفحة وتعبئة البيانات */
+/* بناء ورقة العمل وعرضها للطباعة */
 function build(){
- let student = escapeHtml(document.getElementById("student").value || "_____________________");
- let valueTheme = escapeHtml(document.getElementById("value-theme").value || "طلب العلم والعمل الصالح");
- let grade = document.getElementById("grade").value;
- let level = document.getElementById("level").value;
- let skill = document.getElementById("skill").value;
- let count = Math.min(25, Math.max(1, parseInt(document.getElementById("count").value || 10)));
+  // جلب المدخلات وتطهيرها
+  let dirName = escapeHtml(document.getElementById("dir-name").value || "وزارة التربية والتعليم");
+  let schoolName = escapeHtml(document.getElementById("school-name").value || "المدرسة الأساسية");
+  let teacherName = escapeHtml(document.getElementById("teacher-name").value || "معلم المادة");
+  let valueTheme = escapeHtml(document.getElementById("value-theme").value || "طلب العلم");
+  let student = escapeHtml(document.getElementById("student").value || "_________________________________");
+  
+  let grade = document.getElementById("grade").value;
+  let level = document.getElementById("level").value;
+  let skillSelection = document.getElementById("skill").value;
+  let count = Math.min(20, Math.max(1, parseInt(document.getElementById("count").value || 8)));
 
- let lim = limit(level, grade);
- 
- const gradeAr = grade === "1" ? "الأول" : "الثاني";
- const levelAr = {"easy":"سهل", "mid":"متوسط", "hard":"متقدم"}[level];
+  let limits = getLimits(level, grade);
+  const gradeAr = grade === "1" ? "الصف الأول الأساسي" : "الصف الثاني الأساسي";
+  const levelAr = {"easy":"سهل (دعم)", "mid":"متوسط (قياسي)", "hard":"متقدم (تحدي)"}[level];
+  const goalText = generateEducationalGoal(skillSelection, gradeAr, levelAr);
 
- let html = `
- <div class="page">
+  let html = `
+  <div class="page">
+    <!-- الترويسة الرسمية للمدرسة -->
+    <div class="school-header">
+      <div class="school-info">
+        <div>${dirName}</div>
+        <div>${schoolName}</div>
+        <div>المعلم: ${teacherName}</div>
+      </div>
+      <div class="main-title-area">
+        <h1 class="title">ورقة عمل رياضيات تشخيصية</h1>
+        <div class="goal"><b>الهدف السلوكي:</b> ${goalText}</div>
+      </div>
+      <div class="school-info" style="text-align: left;">
+        <div>التاريخ: ____/____/ ٢٠٢٦م</div>
+        <div>النطاق: أعداد ضمن العدد (${ar(limits.max)})</div>
+        <div style="color: #27ae60;">قيمة الأسبوع: ${valueTheme}</div>
+      </div>
+    </div>
 
- <div class="header">
- <div class="title">ورقة عمل الرياضيات الذكية</div>
- <div class="goal">التدرج التربوي: محسوس ← بصري ← مجرد</div>
- </div>
+    <!-- بار بيانات الطالب -->
+    <div class="student-bar">
+      <div>اسم الطالب/ة: ${student}</div>
+      <div>الصف: ${gradeAr}</div>
+      <div>مستوى الورقة: ${levelAr}</div>
+    </div>
 
- <div class="meta">
- <div>المعلم: ______________</div>
- <div>المدرسة: ______________</div>
- <div>التاريخ: ___ / ___ / ١٤٤٧هـ</div>
- <div>قيمة الأسبوع: ${valueTheme}</div>
- </div>
+    <div id="questions-container">`;
 
- <div class="student">اسم الطالب/ة: ${student}</div>
+  let usedQuestions = new Set();
+  const availableSkills = ["count", "add", "sub", "compare", "order"];
 
- <div style="text-align:center; margin-top:10px; font-weight:bold; color:#555;">
- الصف: ${gradeAr} &nbsp;|&nbsp; مستوى التحدي: ${levelAr}
- </div>
- <hr style="border:0; border-top:1px dashed var(--border); margin-top:15px;">
- `;
+  for(let i = 1; i <= count; i++) {
+    // توزيع المهارات بشكل دوري متوازن إذا تم اختيار 'mix' بدلاً من العشوائية المطلقة
+    let currentSkill = skillSelection;
+    if(skillSelection === "mix") {
+      currentSkill = availableSkills[(i - 1) % availableSkills.length];
+    }
 
- for(let i=1; i<=count; i++){
-   html += draw(gen(skill, lim), i);
- }
+    let qData = generateQuestion(currentSkill, limits, usedQuestions);
+    
+    // رسم بناء السؤال تربوياً هندسياً
+    html += `<div class="q">
+      <div><b>السؤال ${ar(i)}:</b></div>
+      <div class="inst">${getInstruction(qData.type, qData.mode)}</div>`;
 
- html += "</div>";
- document.getElementById("out").innerHTML = html;
+    if(qData.type === "add") {
+      html += `
+      <div class="math-display">
+        <div style="font-size:14px; color:#555;">${showOrganizedDots(qData.a)} &nbsp; + &nbsp; ${showOrganizedDots(qData.b)}</div>
+      </div>
+      <div class="math-display">
+        <span>${ar(qData.a)}</span> 
+        <span>+</span> 
+        <span>${ar(qData.b)}</span> 
+        <span>=</span> 
+        <span class="box"></span>
+      </div>`;
+    }
+
+    else if(qData.type === "sub") {
+      html += `
+      <div class="math-display">
+        <div style="font-size:14px; color:#555;">${showOrganizedDots(qData.a)} &nbsp; - &nbsp; (احذف منها ${ar(qData.b)})</div>
+      </div>
+      <div class="math-display">
+        <span>${ar(qData.a)}</span> 
+        <span>−</span> 
+        <span>${ar(qData.b)}</span> 
+        <span>=</span> 
+        <span class="box"></span>
+      </div>`;
+    }
+
+    else if(qData.type === "compare") {
+      html += `
+      <div class="math-display" style="gap: 40px;">
+        <span>${ar(qData.a)}</span> 
+        <span class="box"></span> 
+        <span>${ar(qData.b)}</span>
+      </div>`;
+    }
+
+    else if(qData.type === "order") {
+      html += `
+      <div class="math-display" style="letter-spacing:15px; font-weight: bold; margin-bottom: 15px;">
+        ${qData.nums.map(ar).join(" ، ")}
+      </div>
+      <div class="math-display" style="gap: 10px;">
+        <span class="box"></span> 
+        <span style="font-size: 14px;">←</span> 
+        <span class="box"></span> 
+        <span style="font-size: 14px;">←</span> 
+        <span class="box"></span>
+      </div>`;
+    }
+
+    else if(qData.type === "count") {
+      html += `
+      <div class="math-display" style="margin-bottom: 12px;">
+        ${showOrganizedDots(qData.a)}
+      </div>
+      <div class="math-display">
+        <span style="font-size: 16px;">عَدَدُ العَنَاصِرِ = </span>
+        <span class="box"></span>
+      </div>`;
+    }
+
+    html += `</div>`;
+  }
+
+  html += `</div>
+  </div>`;
+  
+  document.getElementById("out").innerHTML = html;
 }
 
-// بناء أولي عند تحميل الصفحة
+// تشغيل البناء المبدئي التلقائي عند فتح الصفحة
 build();
 
 </script>
