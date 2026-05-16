@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>منصة أوراق العمل التعليمية</title>
+<title>مولّد أوراق العمل الذكي</title>
 
 <style>
 body{
@@ -17,20 +17,34 @@ body{
   height:100vh;
 }
 
+/* لوحة التحكم */
 .sidebar{
   width:300px;
   background:#0f172a;
   color:#fff;
   padding:15px;
-}
-
-.main{
-  flex:1;
-  padding:15px;
   overflow:auto;
 }
 
-input,select,textarea,button{
+/* الورقة */
+.main{
+  flex:1;
+  padding:20px;
+  overflow:auto;
+}
+
+.paper{
+  width:210mm;
+  min-height:297mm;
+  margin:auto;
+  background:#fff;
+  padding:20mm;
+  box-sizing:border-box;
+  box-shadow:0 2px 10px rgba(0,0,0,0.1);
+}
+
+/* عناصر */
+input,textarea,button{
   width:100%;
   margin:5px 0;
   padding:8px;
@@ -46,51 +60,29 @@ button{cursor:pointer}
 .btn2{background:#2563eb;color:#fff}
 .btn3{background:#334155;color:#fff}
 
-.card{
-  background:#fff;
-  padding:15px;
-  border-radius:10px;
-}
-
 .title{
   text-align:center;
+  font-size:22px;
   font-weight:bold;
-  font-size:20px;
+  margin-bottom:20px;
 }
 
-.stage{
-  border:1px dashed #444;
-  padding:10px;
-  margin-top:10px;
+.block{
+  border:1px solid #ddd;
   border-radius:8px;
+  padding:10px;
+  margin-bottom:12px;
 }
 
-.q{
-  border:1px solid #aaa;
-  padding:8px;
-  min-height:40px;
-  border-radius:6px;
+.question{
+  font-size:18px;
 }
 
-.hidden{display:none}
-
-/* طباعة A4 حقيقية */
+/* الطباعة */
 @media print{
   .sidebar{display:none}
   body{background:#fff}
-  .main{padding:0}
-  .card{box-shadow:none;border:none}
-
-  #content{
-    width:210mm;
-    min-height:297mm;
-    padding:20mm;
-    margin:auto;
-  }
-
-  .stage{
-    page-break-inside:avoid;
-  }
+  .paper{box-shadow:none}
 }
 
 @page{
@@ -105,29 +97,29 @@ button{cursor:pointer}
 <div class="app">
 
 <!-- لوحة التحكم -->
-<div class="sidebar" id="sidebar">
+<div class="sidebar">
 
-<h3>🏫 أوراق العمل</h3>
+<h3>🏫 مولّد أوراق العمل</h3>
 
 <input id="lesson" placeholder="اكتب اسم الدرس (مثال: الجمع ضمن ١٠)">
 
-<select id="grade">
-<option value="1">الصف الأول</option>
-<option value="2">الصف الثاني</option>
-</select>
+<textarea id="apiKey" placeholder="API KEY"></textarea>
+<textarea id="apiUrl" placeholder="API URL"></textarea>
 
-<button class="btn1" onclick="generate()">توليد ورقة</button>
-<button class="btn3" onclick="toggleSidebar()">إظهار / إخفاء</button>
+<button class="btn1" onclick="generate()">توليد ورقة بالذكاء</button>
+<button class="btn3" onclick="toggle()">إظهار / إخفاء</button>
 <button class="btn2" onclick="window.print()">طباعة</button>
 
 </div>
 
-<!-- المحتوى -->
+<!-- الورقة -->
 <div class="main">
 
-<div class="card">
+<div class="paper">
+
 <div class="title" id="title">---</div>
 <div id="content"></div>
+
 </div>
 
 </div>
@@ -137,7 +129,7 @@ button{cursor:pointer}
 <script>
 
 /* =========================
-تحويل الأرقام إلى شرقية
+تحويل أرقام إلى شرقية
 ========================= */
 function toArabic(n){
 return n.toString()
@@ -156,108 +148,79 @@ return n.toString()
 /* =========================
 إظهار / إخفاء اللوحة
 ========================= */
-function toggleSidebar(){
-const sb=document.getElementById("sidebar");
-sb.style.display = (sb.style.display==="none") ? "block" : "none";
+function toggle(){
+const s=document.querySelector(".sidebar");
+s.style.display = (s.style.display==="none")?"block":"none";
 }
 
 /* =========================
-تحديد نوع الدرس
+عرض الورقة
 ========================= */
-function detectType(text){
+function render(text){
 
-if(text.includes("جمع")) return "add";
-if(text.includes("طرح")) return "sub";
-if(text.includes("مقارنة") || text.includes("أكبر") || text.includes("أصغر")) return "compare";
-if(text.includes("ترتيب")) return "order";
-
-return "general";
-}
-
-/* =========================
-أرقام عشوائية
-========================= */
-function rand(max){
-return Math.floor(Math.random()*max)+1;
-}
-
-/* =========================
-بناء الورقة حسب النوع
-========================= */
-function buildWorksheet(type){
-
-let a = rand(10);
-let b = rand(10);
-
-if(type==="add"){
-return [
-"🧠 تمهيد: استخدم العد أو المكعبات",
-`${toArabic(a)} + ${toArabic(b)} = ____`,
-"✏️ تمرين إضافي",
-`${toArabic(a+1)} + ${toArabic(b-1)} = ____`,
-"🧩 مسألة حياتية: لدى طفل أشياء وأضيف له عدد آخر. احسب المجموع."
-];
-}
-
-if(type==="sub"){
-return [
-"🧠 تمهيد: استخدم العد التنازلي",
-`${toArabic(a+b)} - ${toArabic(b)} = ____`,
-"✏️ تمرين إضافي",
-`${toArabic(a+b+1)} - ${toArabic(a)} = ____`,
-"🧩 مسألة حياتية: كان لدى طفل أشياء وفقد بعضها. احسب الباقي."
-];
-}
-
-if(type==="compare"){
-return [
-"🧠 ضع علامة > أو < أو =",
-`${toArabic(a)} ___ ${toArabic(b)}`,
-`${toArabic(a+2)} ___ ${toArabic(b-1)}`,
-"🧩 أيهما أكبر؟ ولماذا؟"
-];
-}
-
-if(type==="order"){
-return [
-"🧠 رتب الأعداد من الأصغر إلى الأكبر",
-`${toArabic(b)} , ${toArabic(a)} , ${toArabic(a+2)}`,
-"✏️ ترتيب أعداد أخرى",
-"🧩 تطبيق حياتي: رتب الأشياء من حولك"
-];
-}
-
-return [
-"🧠 فهم الدرس",
-"✏️ تطبيق",
-"🧩 مسألة حياتية"
-];
-
-}
-
-/* =========================
-توليد الورقة
-========================= */
-function generate(){
-
-const lesson=document.getElementById("lesson").value;
-
-const type=detectType(lesson);
-
-document.getElementById("title").innerText=lesson;
-
-let items=buildWorksheet(type);
+let lines = text.split("\n").filter(l=>l.trim());
 
 let html="";
 
-items.forEach(x=>{
+lines.forEach(l=>{
 html+=`
-<div class="stage">
-<div class="q">${x}</div>
-</div>`;
+<div class="block">
+<div class="question">${l}</div>
+</div>
+`;
 });
 
 document.getElementById("content").innerHTML=html;
+}
+
+/* =========================
+توليد ذكاء اصطناعي حقيقي
+========================= */
+async function generate(){
+
+const lesson = document.getElementById("lesson").value;
+const apiKey = document.getElementById("apiKey").value;
+const apiUrl = document.getElementById("apiUrl").value;
+
+document.getElementById("title").innerText = lesson;
+
+const prompt = `
+أنت معلم رياضيات للصف الأول والثاني.
+أنشئ ورقة عمل مدرسية باللغة العربية فقط وبأرقام شرقية فقط.
+
+الدرس: ${lesson}
+
+الشروط:
+- تمهيد بسيط
+- 3 إلى 5 أسئلة
+- مسألة حياتية واحدة
+- استخدام فراغات للإجابة (____)
+- بدون شرح طويل
+- صياغة مناسبة للأطفال
+`;
+
+try{
+
+const res = await fetch(apiUrl,{
+method:"POST",
+headers:{
+"Content-Type":"application/json",
+"Authorization":"Bearer "+apiKey
+},
+body:JSON.stringify({
+model:"gpt-4o-mini",
+messages:[{role:"user",content:prompt}]
+})
+});
+
+const data = await res.json();
+const text = data.choices?.[0]?.message?.content || "فشل التوليد";
+
+render(text);
+
+}catch(e){
+render("حدث خطأ في الاتصال بالذكاء الاصطناعي");
+}
 
 }
 
