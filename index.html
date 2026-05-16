@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>محرك الرياضيات الذكي - الإصدار الاحترافي</title>
+<title>محرك الرياضيات الذكي - النسخة المعاد هندستها</title>
 
 <style>
 
@@ -14,10 +14,9 @@
 
 body{
   margin:0;
-  background:#e9f2f3;
+  background:#e9f3f4;
 }
 
-/* لوحة التحكم */
 .panel{
   background:#fff;
   padding:15px;
@@ -54,7 +53,6 @@ button{
 .gen{background:#1b5e20;color:white;}
 .prt{background:#1565c0;color:white;}
 
-/* الصفحة */
 .page{
   width:210mm;
   min-height:297mm;
@@ -104,7 +102,6 @@ button{
   border-bottom:1px solid #000;
 }
 
-/* السؤال */
 .q{
   margin-top:12px;
   padding:12px;
@@ -141,17 +138,13 @@ button{
   border-radius:6px;
 }
 
-/* طباعة */
 @media print{
   .panel{display:none;}
   body{background:white;}
   .page{margin:0;}
 }
 
-@page{
-  size:A4;
-  margin:0;
-}
+@page{size:A4;margin:0;}
 
 </style>
 </head>
@@ -160,20 +153,19 @@ button{
 
 <div class="panel">
 
-<h3>محرك الرياضيات الذكي - احترافي</h3>
+<h3>محرك الرياضيات الذكي - النسخة المعاد هندستها</h3>
 
 <div class="row">
 
 <div>
 <label>المهارة</label>
 <select id="skill">
-<option value="count">العدّ</option>
-<option value="compare">المقارنة</option>
-<option value="order">الترتيب</option>
+<option value="mix">مختلط</option>
 <option value="add">الجمع</option>
 <option value="sub">الطرح</option>
-<option value="word">مسألة لفظية</option>
-<option value="place">القيمة المكانية</option>
+<option value="compare">المقارنة</option>
+<option value="order">الترتيب</option>
+<option value="count">العدّ</option>
 </select>
 </div>
 
@@ -210,14 +202,7 @@ button{
 <input id="school" value="مدرسة">
 </div>
 
-<div>
-<label>إظهار الإجابات</label>
-<select id="answers">
-<option value="no">لا</option>
-<option value="yes">نعم</option>
-</select>
-</div>
-
+<div></div>
 <div></div>
 
 </div>
@@ -231,7 +216,7 @@ button{
 
 <script>
 
-/* ================= أدوات أساسية ================= */
+/* ================= أدوات ================= */
 
 function ar(n){
   return String(n).replace(/[0-9]/g,d=>
@@ -243,59 +228,21 @@ function rand(max){
   return Math.floor(Math.random()*(max+1));
 }
 
-/* ================= سجل منع التكرار ================= */
+/* ================= بصمة السؤال (إغلاق التكرار الحقيقي) ================= */
 
 let used = new Set();
 
-function pairKey(a,b){
-  return a<=b ? `${a}:${b}` : `${b}:${a}`;
+function fingerprint(d){
+  return JSON.stringify(d);
 }
 
-/* ================= تحقق صارم ================= */
-
-function validate(d,skill,limit){
-
-  if(skill==="add"){
-    if(d.a + d.b > limit) return false;
-    if(d.a===0 || d.b===0) return false;
-  }
-
-  if(skill==="sub"){
-    if(d.b > d.a) return false;
-  }
-
-  if(skill==="compare"){
-    if(d.a === d.b) return false;
-  }
-
-  if(skill==="order"){
-    if(d.a===d.b || d.a===d.c || d.b===d.c) return false;
-  }
-
-  return true;
-}
-
-/* ================= توليد مضبوط ================= */
+/* ================= توليد موحد ================= */
 
 function generate(skill,limit){
 
   let a,b,c;
 
   switch(skill){
-
-    case "count":
-      return {type:"count",a:rand(limit)};
-
-    case "compare":
-      a=rand(limit); b=rand(limit);
-      if(a===b) b=(b+1)%(limit+1);
-      return {type:"compare",a,b};
-
-    case "order":
-      do{
-        a=rand(limit); b=rand(limit); c=rand(limit);
-      }while(a===b || b===c || a===c);
-      return {type:"order",a,b,c};
 
     case "add":
       do{
@@ -306,64 +253,85 @@ function generate(skill,limit){
     case "sub":
       a=rand(limit);
       b=rand(a);
-      if(a===0) a=1;
       return {type:"sub",a,b};
 
-    case "word":
-      return {type:"word",a:rand(limit),b:rand(limit)};
+    case "compare":
+      a=rand(limit); b=rand(limit);
+      if(a===b) b=(b+1)%(limit+1);
+      return {type:"compare",a,b};
 
-    case "place":
-      return {type:"place",a:rand(limit),b:rand(limit)};
+    case "order":
+      do{
+        a=rand(limit); b=rand(limit); c=rand(limit);
+      }while(a===b || a===c || b===c);
+      return {type:"order",a,b,c};
+
+    case "count":
+      a=Math.max(1,rand(limit));
+      return {type:"count",a};
+
+    case "mix":
+      let skills=["add","sub","compare","order","count"];
+      return generate(skills[rand(skills.length-1)],limit);
   }
 }
 
-/* ================= fallback ذكي متدرج ================= */
+/* ================= تحقق ================= */
+
+function validate(d,skill,limit){
+
+  if(skill==="add" && d.a + d.b > limit) return false;
+  if(skill==="sub" && d.b > d.a) return false;
+  if(skill==="order" && (d.a===d.b||d.b===d.c||d.a===d.c)) return false;
+
+  return true;
+}
+
+/* ================= fallback ذكي ================= */
 
 function fallback(skill){
 
-  if(skill==="add") return {type:"add",a:1,b:1};
-  if(skill==="sub") return {type:"sub",a:2,b:1};
-  if(skill==="compare") return {type:"compare",a:1,b:2};
-  if(skill==="order") return {type:"order",a:1,b:2,c:3};
-
-  return {type:"count",a:1};
+  return {
+    add:{type:"add",a:1,b:1},
+    sub:{type:"sub",a:2,b:1},
+    compare:{type:"compare",a:1,b:2},
+    order:{type:"order",a:1,b:2,c:3},
+    count:{type:"count",a:1},
+    mix:{type:"count",a:1}
+  }[skill] || {type:"count",a:1};
 }
 
-/* ================= محرك استقرار نهائي ================= */
+/* ================= توليد مستقر ================= */
 
 function stableGenerate(skill,limit){
 
   let d;
   let tries=0;
 
-  while(tries<35){
+  while(tries<40){
 
-    d = generate(skill,limit);
+    d=generate(skill,limit);
 
     if(!validate(d,skill,limit)){
       tries++;
       continue;
     }
 
-    if(d.a!==undefined && d.b!==undefined){
+    let fp=fingerprint(d);
 
-      let k = pairKey(d.a,d.b);
-
-      if(used.has(k)){
-        tries++;
-        continue;
-      }
-
-      used.add(k);
+    if(used.has(fp)){
+      tries++;
+      continue;
     }
 
+    used.add(fp);
     return d;
   }
 
   return fallback(skill);
 }
 
-/* ================= العرض ================= */
+/* ================= عرض ================= */
 
 function render(d){
 
@@ -425,7 +393,9 @@ function render(d){
     return `
     <div class="q">
       <div class="q-header">عدّ</div>
-      <div class="visual">⭐ ⭐ ⭐</div>
+      <div class="visual">
+        ${"⭐ ".repeat(Math.max(1,d.a))}
+      </div>
       <div class="math">
         <span class="answer"></span>
       </div>
@@ -435,7 +405,7 @@ function render(d){
   return `<div class="q"></div>`;
 }
 
-/* ================= بناء الورقة ================= */
+/* ================= بناء ================= */
 
 function build(){
 
@@ -452,7 +422,7 @@ function build(){
   <div class="page">
 
     <div class="title">${lesson}</div>
-    <div class="subtitle">محرك ذكي احترافي لمنهاج الصفوف الأولى</div>
+    <div class="subtitle">محرك تعليمي ذكي متوازن - النسخة النهائية</div>
 
     <div class="meta">
       <div>المعلم: ${teacher}</div>
@@ -466,13 +436,13 @@ function build(){
   `;
 
   for(let i=1;i<=count;i++){
-    let d = stableGenerate(skill,limit);
-    html += render(d);
+    let d=stableGenerate(skill,limit);
+    html+=render(d);
   }
 
-  html += `</div>`;
+  html+=`</div>`;
 
-  document.getElementById("out").innerHTML = html;
+  document.getElementById("out").innerHTML=html;
 }
 
 build();
