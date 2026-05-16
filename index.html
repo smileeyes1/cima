@@ -166,6 +166,7 @@ button.print-btn {
   justify-content: center;
   align-items: center;
   gap: 15px;
+  flex-wrap: wrap; /* يمنع تجاوز العناصر للصفحة */
 }
 
 /* إطار المجموعات البصرية المنظمة (إطار الخمسة) */
@@ -175,7 +176,7 @@ button.print-btn {
   border-radius: 4px;
   padding: 4px 8px;
   background: #fafafa;
-  margin: 0 4px;
+  margin: 2px 4px;
   letter-spacing: 3px;
   font-size: 16px;
 }
@@ -263,7 +264,6 @@ button.print-btn {
 
 <script>
 
-/* تحويل الأرقام إلى العربية الشرقية بشكل صارم ومستقر */
 function ar(n){
   return String(n).replace(/[0-9]/g, d => "٠١٢٣٤٥٦٧٨٩"[d]);
 }
@@ -274,9 +274,11 @@ function escapeHtml(str){
 
 const randRange = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
-/* تمثيل بصري منظم قائم على "إطار الخمسة التربوي" لمنع التشتت */
+/* تمثيل بصري منظم مع منع تكدس النقاط للأعداد الكبيرة */
 function showOrganizedDots(n){
   if(n === 0) return "—";
+  if(n > 20) return ""; // إخفاء النقاط لتجنب تشويه الصفحة والتركيز على المجرد
+  
   let html = "";
   let remaining = n;
   
@@ -290,7 +292,6 @@ function showOrganizedDots(n){
   return html;
 }
 
-/* ضبط حدود الأرقام بدقة بناءً على المناهج والمستويات */
 function getLimits(level, grade){
   if(grade === "1") {
     if(level === "easy") return { min: 1, max: 5 };
@@ -303,7 +304,6 @@ function getLimits(level, grade){
   }
 }
 
-/* التوليد الذكي للأهداف السلوكية */
 function generateEducationalGoal(skill, gradeAr, levelAr) {
   const goals = {
     count: `أن يربط الطالب بين المدلول البصري المنظم والرمز العددي الصحيح بدقة.`,
@@ -316,11 +316,10 @@ function generateEducationalGoal(skill, gradeAr, levelAr) {
   return goals[skill] || goals['mix'];
 }
 
-/* بنك التعليمات الموجهة */
 function getInstruction(type, subtype = "") {
   const map = {
-    add: ["جِدْ ناتج الجمع البصري والمجرد الآتي:", "احسب ناتج جمع الأعداد التالية مستعيناً بالنقاط:"],
-    sub: ["أوجد ناتج الطرح مستعيناً بالمجموعات البصرية:", "احسب الفرق بين الأعداد الآتية بدقة:"],
+    add: ["جِدْ ناتج الجمع الآتي:", "احسب ناتج جمع الأعداد التالية:"],
+    sub: ["أوجد ناتج الطرح:", "احسب الفرق بين الأعداد الآتية بدقة:"],
     compare: ["ضع الإشارة المناسبة ( > ، < ، = ) داخل المربع لتصبح العبارة صحيحة:"],
     order_asc: ["رتب الأعداد التالية ترتيباً تصاعدياً (من الأصغر إلى الأكبر):"],
     order_desc: ["رتب الأعداد التالية ترتيباً تنازلياً (من الأكبر إلى الأصغر):"],
@@ -332,7 +331,6 @@ function getInstruction(type, subtype = "") {
   return arr[Math.floor(Math.random() * arr.length)];
 }
 
-/* توليد الأسئلة الفريدة تربوياً ومنع الضعيف منها */
 function generateQuestion(skill, limits, usedQuestions) {
   let attempts = 0;
   while(attempts < 100) {
@@ -341,12 +339,12 @@ function generateQuestion(skill, limits, usedQuestions) {
 
     if(skill === "add") {
       let a = randRange(limits.min, limits.max - 1);
-      let b = randRange(1, limits.max - a); // منع الجمع مع صفر لزيادة القيمة التربوية في المتوسط والمتقدم
+      let b = randRange(1, limits.max - a); 
       q = { type: "add", a, b, id: `add-${a}-${b}` };
     }
     else if(skill === "sub") {
       let a = randRange(limits.min + 1, limits.max);
-      let b = randRange(limits.min, a - 1); // ضمان عدم وجود ناتج صفر أو سالب لصفوف أولى بشكل متكرر وممل
+      let b = randRange(limits.min, a - 1); 
       q = { type: "sub", a, b, id: `sub-${a}-${b}` };
     }
     else if(skill === "compare") {
@@ -360,8 +358,8 @@ function generateQuestion(skill, limits, usedQuestions) {
         nums.add(randRange(limits.min, limits.max));
       }
       let mode = Math.random() > 0.5 ? "asc" : "desc";
-      let sortedArr = [...nums];
-      q = { type: "order", nums: sortedArr, mode, id: `order-${sortedArr.sort().join('-')}-${mode}` };
+      let sortedArr = [...nums].sort((x, y) => x - y); // إصلاح خلل ترتيب الأعداد
+      q = { type: "order", nums: sortedArr, mode, id: `order-${sortedArr.join('-')}-${mode}` };
     }
     else if(skill === "count") {
       let a = randRange(limits.min, limits.max);
@@ -373,13 +371,10 @@ function generateQuestion(skill, limits, usedQuestions) {
       return q;
     }
   }
-  // في حال استنفاد المحاولات (نطاق ضيق جداً) نرجع توليداً حراً
   return { type: "count", a: randRange(limits.min, limits.max) };
 }
 
-/* بناء ورقة العمل وعرضها للطباعة */
 function build(){
-  // جلب المدخلات وتطهيرها
   let dirName = escapeHtml(document.getElementById("dir-name").value || "وزارة التربية والتعليم");
   let schoolName = escapeHtml(document.getElementById("school-name").value || "المدرسة الأساسية");
   let teacherName = escapeHtml(document.getElementById("teacher-name").value || "معلم المادة");
@@ -398,7 +393,6 @@ function build(){
 
   let html = `
   <div class="page">
-    <!-- الترويسة الرسمية للمدرسة -->
     <div class="school-header">
       <div class="school-info">
         <div>${dirName}</div>
@@ -416,7 +410,6 @@ function build(){
       </div>
     </div>
 
-    <!-- بار بيانات الطالب -->
     <div class="student-bar">
       <div>اسم الطالب/ة: ${student}</div>
       <div>الصف: ${gradeAr}</div>
@@ -429,94 +422,69 @@ function build(){
   const availableSkills = ["count", "add", "sub", "compare", "order"];
 
   for(let i = 1; i <= count; i++) {
-    // توزيع المهارات بشكل دوري متوازن إذا تم اختيار 'mix' بدلاً من العشوائية المطلقة
     let currentSkill = skillSelection;
     if(skillSelection === "mix") {
       currentSkill = availableSkills[(i - 1) % availableSkills.length];
     }
 
     let qData = generateQuestion(currentSkill, limits, usedQuestions);
+    let visualDotsA = showOrganizedDots(qData.a);
+    let visualDotsB = currentSkill === "add" ? showOrganizedDots(qData.b) : "";
     
-    // رسم بناء السؤال تربوياً هندسياً
     html += `<div class="q">
       <div><b>السؤال ${ar(i)}:</b></div>
       <div class="inst">${getInstruction(qData.type, qData.mode)}</div>`;
 
     if(qData.type === "add") {
+      if(visualDotsA || visualDotsB) {
+        html += `<div class="math-display"><div style="font-size:14px; color:#555;">${visualDotsA} &nbsp; + &nbsp; ${visualDotsB}</div></div>`;
+      }
       html += `
       <div class="math-display">
-        <div style="font-size:14px; color:#555;">${showOrganizedDots(qData.a)} &nbsp; + &nbsp; ${showOrganizedDots(qData.b)}</div>
-      </div>
-      <div class="math-display">
-        <span>${ar(qData.a)}</span> 
-        <span>+</span> 
-        <span>${ar(qData.b)}</span> 
-        <span>=</span> 
-        <span class="box"></span>
+        <span>${ar(qData.a)}</span> <span>+</span> <span>${ar(qData.b)}</span> <span>=</span> <span class="box"></span>
       </div>`;
     }
-
     else if(qData.type === "sub") {
+      if(visualDotsA) {
+        html += `<div class="math-display"><div style="font-size:14px; color:#555;">${visualDotsA} &nbsp; - &nbsp; (احذف منها ${ar(qData.b)})</div></div>`;
+      }
       html += `
       <div class="math-display">
-        <div style="font-size:14px; color:#555;">${showOrganizedDots(qData.a)} &nbsp; - &nbsp; (احذف منها ${ar(qData.b)})</div>
-      </div>
-      <div class="math-display">
-        <span>${ar(qData.a)}</span> 
-        <span>−</span> 
-        <span>${ar(qData.b)}</span> 
-        <span>=</span> 
-        <span class="box"></span>
+        <span>${ar(qData.a)}</span> <span>−</span> <span>${ar(qData.b)}</span> <span>=</span> <span class="box"></span>
       </div>`;
     }
-
     else if(qData.type === "compare") {
       html += `
       <div class="math-display" style="gap: 40px;">
-        <span>${ar(qData.a)}</span> 
-        <span class="box"></span> 
-        <span>${ar(qData.b)}</span>
+        <span>${ar(qData.a)}</span> <span class="box"></span> <span>${ar(qData.b)}</span>
       </div>`;
     }
-
     else if(qData.type === "order") {
       html += `
       <div class="math-display" style="letter-spacing:15px; font-weight: bold; margin-bottom: 15px;">
         ${qData.nums.map(ar).join(" ، ")}
       </div>
       <div class="math-display" style="gap: 10px;">
-        <span class="box"></span> 
-        <span style="font-size: 14px;">←</span> 
-        <span class="box"></span> 
-        <span style="font-size: 14px;">←</span> 
-        <span class="box"></span>
+        <span class="box"></span> <span style="font-size: 14px;">←</span> <span class="box"></span> <span style="font-size: 14px;">←</span> <span class="box"></span>
       </div>`;
     }
-
     else if(qData.type === "count") {
+      if(visualDotsA) {
+        html += `<div class="math-display" style="margin-bottom: 12px;">${visualDotsA}</div>`;
+      }
       html += `
-      <div class="math-display" style="margin-bottom: 12px;">
-        ${showOrganizedDots(qData.a)}
-      </div>
       <div class="math-display">
-        <span style="font-size: 16px;">عَدَدُ العَنَاصِرِ = </span>
-        <span class="box"></span>
+        <span style="font-size: 16px;">عَدَدُ العَنَاصِرِ = </span> <span class="box"></span>
       </div>`;
     }
-
     html += `</div>`;
   }
 
-  html += `</div>
-  </div>`;
-  
+  html += `</div></div>`;
   document.getElementById("out").innerHTML = html;
 }
 
-// تشغيل البناء المبدئي التلقائي عند فتح الصفحة
 build();
-
 </script>
-
 </body>
 </html>
