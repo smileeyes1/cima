@@ -1,458 +1,576 @@
-<!DOCTYPE html><html lang="ar" dir="rtl">
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>مولّد أوراق العمل الفلسطينية</title>  <style>
-    * {
-      box-sizing: border-box;
-      font-family: "Tahoma", "Arial", sans-serif;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>مولد أوراق العمل الفلسطينية</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    font-family:"Cairo","Tahoma",sans-serif;
+}
+
+body{
+    margin:0;
+    background:#eef3f1;
+    color:#222;
+}
+
+/* =========================
+   لوحة التحكم
+========================= */
+
+.control-panel{
+    width:340px;
+    background:#ffffff;
+    padding:20px;
+    position:fixed;
+    top:0;
+    right:0;
+    height:100vh;
+    overflow:auto;
+    box-shadow:-3px 0 12px rgba(0,0,0,0.1);
+    z-index:100;
+}
+
+.control-panel h2{
+    margin-top:0;
+    color:#1b5e20;
+}
+
+label{
+    display:block;
+    margin-top:14px;
+    margin-bottom:6px;
+    font-weight:bold;
+}
+
+input,
+select{
+    width:100%;
+    padding:12px;
+    border-radius:10px;
+    border:1px solid #ccc;
+    font-size:16px;
+}
+
+button{
+    width:100%;
+    border:none;
+    padding:14px;
+    margin-top:15px;
+    border-radius:12px;
+    font-size:17px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.generate-btn{
+    background:#2e7d32;
+    color:white;
+}
+
+.print-btn{
+    background:#1565c0;
+    color:white;
+}
+
+/* =========================
+   صفحة الورقة
+========================= */
+
+.page{
+    width:210mm;
+    min-height:297mm;
+    background:white;
+    margin:20px auto;
+    padding:14mm;
+    margin-right:380px;
+    box-shadow:0 0 12px rgba(0,0,0,0.1);
+    position:relative;
+    overflow:hidden;
+}
+
+/* زخارف */
+
+.page::before{
+    content:"";
+    position:absolute;
+    top:-40px;
+    left:-40px;
+    width:160px;
+    height:160px;
+    background:rgba(67,160,71,0.08);
+    border-radius:50%;
+}
+
+.page::after{
+    content:"";
+    position:absolute;
+    bottom:-50px;
+    right:-50px;
+    width:180px;
+    height:180px;
+    background:rgba(21,101,192,0.08);
+    border-radius:50%;
+}
+
+/* =========================
+   رأس الورقة
+========================= */
+
+.header{
+    border-bottom:3px solid #2e7d32;
+    padding-bottom:12px;
+    margin-bottom:16px;
+}
+
+.title{
+    text-align:center;
+    font-size:28px;
+    color:#1b5e20;
+    font-weight:bold;
+}
+
+.info-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+    margin-top:15px;
+}
+
+.info-box{
+    border:1px solid #ccc;
+    border-radius:10px;
+    padding:10px;
+    background:#fafafa;
+    min-height:48px;
+    font-size:14px;
+}
+
+/* =========================
+   الأقسام
+========================= */
+
+.section-title{
+    background:linear-gradient(135deg,#2e7d32,#43a047);
+    color:white;
+    padding:10px 16px;
+    border-radius:12px;
+    margin:16px 0 12px;
+    font-size:18px;
+    font-weight:bold;
+}
+
+/* =========================
+   الأسئلة
+========================= */
+
+.question{
+    border:2px solid #dfe5e8;
+    border-radius:16px;
+    padding:10px;
+    margin-bottom:10px;
+    background:#fff;
+    page-break-inside:avoid;
+}
+
+.q-number{
+    font-weight:bold;
+    color:#1565c0;
+    margin-bottom:8px;
+}
+
+.math{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    font-size:26px;
+    font-weight:bold;
+    margin-top:10px;
+}
+
+.answer{
+    width:65px;
+    height:42px;
+    border:2px dashed #666;
+    border-radius:10px;
+}
+
+.shapes{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:5px;
+    margin-top:10px;
+}
+
+.shape{
+    width:22px;
+    height:22px;
+    border-radius:50%;
+    background:#43a047;
+}
+
+.subtle-shape{
+    width:20px;
+    height:20px;
+    border-radius:6px;
+    background:#90caf9;
+}
+
+.number-line{
+    margin-top:12px;
+    display:flex;
+    justify-content:center;
+    gap:6px;
+    flex-wrap:wrap;
+}
+
+.number-step{
+    width:28px;
+    height:28px;
+    border-radius:50%;
+    background:#e8f5e9;
+    border:1px solid #43a047;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:13px;
+}
+
+/* =========================
+   الطباعة
+========================= */
+
+@media print{
+
+    body{
+        background:white;
     }
 
-    body {
-      margin: 0;
-      background: #f4f6f8;
-      color: #222;
+    .control-panel{
+        display:none !important;
     }
 
-    header {
-      background: linear-gradient(135deg, #2e7d32, #1b5e20);
-      color: white;
-      padding: 20px;
-      text-align: center;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    .page{
+        margin:0;
+        margin-right:0;
+        box-shadow:none;
+        width:210mm;
+        min-height:297mm;
     }
 
-    header {
-      display: none;
+}
+
+@media(max-width:1200px){
+
+    .control-panel{
+        position:relative;
+        width:100%;
+        height:auto;
     }
 
-    header h1 {
-      margin: 0;
-      font-size: 30px;
+    .page{
+        margin-right:auto;
     }
 
-    .container {
-      max-width: 1300px;
-      margin: 20px auto;
-      padding: 15px;
-      display: grid;
-      grid-template-columns: 320px 1fr;
-      gap: 20px;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- =========================
+     لوحة التحكم
+========================= -->
+
+<div class="control-panel">
+
+<h2>إعدادات الورقة</h2>
+
+<label>اسم المدرسة</label>
+<input type="text" id="school" value="مدرسة فلسطين الأساسية">
+
+<label>الصف</label>
+<select id="grade">
+<option>الأول</option>
+<option selected>الثاني</option>
+<option>الثالث</option>
+</select>
+
+<label>الدرس</label>
+<select id="lesson">
+<option value="addition10">الجمع ضمن ١٠</option>
+<option value="addition20">الجمع ضمن ٢٠</option>
+</select>
+
+<label>عدد الأسئلة</label>
+<input type="number" id="count" value="8" min="4" max="12">
+
+<label>اسم المعلم</label>
+<input type="text" id="teacher" value="الأستاذ محمد">
+
+<button class="generate-btn" onclick="generateWorksheet()">
+إنشاء ورقة العمل
+</button>
+
+<button class="print-btn" onclick="window.print()">
+طباعة الورقة
+</button>
+
+</div>
+
+<!-- =========================
+     صفحة الورقة
+========================= -->
+
+<div class="page" id="worksheet"></div>
+
+<script>
+
+/* =========================
+   أرقام شرقية
+========================= */
+
+function eastern(num){
+
+    const map=['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
+
+    return num.toString().replace(/[0-9]/g,d=>map[d]);
+
+}
+
+/* =========================
+   رقم عشوائي
+========================= */
+
+function rand(min,max){
+
+    return Math.floor(Math.random()*(max-min+1))+min;
+
+}
+
+/* =========================
+   محسوس
+========================= */
+
+function createConcrete(count){
+
+    let html='<div class="shapes">';
+
+    for(let i=0;i<count;i++){
+
+        html+='<div class="shape"></div>';
+
     }
 
-    .panel {
-      background: white;
-      border-radius: 16px;
-      padding: 10px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-    }
-
-    .panel h2 {
-      margin-top: 0;
-      color: #1b5e20;
-      font-size: 22px;
-    }
-
-    label {
-      display: block;
-      margin-top: 14px;
-      margin-bottom: 6px;
-      font-weight: bold;
-    }
-
-    select,
-    input,
-    textarea {
-      width: 100%;
-      padding: 10px;
-      border-radius: 10px;
-      border: 1px solid #ccc;
-      font-size: 16px;
-    }
-
-    button {
-      width: 100%;
-      margin-top: 16px;
-      border: none;
-      padding: 14px;
-      border-radius: 12px;
-      font-size: 17px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: 0.2s;
-    }
-
-    .generate-btn {
-      background: #2e7d32;
-      color: white;
-    }
-
-    .generate-btn:hover {
-      background: #1b5e20;
-    }
-
-    .print-btn {
-      background: #1565c0;
-      color: white;
-    }
-
-    .worksheet {
-      background: white;
-      width: 210mm;
-      min-height: 297mm;
-      padding: 18mm;
-      border-radius: 18px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-    }
-
-    .worksheet-header {
-      border-bottom: 3px solid #2e7d32;
-      padding-bottom: 14px;
-      margin-bottom: 24px;
-    }
-
-    .worksheet-title {
-      text-align: center;
-      font-size: 24px;
-      font-weight: bold;
-      color: #1b5e20;
-      margin-bottom: 10px;
-    }
-
-    .worksheet-info {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      margin-top: 14px;
-    }
-
-    .info-box {
-      border: 1px solid #bbb;
-      padding: 10px;
-      border-radius: 10px;
-      min-height: 45px;
-      background: #fafafa;
-    }
-
-    .section-title {
-      font-size: 24px;
-      color: #2e7d32;
-      margin: 25px 0 15px;
-      font-weight: bold;
-    }
-
-    .question-box {
-      border: 2px solid #cfd8dc;
-      border-radius: 16px;
-      padding: 10px;
-      margin-bottom: 10px;
-      background: #fff;
-      page-break-inside: avoid;
-    }
-
-    .question-number {
-      font-weight: bold;
-      margin-bottom: 12px;
-      color: #1565c0;
-      font-size: 20px;
-    }
-
-    .math-line {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin-top: 12px;
-      font-size: 24px;
-      font-weight: bold;
-    }
-
-    .answer-box {
-      width: 70px;
-      height: 42px;
-      border: 2px dashed #777;
-      border-radius: 12px;
-      display: inline-block;
-      background: #fff;
-    }
-
-    .shape-grid {
-      display: flex;
-      gap: 6px;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-top: 10px;
-    }
-
-    .shape {
-      width: 26px;
-      height: 26px;
-      border-radius: 50%;
-      background: #43a047;
-    }
-
-    .footer-note {
-      margin-top: 40px;
-      text-align: center;
-      color: #666;
-      font-size: 14px;
-    }
-
-    @media print {
-      body {
-        background: white;
-      }
-
-      .panel,
-      header {
-        display: none !important;
-      }
-
-      .container {
-        display: block;
-        margin: 0;
-        padding: 0;
-        max-width: 100%;
-      }
-
-      .worksheet {
-        width: 210mm;
-        min-height: 297mm;
-        margin: 0;
-        padding: 12mm;
-        box-shadow: none;
-        border-radius: 0;
-      }
-    }
-
-    @media (max-width: 900px) {
-      .container {
-        grid-template-columns: 1fr;
-      }
-
-      .worksheet-info {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style></head>
-<body><header>
-  <h1>مولّد أوراق العمل التعليمية الفلسطينية</h1>
-  <p>دعم كامل للغة العربية والأعداد الشرقية والطباعة المباشرة</p>
-</header><div class="container">  <div class="worksheet" id="worksheet">  </div>
-</div><script>
-
-  function toEasternNumber(num) {
-    const eastern = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
-
-    return num.toString().replace(/[0-9]/g, d => eastern[d]);
-  }
-
-  function random(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-  }
-
-  function createShapes(count) {
-    let html = '<div class="shape-grid">';
-
-    for (let i = 0; i < count; i++) {
-      html += '<div class="shape"></div>';
-    }
-
-    html += '</div>';
+    html+='</div>';
 
     return html;
-  }
 
-  function generateAddition(max, count) {
+}
 
-    count = Math.min(count, 10);
+/* =========================
+   شبه محسوس
+========================= */
 
-    let html = '';
+function createSemiConcrete(count){
 
-    for (let i = 1; i <= count; i++) {
+    let html='<div class="shapes">';
 
-      let a = random(0, max);
-      let b = random(0, max - a);
+    for(let i=0;i<count;i++){
 
-      html += `
-        <div class="question-box">
-          <div class="question-number">السؤال ${toEasternNumber(i)}</div>
+        html+='<div class="subtle-shape"></div>';
 
-          <div class="math-line">
-            <span>${toEasternNumber(a)}</span>
+    }
+
+    html+='</div>';
+
+    return html;
+
+}
+
+/* =========================
+   خط أعداد
+========================= */
+
+function createNumberLine(max){
+
+    let html='<div class="number-line">';
+
+    for(let i=0;i<=max;i++){
+
+        html+=`
+        <div class="number-step">
+            ${eastern(i)}
+        </div>
+        `;
+
+    }
+
+    html+='</div>';
+
+    return html;
+
+}
+
+/* =========================
+   إنشاء السؤال
+========================= */
+
+function createQuestion(index,a,b){
+
+    return `
+
+    <div class="question">
+
+        <div class="q-number">
+            السؤال ${eastern(index)}
+        </div>
+
+        <!-- محسوس -->
+
+        ${createConcrete(a)}
+
+        <div style="height:6px"></div>
+
+        ${createConcrete(b)}
+
+        <!-- شبه محسوس -->
+
+        ${createSemiConcrete(a+b)}
+
+        <!-- خط الأعداد -->
+
+        ${createNumberLine(10)}
+
+        <!-- مجرد -->
+
+        <div class="math">
+
+            <span>${eastern(a)}</span>
+
             <span>+</span>
-            <span>${toEasternNumber(b)}</span>
+
+            <span>${eastern(b)}</span>
+
             <span>=</span>
-            <span class="answer-box"></span>
-          </div>
 
-          ${createShapes(a)}
-          <div style="height:8px"></div>
-          ${createShapes(b)}
-        </div>
-      `;
-    }
-
-    return html;
-  }
-
-  function generateSubtraction(max, count) {
-
-    count = Math.min(count, 10);
-
-    let html = '';
-
-    for (let i = 1; i <= count; i++) {
-
-      let a = random(5, max);
-      let b = random(0, a);
-
-      html += `
-        <div class="question-box">
-          <div class="question-number">السؤال ${toEasternNumber(i)}</div>
-
-          <div class="math-line">
-            <span>${toEasternNumber(a)}</span>
-            <span>-</span>
-            <span>${toEasternNumber(b)}</span>
-            <span>=</span>
-            <span class="answer-box"></span>
-          </div>
-
-          ${createShapes(a)}
-        </div>
-      `;
-    }
-
-    return html;
-  }
-
-  function generateShapesQuestions(count) {
-
-    count = Math.min(count, 8);
-
-
-    const shapes = [
-      'دائرة',
-      'مربع',
-      'مثلث',
-      'مستطيل'
-    ];
-
-    let html = '';
-
-    for (let i = 1; i <= count; i++) {
-
-      let shape = shapes[random(0, shapes.length - 1)];
-
-      html += `
-        <div class="question-box">
-          <div class="question-number">السؤال ${toEasternNumber(i)}</div>
-
-          <div style="font-size:26px; text-align:center;">
-            ضع دائرة حول شكل الـ ${shape}
-          </div>
-
-          <div style="display:flex; justify-content:center; gap:20px; margin-top:20px; font-size:50px; flex-wrap:wrap;">
-            <div>⬜</div>
-            <div>🔺</div>
-            <div>⚪</div>
-            <div>▭</div>
-          </div>
-        </div>
-      `;
-    }
-
-    return html;
-  }
-
-  function generateWorksheet() {
-
-    const school = document.getElementById('school').value;
-    const subject = document.getElementById('subject').value;
-    const grade = document.getElementById('grade').value;
-    const lesson = document.getElementById('lesson').value;
-    const count = parseInt(document.getElementById('count').value);
-    const teacher = document.getElementById('teacher').value;
-
-    let title = '';
-    let content = '';
-
-    if (lesson === 'addition10') {
-      title = 'ورقة عمل: الجمع ضمن ١٠';
-      content = generateAddition(10, count);
-    }
-
-    else if (lesson === 'addition20') {
-      title = 'ورقة عمل: الجمع ضمن ٢٠';
-      content = generateAddition(20, count);
-    }
-
-    else if (lesson === 'subtraction20') {
-      title = 'ورقة عمل: الطرح ضمن ٢٠';
-      content = generateSubtraction(20, count);
-    }
-
-    else if (lesson === 'shapes') {
-      title = 'ورقة عمل: الأشكال الهندسية';
-      content = generateShapesQuestions(count);
-    }
-
-    document.getElementById('worksheet').innerHTML = `
-
-      <div class="worksheet-header">
-
-        <div class="worksheet-title">
-          🌿 ${title}
-        </div>
-
-        <div class="worksheet-info">
-
-          <div class="info-box">
-            <strong>المدرسة:</strong>
-            ${school}
-          </div>
-
-          <div class="info-box">
-            <strong>المادة:</strong>
-            ${subject}
-          </div>
-
-          <div class="info-box">
-            <strong>الصف:</strong>
-            الصف ${grade}
-          </div>
-
-          <div class="info-box">
-            <strong>المعلم:</strong>
-            ${teacher}
-          </div>
-
-          <div class="info-box">
-            <strong>اسم الطالب:</strong>
-          </div>
-
-          <div class="info-box">
-            <strong>التاريخ:</strong>
-          </div>
+            <span class="answer"></span>
 
         </div>
-      </div>
 
-      <div class="section-title">
-        نشاط تدريبي تفاعلي
-      </div>
+    </div>
 
-      ${content}
-
-      <div class="footer-note">
-        صُممت الورقة لتناسب الطباعة المباشرة على صفحة A4 واحدة
-      </div>
     `;
-  }
 
-  generateWorksheet();
+}
 
-</script></body>
+/* =========================
+   إنشاء الورقة
+========================= */
+
+function generateWorksheet(){
+
+    const school=document.getElementById("school").value;
+
+    const grade=document.getElementById("grade").value;
+
+    const lesson=document.getElementById("lesson").value;
+
+    const count=parseInt(document.getElementById("count").value);
+
+    const teacher=document.getElementById("teacher").value;
+
+    let title="";
+
+    let max=10;
+
+    if(lesson==="addition10"){
+
+        title="ورقة عمل | الجمع ضمن ١٠";
+        max=10;
+
+    }else{
+
+        title="ورقة عمل | الجمع ضمن ٢٠";
+        max=20;
+
+    }
+
+    let questions="";
+
+    for(let i=1;i<=count;i++){
+
+        let a=rand(0,max);
+
+        let b=rand(0,max-a);
+
+        questions+=createQuestion(i,a,b);
+
+    }
+
+    document.getElementById("worksheet").innerHTML=`
+
+    <div class="header">
+
+        <div class="title">
+            🌿 ${title}
+        </div>
+
+        <div class="info-grid">
+
+            <div class="info-box">
+                <strong>المدرسة:</strong>
+                ${school}
+            </div>
+
+            <div class="info-box">
+                <strong>الصف:</strong>
+                ${grade}
+            </div>
+
+            <div class="info-box">
+                <strong>المعلم:</strong>
+                ${teacher}
+            </div>
+
+            <div class="info-box">
+                <strong>اسم الطالب:</strong>
+            </div>
+
+            <div class="info-box">
+                <strong>التاريخ:</strong>
+            </div>
+
+            <div class="info-box">
+                <strong>الهدف:</strong>
+                إتقان مهارة الجمع
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="section-title">
+        نشاط تدريجي: محسوس → شبه محسوس → مجرد
+    </div>
+
+    ${questions}
+
+    `;
+
+}
+
+generateWorksheet();
+
+</script>
+
+</body>
 </html>
