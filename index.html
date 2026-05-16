@@ -8,6 +8,10 @@
 
 <style>
 
+/* =========================
+   إعدادات عامة
+========================= */
+
 *{
     box-sizing:border-box;
     font-family:"Cairo","Tahoma",sans-serif;
@@ -16,7 +20,12 @@
 body{
     margin:0;
     background:#eef3f1;
-    color:#222;
+}
+
+/* إجبار الطباعة على إظهار الألوان والأشكال */
+*{
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
 }
 
 /* =========================
@@ -24,145 +33,94 @@ body{
 ========================= */
 
 .control-panel{
-    width:340px;
-    background:#ffffff;
-    padding:20px;
+    width:320px;
     position:fixed;
-    top:0;
     right:0;
+    top:0;
     height:100vh;
+    background:#fff;
+    padding:16px;
     overflow:auto;
-    box-shadow:-3px 0 12px rgba(0,0,0,0.1);
-    z-index:100;
-}
-
-.control-panel h2{
-    margin-top:0;
-    color:#1b5e20;
+    box-shadow:-3px 0 10px rgba(0,0,0,0.1);
 }
 
 label{
     display:block;
-    margin-top:14px;
-    margin-bottom:6px;
+    margin-top:10px;
     font-weight:bold;
 }
 
-input,
-select{
+input,select{
     width:100%;
-    padding:12px;
-    border-radius:10px;
+    padding:10px;
+    margin-top:5px;
+    border-radius:8px;
     border:1px solid #ccc;
-    font-size:16px;
 }
 
 button{
     width:100%;
+    margin-top:12px;
+    padding:12px;
     border:none;
-    padding:14px;
-    margin-top:15px;
-    border-radius:12px;
-    font-size:17px;
+    border-radius:10px;
     font-weight:bold;
     cursor:pointer;
 }
 
-.generate-btn{
-    background:#2e7d32;
-    color:white;
-}
-
-.print-btn{
-    background:#1565c0;
-    color:white;
-}
+.generate{background:#2e7d32;color:#fff;}
+.print{background:#1565c0;color:#fff;}
 
 /* =========================
-   صفحة الورقة
+   صفحة A4
 ========================= */
 
 .page{
     width:210mm;
     min-height:297mm;
     background:white;
-    margin:20px auto;
-    padding:14mm;
-    margin-right:380px;
-    box-shadow:0 0 12px rgba(0,0,0,0.1);
+    margin:10px auto;
+    margin-right:340px;
+    padding:8mm;
     position:relative;
-    overflow:hidden;
 }
 
-/* زخارف */
-
-.page::before{
-    content:"";
-    position:absolute;
-    top:-40px;
-    left:-40px;
-    width:160px;
-    height:160px;
-    background:rgba(67,160,71,0.08);
-    border-radius:50%;
-}
-
-.page::after{
-    content:"";
-    position:absolute;
-    bottom:-50px;
-    right:-50px;
-    width:180px;
-    height:180px;
-    background:rgba(21,101,192,0.08);
-    border-radius:50%;
+/* إزالة هوامش الطباعة الافتراضية */
+@page{
+    size:A4;
+    margin:0;
 }
 
 /* =========================
-   رأس الورقة
+   الترويسة (مصغرة ومرفوعة)
 ========================= */
 
 .header{
-    border-bottom:3px solid #2e7d32;
-    padding-bottom:12px;
-    margin-bottom:16px;
+    border-bottom:2px solid #2e7d32;
+    padding-bottom:6px;
+    margin-bottom:8px;
 }
 
 .title{
     text-align:center;
-    font-size:28px;
-    color:#1b5e20;
+    font-size:20px;
     font-weight:bold;
+    color:#1b5e20;
 }
 
-.info-grid{
+.info{
     display:grid;
     grid-template-columns:repeat(3,1fr);
-    gap:10px;
-    margin-top:15px;
+    gap:6px;
+    margin-top:8px;
+    font-size:12px;
 }
 
-.info-box{
+.box{
     border:1px solid #ccc;
-    border-radius:10px;
-    padding:10px;
+    padding:6px;
+    border-radius:6px;
     background:#fafafa;
-    min-height:48px;
-    font-size:14px;
-}
-
-/* =========================
-   الأقسام
-========================= */
-
-.section-title{
-    background:linear-gradient(135deg,#2e7d32,#43a047);
-    color:white;
-    padding:10px 16px;
-    border-radius:12px;
-    margin:16px 0 12px;
-    font-size:18px;
-    font-weight:bold;
 }
 
 /* =========================
@@ -170,77 +128,57 @@ button{
 ========================= */
 
 .question{
-    border:2px solid #dfe5e8;
-    border-radius:16px;
-    padding:10px;
-    margin-bottom:10px;
-    background:#fff;
+    border:1px solid #cfd8dc;
+    border-radius:10px;
+    padding:8px;
+    margin-bottom:8px;
     page-break-inside:avoid;
 }
 
-.q-number{
-    font-weight:bold;
+.qnum{
     color:#1565c0;
-    margin-bottom:8px;
+    font-weight:bold;
+    margin-bottom:6px;
 }
+
+/* =========================
+   الأشكال (مضمونة الطباعة)
+========================= */
+
+.shape{
+    width:16px;
+    height:16px;
+    border-radius:50%;
+    border:2px solid #43a047;
+    display:inline-block;
+    margin:2px;
+}
+
+.square{
+    width:14px;
+    height:14px;
+    border:2px solid #90caf9;
+    display:inline-block;
+    margin:2px;
+}
+
+/* =========================
+   معادلة
+========================= */
 
 .math{
     display:flex;
-    align-items:center;
     justify-content:center;
-    gap:10px;
-    font-size:26px;
-    font-weight:bold;
-    margin-top:10px;
+    gap:8px;
+    font-size:20px;
+    margin-top:6px;
 }
 
 .answer{
-    width:65px;
-    height:42px;
+    width:50px;
+    height:35px;
     border:2px dashed #666;
-    border-radius:10px;
-}
-
-.shapes{
-    display:flex;
-    flex-wrap:wrap;
-    justify-content:center;
-    gap:5px;
-    margin-top:10px;
-}
-
-.shape{
-    width:22px;
-    height:22px;
-    border-radius:50%;
-    background:#43a047;
-}
-
-.subtle-shape{
-    width:20px;
-    height:20px;
     border-radius:6px;
-    background:#90caf9;
-}
-
-.number-line{
-    margin-top:12px;
-    display:flex;
-    justify-content:center;
-    gap:6px;
-    flex-wrap:wrap;
-}
-
-.number-step{
-    width:28px;
-    height:28px;
-    border-radius:50%;
-    background:#e8f5e9;
-    border:1px solid #43a047;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:13px;
 }
 
 /* =========================
@@ -249,36 +187,20 @@ button{
 
 @media print{
 
-    body{
-        background:white;
-    }
-
     .control-panel{
         display:none !important;
     }
 
+    body{
+        margin:0;
+    }
+
     .page{
         margin:0;
-        margin-right:0;
-        box-shadow:none;
         width:210mm;
         min-height:297mm;
+        box-shadow:none;
     }
-
-}
-
-@media(max-width:1200px){
-
-    .control-panel{
-        position:relative;
-        width:100%;
-        height:auto;
-    }
-
-    .page{
-        margin-right:auto;
-    }
-
 }
 
 </style>
@@ -286,16 +208,10 @@ button{
 
 <body>
 
-<!-- =========================
-     لوحة التحكم
-========================= -->
-
+<!-- لوحة التحكم -->
 <div class="control-panel">
 
-<h2>إعدادات الورقة</h2>
-
-<label>اسم المدرسة</label>
-<input type="text" id="school" value="مدرسة فلسطين الأساسية">
+<h3>إعداد الورقة</h3>
 
 <label>الصف</label>
 <select id="grade">
@@ -304,271 +220,117 @@ button{
 <option>الثالث</option>
 </select>
 
-<label>الدرس</label>
-<select id="lesson">
-<option value="addition10">الجمع ضمن ١٠</option>
-<option value="addition20">الجمع ضمن ٢٠</option>
-</select>
-
 <label>عدد الأسئلة</label>
-<input type="number" id="count" value="8" min="4" max="12">
+<input type="number" id="count" value="10" min="4" max="20">
 
-<label>اسم المعلم</label>
-<input type="text" id="teacher" value="الأستاذ محمد">
-
-<button class="generate-btn" onclick="generateWorksheet()">
-إنشاء ورقة العمل
-</button>
-
-<button class="print-btn" onclick="window.print()">
-طباعة الورقة
-</button>
+<button class="generate" onclick="generate()">إنشاء</button>
+<button class="print" onclick="window.print()">طباعة</button>
 
 </div>
 
-<!-- =========================
-     صفحة الورقة
-========================= -->
-
-<div class="page" id="worksheet"></div>
+<!-- الصفحة -->
+<div id="pages"></div>
 
 <script>
 
-/* =========================
-   أرقام شرقية
-========================= */
-
-function eastern(num){
-
-    const map=['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
-
-    return num.toString().replace(/[0-9]/g,d=>map[d]);
-
+function east(n){
+    const m=['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
+    return n.toString().replace(/[0-9]/g,d=>m[d]);
 }
 
-/* =========================
-   رقم عشوائي
-========================= */
-
-function rand(min,max){
-
-    return Math.floor(Math.random()*(max-min+1))+min;
-
+function rand(a,b){
+    return Math.floor(Math.random()*(b-a+1))+a;
 }
 
-/* =========================
-   محسوس
-========================= */
+/* تقسيم تلقائي لصفحات A4 (أهم نقطة جديدة) */
+function splitIntoPages(items, perPage){
 
-function createConcrete(count){
+    let pages=[];
 
-    let html='<div class="shapes">';
-
-    for(let i=0;i<count;i++){
-
-        html+='<div class="shape"></div>';
-
+    for(let i=0;i<items.length;i+=perPage){
+        pages.push(items.slice(i,i+perPage));
     }
 
-    html+='</div>';
-
-    return html;
-
+    return pages;
 }
 
-/* =========================
-   شبه محسوس
-========================= */
+/* توليد سؤال */
+function q(i){
 
-function createSemiConcrete(count){
-
-    let html='<div class="shapes">';
-
-    for(let i=0;i<count;i++){
-
-        html+='<div class="subtle-shape"></div>';
-
-    }
-
-    html+='</div>';
-
-    return html;
-
-}
-
-/* =========================
-   خط أعداد
-========================= */
-
-function createNumberLine(max){
-
-    let html='<div class="number-line">';
-
-    for(let i=0;i<=max;i++){
-
-        html+=`
-        <div class="number-step">
-            ${eastern(i)}
-        </div>
-        `;
-
-    }
-
-    html+='</div>';
-
-    return html;
-
-}
-
-/* =========================
-   إنشاء السؤال
-========================= */
-
-function createQuestion(index,a,b){
+    let a=rand(0,10);
+    let b=rand(0,10-a);
 
     return `
-
     <div class="question">
 
-        <div class="q-number">
-            السؤال ${eastern(index)}
+        <div class="qnum">السؤال ${east(i)}</div>
+
+        <div>
+            ${Array(a).fill('<span class="shape"></span>').join('')}
+            ${Array(b).fill('<span class="square"></span>').join('')}
         </div>
 
-        <!-- محسوس -->
-
-        ${createConcrete(a)}
-
-        <div style="height:6px"></div>
-
-        ${createConcrete(b)}
-
-        <!-- شبه محسوس -->
-
-        ${createSemiConcrete(a+b)}
-
-        <!-- خط الأعداد -->
-
-        ${createNumberLine(10)}
-
-        <!-- مجرد -->
-
         <div class="math">
-
-            <span>${eastern(a)}</span>
-
+            <span>${east(a)}</span>
             <span>+</span>
-
-            <span>${eastern(b)}</span>
-
+            <span>${east(b)}</span>
             <span>=</span>
-
             <span class="answer"></span>
-
         </div>
 
     </div>
-
     `;
-
 }
 
-/* =========================
-   إنشاء الورقة
-========================= */
-
-function generateWorksheet(){
-
-    const school=document.getElementById("school").value;
-
-    const grade=document.getElementById("grade").value;
-
-    const lesson=document.getElementById("lesson").value;
+/* بناء الصفحات */
+function generate(){
 
     const count=parseInt(document.getElementById("count").value);
 
-    const teacher=document.getElementById("teacher").value;
-
-    let title="";
-
-    let max=10;
-
-    if(lesson==="addition10"){
-
-        title="ورقة عمل | الجمع ضمن ١٠";
-        max=10;
-
-    }else{
-
-        title="ورقة عمل | الجمع ضمن ٢٠";
-        max=20;
-
-    }
-
-    let questions="";
+    let items=[];
 
     for(let i=1;i<=count;i++){
-
-        let a=rand(0,max);
-
-        let b=rand(0,max-a);
-
-        questions+=createQuestion(i,a,b);
-
+        items.push(q(i));
     }
 
-    document.getElementById("worksheet").innerHTML=`
+    let pages=splitIntoPages(items,8); // أهم تحسين: ضبط تلقائي لـ A4
 
-    <div class="header">
+    let html="";
 
-        <div class="title">
-            🌿 ${title}
-        </div>
+    pages.forEach((p,idx)=>{
 
-        <div class="info-grid">
+        html+=`
+        <div class="page">
 
-            <div class="info-box">
-                <strong>المدرسة:</strong>
-                ${school}
+            <div class="header">
+
+                <div class="title">
+                    ورقة عمل تعليمية
+                </div>
+
+                <div class="info">
+
+                    <div class="box">الصف: ${document.getElementById("grade").value}</div>
+                    <div class="box">الهدف: تنمية المهارات</div>
+                    <div class="box">الزمن: 40 دقيقة</div>
+
+                </div>
+
             </div>
 
-            <div class="info-box">
-                <strong>الصف:</strong>
-                ${grade}
-            </div>
-
-            <div class="info-box">
-                <strong>المعلم:</strong>
-                ${teacher}
-            </div>
-
-            <div class="info-box">
-                <strong>اسم الطالب:</strong>
-            </div>
-
-            <div class="info-box">
-                <strong>التاريخ:</strong>
-            </div>
-
-            <div class="info-box">
-                <strong>الهدف:</strong>
-                إتقان مهارة الجمع
-            </div>
+            ${p.join("")}
 
         </div>
+        `;
 
-    </div>
+    });
 
-    <div class="section-title">
-        نشاط تدريجي: محسوس → شبه محسوس → مجرد
-    </div>
-
-    ${questions}
-
-    `;
+    document.getElementById("pages").innerHTML=html;
 
 }
 
-generateWorksheet();
+/* تشغيل افتراضي */
+generate();
 
 </script>
 
