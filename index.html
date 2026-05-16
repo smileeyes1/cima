@@ -22,6 +22,10 @@
       box-shadow: 0 2px 8px rgba(0,0,0,0.15);
     }
 
+    header {
+      display: none;
+    }
+
     header h1 {
       margin: 0;
       font-size: 30px;
@@ -229,47 +233,7 @@
 <body><header>
   <h1>مولّد أوراق العمل التعليمية الفلسطينية</h1>
   <p>دعم كامل للغة العربية والأعداد الشرقية والطباعة المباشرة</p>
-</header><div class="container">  <div class="panel">
-    <h2>إعدادات الورقة</h2><label>اسم المدرسة</label>
-<input type="text" id="school" value="مدرسة فلسطين الأساسية" />
-
-<label>المادة</label>
-<select id="subject">
-  <option>الرياضيات</option>
-  <option>اللغة العربية</option>
-  <option>العلوم</option>
-</select>
-
-<label>الصف</label>
-<select id="grade">
-  <option>الأول</option>
-  <option selected>الثاني</option>
-  <option>الثالث</option>
-</select>
-
-<label>الدرس</label>
-<select id="lesson">
-  <option value="addition10">الجمع ضمن ١٠</option>
-  <option value="addition20">الجمع ضمن ٢٠</option>
-  <option value="subtraction20">الطرح ضمن ٢٠</option>
-  <option value="shapes">الأشكال الهندسية</option>
-</select>
-
-<label>عدد الأسئلة</label>
-<input type="number" id="count" value="8" min="1" max="30" />
-
-<label>اسم المعلم</label>
-<input type="text" id="teacher" value="الأستاذ محمد" />
-
-<button class="generate-btn" onclick="generateWorksheet()">
-  إنشاء ورقة العمل
-</button>
-
-<button class="print-btn" onclick="window.print()">
-  طباعة الورقة
-</button>
-
-  </div>  <div class="worksheet" id="worksheet">  </div>
+</header><div class="container">  <div class="worksheet" id="worksheet">  </div>
 </div><script>
 
   function toEasternNumber(num) {
