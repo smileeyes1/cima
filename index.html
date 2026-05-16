@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>مولد أوراق العمل</title>
+<title>النظام الذكي للمرحلة الابتدائية</title>
 
 <style>
 
@@ -22,23 +22,18 @@ body{
 }
 
 /* =========================
-   لوحة التحكم (تظهر دائمًا)
+   لوحة التحكم
 ========================= */
 
 .panel{
-  background:#ffffff;
-  padding:15px;
+  background:white;
+  padding:16px;
   border-bottom:3px solid #2e7d32;
 }
 
-.panel h2{
-  margin:0 0 10px 0;
-  color:#1b5e20;
-}
-
-.grid{
+.row{
   display:grid;
-  grid-template-columns:repeat(3,1fr);
+  grid-template-columns:repeat(4,1fr);
   gap:10px;
 }
 
@@ -52,12 +47,11 @@ label{
 input,select{
   width:100%;
   padding:8px;
-  border:1px solid #ccc;
   border-radius:8px;
+  border:1px solid #ccc;
 }
 
-/* أزرار */
-.actions{
+.buttons{
   display:flex;
   gap:10px;
   margin-top:12px;
@@ -69,18 +63,10 @@ button{
   border:none;
   border-radius:10px;
   font-weight:bold;
-  cursor:pointer;
 }
 
-.print{
-  background:#1565c0;
-  color:white;
-}
-
-.generate{
-  background:#2e7d32;
-  color:white;
-}
+.gen{background:#2e7d32;color:white;}
+.prt{background:#1565c0;color:white;}
 
 /* =========================
    صفحة A4
@@ -89,14 +75,13 @@ button{
 .page{
   width:210mm;
   min-height:297mm;
-  margin:20px auto;
   background:white;
+  margin:15px auto;
   padding:10mm;
-  box-shadow:0 0 10px rgba(0,0,0,0.1);
 }
 
 /* =========================
-   الترويسة
+   الترويسة الذكية
 ========================= */
 
 .title{
@@ -111,7 +96,7 @@ button{
   grid-template-columns:repeat(3,1fr);
   gap:6px;
   font-size:11px;
-  margin-top:10px;
+  margin-top:8px;
 }
 
 .meta div{
@@ -122,20 +107,55 @@ button{
 }
 
 /* =========================
-   الأسئلة
+   مستويات تربوية
+========================= */
+
+.level{
+  margin:10px 0;
+  padding:6px 10px;
+  border-radius:10px;
+  font-size:12px;
+  font-weight:bold;
+  color:white;
+}
+
+.l1{background:#43a047;}
+.l2{background:#1e88e5;}
+.l3{background:#fb8c00;}
+.l4{background:#8e24aa;}
+
+/* =========================
+   سؤال
 ========================= */
 
 .q{
   border:1px solid #cfd8dc;
-  padding:8px;
-  margin-top:10px;
   border-radius:10px;
+  padding:8px;
+  margin-top:8px;
+}
+
+/* محسوس */
+.dot{
+  width:14px;height:14px;
+  border-radius:50%;
+  border:2px solid #43a047;
+  display:inline-block;
+  margin:2px;
+}
+
+/* شبه محسوس */
+.box{
+  width:12px;height:12px;
+  border:2px solid #1e88e5;
+  display:inline-block;
+  margin:2px;
 }
 
 .math{
   display:flex;
   justify-content:center;
-  gap:8px;
+  gap:6px;
   font-size:18px;
   margin-top:6px;
 }
@@ -143,38 +163,15 @@ button{
 .answer{
   width:45px;
   height:30px;
-  border:2px dashed #555;
+  border:2px dashed #444;
   border-radius:6px;
 }
 
-/* أشكال مضمونة الطباعة */
-.dot{
-  width:14px;
-  height:14px;
-  border-radius:50%;
-  border:2px solid #43a047;
-  display:inline-block;
-  margin:2px;
-}
-
-/* =========================
-   الطباعة (هنا الحل الحقيقي)
-========================= */
-
+/* الطباعة */
 @media print{
-
-  .panel{
-    display:none !important;
-  }
-
-  body{
-    background:white;
-  }
-
-  .page{
-    margin:0;
-    box-shadow:none;
-  }
+  .panel{display:none;}
+  body{background:white;}
+  .page{margin:0;}
 }
 
 @page{
@@ -188,42 +185,28 @@ button{
 <body>
 
 <!-- =========================
-   لوحة التحكم (أساسية)
+   لوحة التحكم
 ========================= -->
 
 <div class="panel">
 
-<h2>لوحة التحكم</h2>
+<h3>النظام الذكي</h3>
 
-<div class="grid">
-
-<div>
-<label>اسم الدرس</label>
-<input id="lesson" value="الجمع ضمن ١٠">
-</div>
-
-<div>
-<label>المدرسة</label>
-<input id="school" value="مدرسة فلسطين">
-</div>
-
-<div>
-<label>المديرية</label>
-<input id="directorate" value="مديرية نابلس">
-</div>
+<div class="row">
 
 <div>
 <label>الصف</label>
 <select id="grade">
-<option>الأول</option>
-<option selected>الثاني</option>
-<option>الثالث</option>
+<option value="1">الأول</option>
+<option value="2" selected>الثاني</option>
+<option value="3">الثالث</option>
+<option value="4">الرابع</option>
 </select>
 </div>
 
 <div>
-<label>المعلم</label>
-<input id="teacher" value="الأستاذ محمد">
+<label>الدرس</label>
+<input id="lesson" value="الجمع">
 </div>
 
 <div>
@@ -231,22 +214,28 @@ button{
 <input id="count" type="number" value="10">
 </div>
 
+<div>
+<label>المعلم</label>
+<input id="teacher" value="المعلم">
 </div>
 
-<div class="actions">
-<button class="generate" onclick="generate()">توليد</button>
-<button class="print" onclick="window.print()">طباعة</button>
+</div>
+
+<div class="buttons">
+<button class="gen" onclick="build()">توليد ذكي</button>
+<button class="prt" onclick="window.print()">طباعة</button>
 </div>
 
 </div>
 
-<!-- =========================
-   الورقة
-========================= -->
-
+<!-- الورقة -->
 <div id="out"></div>
 
 <script>
+
+/* =========================
+   أرقام شرقية
+========================= */
 
 function ar(n){
   return n.toString().replace(/[0-9]/g,d=>
@@ -254,22 +243,49 @@ function ar(n){
   );
 }
 
-function r(a,b){
-  return Math.floor(Math.random()*(b-a+1))+a;
+/* =========================
+   منطق حسب الصف
+========================= */
+
+function levelConfig(g){
+
+  if(g==1){
+    return {max:5, visual:true};
+  }
+
+  if(g==2){
+    return {max:10, visual:true};
+  }
+
+  if(g==3){
+    return {max:20, visual:false};
+  }
+
+  return {max:50, visual:false};
 }
 
-function q(i){
+/* =========================
+   سؤال ذكي
+========================= */
 
-  let a=r(0,10);
-  let b=r(0,10-a);
+function q(i,conf){
+
+  let a=Math.floor(Math.random()*conf.max);
+  let b=Math.floor(Math.random()*(conf.max-a));
+
+  let visual="";
+
+  if(conf.visual){
+    visual = Array(a).fill('<span class="dot"></span>').join('');
+  }
 
   return `
   <div class="q">
 
-    <b>السؤال ${ar(i)}</b>
+    <b>سؤال ${ar(i)}</b>
 
     <div style="text-align:center;margin-top:6px">
-      ${Array(a).fill('<span class="dot"></span>').join('')}
+      ${visual}
     </div>
 
     <div class="math">
@@ -284,14 +300,20 @@ function q(i){
   `;
 }
 
-function generate(){
+/* =========================
+   بناء الورقة الذكية
+========================= */
 
-  const lesson=document.getElementById("lesson").value;
-  const school=document.getElementById("school").value;
-  const directorate=document.getElementById("directorate").value;
-  const grade=document.getElementById("grade").value;
-  const teacher=document.getElementById("teacher").value;
-  const count=parseInt(document.getElementById("count").value);
+function build(){
+
+  let grade=document.getElementById("grade").value;
+  let lesson=document.getElementById("lesson").value;
+  let count=parseInt(document.getElementById("count").value);
+  let teacher=document.getElementById("teacher").value;
+
+  let conf=levelConfig(grade);
+
+  let levelName = grade==1?"محسوس":grade==2?"شبه محسوس":grade==3?"انتقال":"مجرد";
 
   let html=`
   <div class="page">
@@ -299,17 +321,21 @@ function generate(){
     <div class="title">${lesson}</div>
 
     <div class="meta">
-      <div>المدرسة: ${school}</div>
-      <div>المديرية: ${directorate}</div>
       <div>الصف: ${grade}</div>
       <div>المعلم: ${teacher}</div>
-      <div>هدف: مهارة الجمع</div>
-      <div>زمن: 40 دقيقة</div>
+      <div>المستوى: ${levelName}</div>
+      <div>فهم</div>
+      <div>مهارة</div>
+      <div>تطبيق</div>
+    </div>
+
+    <div class="level l${grade}">
+      تدرج: الفهم → المهارة → التطبيق
     </div>
   `;
 
   for(let i=1;i<=count;i++){
-    html+=q(i);
+    html+=q(i,conf);
   }
 
   html+=`</div>`;
@@ -317,7 +343,7 @@ function generate(){
   document.getElementById("out").innerHTML=html;
 }
 
-generate();
+build();
 
 </script>
 
