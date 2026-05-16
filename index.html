@@ -3,11 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>منهج الرياضيات التفاعلي</title>
+<title>محرك منهج الرياضيات الذكي - مطوّر</title>
 
 <style>
-
-/* ================= الأساس ================= */
 
 *{
   box-sizing:border-box;
@@ -19,8 +17,7 @@ body{
   background:#eaf2f3;
 }
 
-/* ================= لوحة التحكم ================= */
-
+/* لوحة التحكم */
 .panel{
   background:#fff;
   padding:15px;
@@ -51,14 +48,12 @@ button{
   border:none;
   border-radius:10px;
   font-weight:bold;
-  cursor:pointer;
 }
 
 .gen{background:#2e7d32;color:white;}
 .prt{background:#1565c0;color:white;}
 
-/* ================= الصفحة ================= */
-
+/* الصفحة */
 .page{
   width:210mm;
   min-height:297mm;
@@ -67,7 +62,6 @@ button{
   padding:12mm;
 }
 
-/* العنوان */
 .title{
   text-align:center;
   font-size:24px;
@@ -81,7 +75,6 @@ button{
   color:#666;
 }
 
-/* بيانات */
 .meta{
   display:grid;
   grid-template-columns:repeat(3,1fr);
@@ -97,13 +90,11 @@ button{
   border:1px solid #ddd;
 }
 
-/* الطالب */
 .student{
   margin-top:10px;
   padding:10px;
   border:2px dashed #888;
   border-radius:10px;
-  font-size:13px;
 }
 
 .line{
@@ -112,14 +103,13 @@ button{
   border-bottom:1px solid #000;
 }
 
-/* ================= بصريات السؤال ================= */
-
+/* السؤال */
 .q{
   margin-top:12px;
   padding:12px;
   border-radius:14px;
   border:1px solid #d0d7de;
-  background:linear-gradient(180deg,#ffffff,#f8fafb);
+  background:linear-gradient(180deg,#fff,#f8fafb);
 }
 
 .q-header{
@@ -150,12 +140,6 @@ button{
   border-radius:6px;
 }
 
-/* أيقونات */
-.icon{
-  font-size:18px;
-  margin:2px;
-}
-
 /* طباعة */
 @media print{
   .panel{display:none;}
@@ -163,10 +147,7 @@ button{
   .page{margin:0;}
 }
 
-@page{
-  size:A4;
-  margin:0;
-}
+@page{size:A4;margin:0;}
 
 </style>
 </head>
@@ -175,22 +156,13 @@ button{
 
 <div class="panel">
 
-<h3>منهج الرياضيات التفاعلي (صفوف أولى)</h3>
+<h3>محرك المنهج الذكي (نسخة مطوّرة)</h3>
 
 <div class="row">
 
 <div>
-<label>الصف</label>
-<select id="grade">
-<option value="1">الأول</option>
-<option value="2">الثاني</option>
-</select>
-</div>
-
-<div>
 <label>المهارة</label>
 <select id="skill">
-
 <option value="count">العدّ</option>
 <option value="compare">المقارنة</option>
 <option value="order">الترتيب</option>
@@ -198,9 +170,7 @@ button{
 <option value="sub">الطرح</option>
 <option value="word">مسألة لفظية</option>
 <option value="place">القيمة المكانية</option>
-
 </select>
-
 </div>
 
 <div>
@@ -217,14 +187,14 @@ button{
 <input id="count" type="number" value="10">
 </div>
 
-</div>
-
-<div class="row">
-
 <div>
 <label>اسم الدرس</label>
 <input id="lesson" value="رياضيات">
 </div>
+
+</div>
+
+<div class="row">
 
 <div>
 <label>المعلم</label>
@@ -243,6 +213,8 @@ button{
 <option value="yes">نعم</option>
 </select>
 </div>
+
+<div></div>
 
 </div>
 
@@ -266,75 +238,90 @@ function rand(max){
   return Math.floor(Math.random()*(max+1));
 }
 
-/* ================= محرك ذكي ================= */
+/* ================= توليد ================= */
 
 function generate(skill,limit){
 
   let a,b,c;
 
-  switch(skill){
+  if(skill==="count"){
+    return {type:"count",a:rand(limit)};
+  }
 
-    case "count":
-      return {type:"count", a:rand(limit)};
+  if(skill==="compare"){
+    return {type:"compare",a:rand(limit),b:rand(limit)};
+  }
 
-    case "compare":
-      return {type:"compare", a:rand(limit), b:rand(limit)};
+  if(skill==="order"){
+    return {type:"order",a:rand(limit),b:rand(limit),c:rand(limit)};
+  }
 
-    case "order":
-      return {type:"order", a:rand(limit), b:rand(limit), c:rand(limit)};
-
-    case "add":
-      do{
-        a=rand(limit); b=rand(limit);
-      }while(a+b>limit);
-      return {type:"add", a,b};
-
-    case "sub":
-      a=rand(limit); b=rand(a);
-      return {type:"sub", a,b};
-
-    case "word":
+  if(skill==="add"){
+    do{
       a=rand(limit); b=rand(limit);
-      return {type:"word", a,b};
+    }while(a+b>limit);
+    return {type:"add",a,b};
+  }
 
-    case "place":
-      return {type:"place", a:rand(limit), b:rand(limit)};
+  if(skill==="sub"){
+    a=rand(limit);
+    b=rand(a);
+    return {type:"sub",a,b};
+  }
+
+  if(skill==="word"){
+    return {type:"word",a:rand(limit),b:rand(limit)};
+  }
+
+  if(skill==="place"){
+    return {type:"place",a:rand(limit),b:rand(limit)};
   }
 }
 
-/* ================= السؤال ================= */
+/* ================= تحقق متعدد الطبقات ================= */
+
+function validate(data,skill,limit){
+
+  if(skill==="add" && data.a + data.b > limit) return false;
+  if(skill==="sub" && data.b > data.a) return false;
+
+  if(skill==="order"){
+    if(data.a===data.b || data.b===data.c || data.a===data.c) return false;
+  }
+
+  return true;
+}
+
+/* ================= حلقة الاستقرار ================= */
+
+function stableGenerate(skill,limit){
+
+  let data;
+  let tries = 0;
+
+  while(tries < 20){
+
+    data = generate(skill,limit);
+
+    if(validate(data,skill,limit)){
+      return data;
+    }
+
+    tries++;
+  }
+
+  // حالة طوارئ آمنة
+  return {type:"count",a:1};
+}
+
+/* ================= عرض السؤال ================= */
 
 function render(i,data){
-
-  if(data.type==="compare"){
-    return `
-    <div class="q">
-      <div class="q-header">قارن بين العددين</div>
-      <div class="math">
-        <span>${ar(data.a)}</span>
-        <span>___</span>
-        <span>${ar(data.b)}</span>
-      </div>
-    </div>`;
-  }
-
-  if(data.type==="order"){
-    return `
-    <div class="q">
-      <div class="q-header">رتب الأعداد</div>
-      <div class="visual">🔢</div>
-      <div class="math">
-        <span>${ar(data.a)}</span>
-        <span>${ar(data.b)}</span>
-        <span>${ar(data.c)}</span>
-      </div>
-    </div>`;
-  }
 
   if(data.type==="add"){
     return `
     <div class="q">
-      <div class="q-header">عملية جمع</div>
+      <div class="q-header">جمع</div>
       <div class="visual">🍎➕🍌</div>
       <div class="math">
         <span>${ar(data.a)}</span>
@@ -349,7 +336,7 @@ function render(i,data){
   if(data.type==="sub"){
     return `
     <div class="q">
-      <div class="q-header">عملية طرح</div>
+      <div class="q-header">طرح</div>
       <div class="visual">🍎➖🍌</div>
       <div class="math">
         <span>${ar(data.a)}</span>
@@ -361,22 +348,42 @@ function render(i,data){
     </div>`;
   }
 
+  if(data.type==="compare"){
+    return `
+    <div class="q">
+      <div class="q-header">قارن</div>
+      <div class="math">
+        <span>${ar(data.a)}</span>
+        <span>___</span>
+        <span>${ar(data.b)}</span>
+      </div>
+    </div>`;
+  }
+
+  if(data.type==="order"){
+    return `
+    <div class="q">
+      <div class="q-header">رتب</div>
+      <div class="math">
+        <span>${ar(data.a)}</span>
+        <span>${ar(data.b)}</span>
+        <span>${ar(data.c)}</span>
+      </div>
+    </div>`;
+  }
+
   if(data.type==="count"){
     return `
     <div class="q">
-      <div class="q-header">عدّ الأعداد</div>
+      <div class="q-header">عدّ</div>
       <div class="visual">⭐ ⭐ ⭐</div>
       <div class="math">
-        <span>كم العدد؟</span>
         <span class="answer"></span>
       </div>
     </div>`;
   }
 
-  return `
-  <div class="q">
-    <div class="q-header">سؤال</div>
-  </div>`;
+  return `<div class="q"><div class="q-header">سؤال</div></div>`;
 }
 
 /* ================= بناء ================= */
@@ -394,7 +401,7 @@ function build(){
   <div class="page">
 
     <div class="title">${lesson}</div>
-    <div class="subtitle">منهج الرياضيات التفاعلي - الصفوف الأولى</div>
+    <div class="subtitle">محرك منهج رياضيات ذكي - الصفوف الأولى</div>
 
     <div class="meta">
       <div>المعلم: ${teacher}</div>
@@ -408,13 +415,13 @@ function build(){
   `;
 
   for(let i=1;i<=count;i++){
-    let data=generate(skill,limit);
-    html+=render(i,data);
+    let data = stableGenerate(skill,limit);
+    html += render(i,data);
   }
 
-  html+=`</div>`;
+  html += `</div>`;
 
-  document.getElementById("out").innerHTML=html;
+  document.getElementById("out").innerHTML = html;
 }
 
 build();
