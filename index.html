@@ -2,198 +2,357 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<title>ورقة عمل الرياضيات الاحترافية المطورة</title>
+<title>منظومة التميز التربوي لإنتاج أوراق العمل المعيارية</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
 
 <style>
-:root{
-  --primary:#1a73e8;
-  --bg:#f4f6fb;
-  --border:#bdc3c7;
-  --soft:#f8f9fa;
-  --dark:#2c3e50;
+:root {
+  --primary: #1e3a8a;       
+  --secondary: #0d9488;     
+  --dark: #0f172a;          
+  --bg: #f8fafc;            
+  --border: #94a3b8;        
+  --light-bg: #f1f5f9;      
 }
 
-*{
-  box-sizing:border-box;
-  font-family:"Cairo","Tahoma",sans-serif;
+* {
+  box-sizing: border-box;
+  font-family: 'Tajawal', "Tahoma", sans-serif;
 }
 
-body{
-  margin:0;
-  background:var(--bg);
+body {
+  margin: 0;
+  background: var(--bg);
   color: var(--dark);
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
 }
 
-/* لوحة التحكم فوق المدونة */
-.panel{
-  background:#fff;
-  padding:20px;
-  border-bottom:2px solid var(--primary);
-  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+/* لوحة التحكم الإدارية */
+.panel {
+  background: #fff;
+  padding: 24px;
+  border-bottom: 4px solid var(--primary);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+  margin-bottom: 20px;
 }
 
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit, minmax(180px, 1fr));
-  gap:12px;
+.panel-header {
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-size: 18px;
+  color: var(--primary);
+  border-bottom: 2px solid var(--light-bg);
+  padding-bottom: 8px;
+  font-weight: 700;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
 }
 
 .field-group {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
 }
 
 .field-group label {
-  font-size: 12px;
-  font-weight: bold;
-  color: #555;
+  font-size: 13px;
+  font-weight: 700;
+  color: #475569;
 }
 
-input,select{
-  padding:10px;
-  border-radius:6px;
-  border:1px solid var(--border);
-  font-size:14px;
-  width: 100%;
+input, select {
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  font-size: 14px;
+  background: #fff;
+  color: var(--dark);
 }
 
 input:focus, select:focus {
   outline: none;
   border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.15);
 }
 
 .actions {
-  margin-top: 15px;
+  margin-top: 20px;
   display: flex;
-  gap: 10px;
+  gap: 12px;
+  justify-content: flex-end;
 }
 
-button{
-  padding:12px 24px;
-  border:none;
-  border-radius:6px;
-  background:var(--primary);
-  color:white;
-  cursor:pointer;
-  font-weight:bold;
+button {
+  padding: 12px 28px;
+  border: none;
+  border-radius: 8px;
+  background: var(--primary);
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
   font-size: 14px;
+  transition: background 0.2s ease, opacity 0.2s ease;
 }
 
-button.print-btn {
-  background:#202124;
-}
+button:hover { opacity: 0.9; }
+button.print-btn { background: #0f172a; }
 
-/* تصميم صفحة الطباعة القياسية A4 */
-.page{
-  width:210mm;
-  min-height:297mm;
-  background:#fff;
-  margin:20px auto;
-  padding:20mm;
-  box-shadow: 0 0 15px rgba(0,0,0,0.1);
+/* وثيقة الطباعة المعتمدة A4 بالمواصفات الوزارية */
+.page {
+  width: 210mm;
+  min-height: 297mm;
+  background: #fff;
+  margin: 0 auto 30px auto;
+  padding: 15mm;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
   position: relative;
-  border: 1px solid #ddd;
+  border: 2px solid #000;
+  outline: 4px double #000;
+  outline-offset: -8px;
+  box-sizing: border-box;
 }
 
-/* الترويسة المدرسية الرسمية */
+/* الترويسة الوزارية الرسمية */
 .school-header {
   display: grid;
-  grid-template-columns: 1fr 1.2fr 1fr;
+  grid-template-columns: 1fr 1.5fr 1fr;
   align-items: center;
-  border-bottom: 2px double #000;
-  padding-bottom: 10px;
+  border-bottom: 3px solid #000;
+  padding-bottom: 12px;
   margin-bottom: 15px;
 }
 
 .school-info {
   font-size: 13px;
-  line-height: 1.6;
+  line-height: 1.7;
+  font-weight: 600;
 }
 
 .main-title-area {
   text-align: center;
 }
 
-.title{
-  font-size:24px;
-  font-weight:bold;
-  color:#000;
+.title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #000;
   margin: 0;
+  text-decoration: underline;
+  text-underline-offset: 6px;
 }
 
-.goal{
-  font-size:12px;
-  color:#444;
-  margin-top:5px;
-  font-style: italic;
+.goal {
+  font-size: 12px;
+  color: #334155;
+  margin-top: 8px;
+  line-height: 1.4;
+  background: var(--light-bg);
+  padding: 6px 8px;
+  border-radius: 4px;
+  border-right: 3px solid var(--primary);
 }
 
-.student-bar{
-  margin-top:10px;
-  padding:10px;
-  border:1px solid #000;
-  background:var(--soft);
-  border-radius:4px;
+.student-bar {
+  margin-top: 10px;
+  padding: 10px 15px;
+  border: 1.5px solid #000;
+  background-color: #f8fafc;
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
   font-size: 14px;
-  font-weight:bold;
+  font-weight: 700;
+  gap: 10px;
 }
 
-/* تنسيق الأسئلة */
-.q{
-  margin-top:18px;
-  padding:15px;
-  border:1px solid #ccced0;
-  border-radius:8px;
+/* شبكة الأسئلة المتوازنة المانعة للكسر البنائي */
+.questions-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr; 
+  gap: 16px;
+  margin-top: 15px;
+}
+
+.q {
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  padding: 14px;
+  position: relative;
+  background: #fff;
+  page-break-inside: avoid;
+  break-inside: avoid;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 190px;
+}
+
+.q-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px dashed var(--border);
+  padding-bottom: 6px;
+  margin-bottom: 8px;
+}
+
+.q-num {
+  font-weight: 700;
+  color: var(--primary);
+  font-size: 14px;
+}
+
+.q-diff {
+  font-size: 11px;
+  padding: 3px 6px;
+  border-radius: 4px;
+  background: #e2e8f0;
+  color: #475569;
+}
+
+.inst {
+  font-size: 14px;
+  font-weight: 700;
+  color: #000;
+  line-height: 1.5;
+  margin-bottom: 8px;
+}
+
+/* إطار العشرة التربوي التفاعلي والمفهومي */
+.ten-frame-container {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin: 8px 0;
+  flex-wrap: wrap;
+}
+
+.ten-frame {
+  display: inline-grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  border: 2px solid #000;
+  gap: 2px;
+  background: #fff;
+  padding: 2px;
+  width: 115px;
+  height: 48px;
+}
+
+.ten-cell {
+  border: 1px solid #94a3b8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+}
+
+.dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: bold;
+}
+
+.dot.solid { background-color: var(--dark); }
+.dot.hollow { border: 2.5px solid var(--dark); background-color: transparent; }
+.dot.crossed { background-color: transparent; color: #e11d48; font-weight: 900; }
+
+/* صياغة المعادلات الرياضية القياسية */
+.math-display {
+  text-align: center;
+  margin-top: auto;
+  font-size: 24px;
+  font-weight: 700;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  direction: rtl; 
+}
+
+.box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60px;
+  height: 40px;
+  border: 2px solid var(--dark);
+  border-radius: 6px;
+  background: #fff;
+}
+
+.answer-text {
+  color: #dc2626; /* لون أحمر للإجابة */
+  font-weight: bold;
+  font-size: 22px;
+}
+
+/* تذييل المراقبة والتحليل */
+.evaluation-box {
+  margin-top: 20px;
+  border: 1px dashed var(--dark);
+  padding: 10px;
+  border-radius: 6px;
+  font-size: 13px;
+  text-align: center;
+  background: var(--light-bg);
+  font-weight: 500;
   page-break-inside: avoid;
   break-inside: avoid;
 }
 
-.inst{
-  font-size:15px;
-  font-weight:bold;
-  margin-bottom:12px;
-  color: #000;
-}
-
-.math-display{
-  text-align:center;
-  margin-top:10px;
-  font-size:22px;
+.analysis-box {
+  margin-top: 10px;
   display: flex;
   justify-content: center;
-  align-items: center;
   gap: 15px;
-  flex-wrap: wrap; /* يمنع تجاوز العناصر للصفحة */
+  font-size: 12px;
+  font-weight: bold;
+  color: #334155;
 }
 
-/* إطار المجموعات البصرية المنظمة (إطار الخمسة) */
-.dot-frame {
-  display: inline-flex;
-  border: 1px solid #95a5a6;
-  border-radius: 4px;
-  padding: 4px 8px;
-  background: #fafafa;
-  margin: 2px 4px;
-  letter-spacing: 3px;
-  font-size: 16px;
+.institutional-footer {
+  margin-top: 20px;
+  border-top: 2px solid #000;
+  padding-top: 15px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 700;
+  page-break-inside: avoid;
+  break-inside: avoid;
 }
 
-.box{
-  display:inline-block;
-  width:65px;
-  height:38px;
-  border:2px dashed #444;
-  border-radius:6px;
-  vertical-align: middle;
-}
-
-@media print{
-  .panel{display:none}
-  body{background:#fff}
-  .page{margin:0; padding:12mm; box-shadow:none; width:100%; border:none;}
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 0;
+  }
+  .panel { display: none !important; }
+  body { background: #fff; margin: 0; padding: 0; }
+  .page { 
+    margin: 0 auto; 
+    padding: 15mm; 
+    box-shadow: none; 
+    width: 210mm;
+    height: 297mm;
+    border: 2px solid #000; 
+    page-break-after: avoid;
+    break-after: avoid;
+  }
 }
 </style>
 </head>
@@ -201,69 +360,76 @@ button.print-btn {
 <body>
 
 <div class="panel">
-<div class="grid">
-  <div class="field-group">
-    <label>وزارة التربية والتعليم / المديرية</label>
-    <input id="dir-name" value="مديرية التربية والتعليم - طوباس">
+  <h2 class="panel-header">منظومة إعداد واشتقاق أوراق العمل الرياضية المعتمدة ومراقبة الجودة الفنية</h2>
+  <div class="grid">
+    <div class="field-group">
+      <label>المديرية</label>
+      <input id="dir-name" value="مديرية التربية والتعليم - طوباس">
+    </div>
+    <div class="field-group">
+      <label>المدرسة</label>
+      <input id="school-name" value="مدرسة عاطوف الأساسية المختلطة">
+    </div>
+    <div class="field-group">
+      <label>المعلم</label>
+      <input id="teacher-name" value="محمد وجيه غنام">
+    </div>
+    <div class="field-group">
+      <label>القيمة التربوية</label>
+      <input id="value-theme" value="الإتقان والأمانة في العمل">
+    </div>
+    <div class="field-group">
+      <label>اسم الطالب (فارغ للطباعة العامة)</label>
+      <input id="student" placeholder="دعه فارغاً للطباعة الجماعية">
+    </div>
+    <div class="field-group">
+      <label>الصف</label>
+      <select id="grade">
+        <option value="1">الأول الأساسي</option>
+        <option value="2">الثاني الأساسي</option>
+      </select>
+    </div>
+    <div class="field-group">
+      <label>المستوى الكلي المستهدف</label>
+      <select id="level">
+        <option value="easy">سهل (دعم وتثبيت)</option>
+        <option value="mid" selected>متوسط (تمرن قياسي)</option>
+        <option value="hard">متقدم (قدرات عليا)</option>
+      </select>
+    </div>
+    <div class="field-group">
+      <label>المهارة</label>
+      <select id="skill">
+        <option value="mix">منهجي متدرج (توزيع تربوي)</option>
+        <option value="count">عد العناصر</option>
+        <option value="add">عملية الجمع</option>
+        <option value="sub">عملية الطرح</option>
+        <option value="compare">المقارنة</option>
+        <option value="order">الترتيب</option>
+      </select>
+    </div>
+    <div class="field-group">
+      <label>العدد</label>
+      <input id="count" type="number" value="8" min="1" max="20">
+    </div>
+    <div class="field-group">
+      <label>نموذج الإجابة</label>
+      <select id="show-answers">
+        <option value="no">ورقة طالب (بدون حل)</option>
+        <option value="yes">ورقة معلم (مع الحل)</option>
+      </select>
+    </div>
   </div>
-  <div class="field-group">
-    <label>اسم المدرسة</label>
-    <input id="school-name" value="مدرسة عاطوف الأساسية المختلطة">
-  </div>
-  <div class="field-group">
-    <label>اسم المعلم</label>
-    <input id="teacher-name" value="محمد وجيه غنام">
-  </div>
-  <div class="field-group">
-    <label>قيمة الأسبوع / القيمة التربوية</label>
-    <input id="value-theme" value="الأمانة والصدق في العمل">
-  </div>
-  <div class="field-group">
-    <label>اسم الطالب (اختياري للطباعة الفردية)</label>
-    <input id="student" placeholder="دعه فارغاً للطباعة الجماعية">
-  </div>
-  <div class="field-group">
-    <label>الصف الدراسي</label>
-    <select id="grade">
-      <option value="1">الصف الأول الأساسي</option>
-      <option value="2">الصف الثاني الأساسي</option>
-    </select>
-  </div>
-  <div class="field-group">
-    <label>مستوى التحدي التربوي</label>
-    <select id="level">
-      <option value="easy">سهل (دعم وتثبيت)</option>
-      <option value="mid" selected>متوسط (تمرن قياسي)</option>
-      <option value="hard">متقدم (قدرات عليا)</option>
-    </select>
-  </div>
-  <div class="field-group">
-    <label>المهارة المستهدفة</label>
-    <select id="skill">
-      <option value="mix">مهارات مختلطة (توزيع متوازن)</option>
-      <option value="count">عد العناصر وترسيخ المدلول</option>
-      <option value="add">عملية الجمع</option>
-      <option value="sub">عملية الطرح</option>
-      <option value="compare">المقارنة (أكبر، أصغر، يساوي)</option>
-      <option value="order">ترتيب الأعداد</option>
-    </select>
-  </div>
-  <div class="field-group">
-    <label>عدد الأسئلة المطلوبة</label>
-    <input id="count" type="number" value="8" min="1" max="20">
-  </div>
-</div>
 
-<div class="actions">
-  <button onclick="build()">توليد ورقة العمل التربوية</button>
-  <button class="print-btn" onclick="window.print()">طباعة ورقة العمل</button>
-</div>
+  <div class="actions">
+    <button onclick="build()">توليد واشتقاق ورقة العمل</button>
+    <button class="print-btn" onclick="window.print()">أمر الطباعة</button>
+  </div>
 </div>
 
 <div id="out"></div>
 
 <script>
-
 function ar(n){
   return String(n).replace(/[0-9]/g, d => "٠١٢٣٤٥٦٧٨٩"[d]);
 }
@@ -274,21 +440,67 @@ function escapeHtml(str){
 
 const randRange = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
-/* تمثيل بصري منظم مع منع تكدس النقاط للأعداد الكبيرة */
-function showOrganizedDots(n){
-  if(n === 0) return "—";
-  if(n > 20) return ""; // إخفاء النقاط لتجنب تشويه الصفحة والتركيز على المجرد
+function generateSmartTenFrame(type, a, b = 0) {
+  if (type === "order" || a > 20 || b > 20) return ""; 
+  let html = `<div class="ten-frame-container">`;
   
-  let html = "";
-  let remaining = n;
-  
-  while(remaining > 0) {
-    let currentGroup = Math.min(remaining, 5);
-    html += `<span class="dot-frame">`;
-    html += "● ".repeat(currentGroup).trim();
-    html += `</span>`;
-    remaining -= currentGroup;
+  if (type === "count") {
+    let total = a;
+    let frames = Math.ceil(total / 10) || 1;
+    for (let f = 0; f < frames; f++) {
+      html += `<div class="ten-frame">`;
+      let dots = Math.min(total - f*10, 10);
+      for (let c = 0; c < 10; c++) {
+        html += `<div class="ten-cell">${c < dots ? '<div class="dot solid"></div>' : ''}</div>`;
+      }
+      html += `</div>`;
+    }
   }
+  else if (type === "add") {
+    let total = a + b;
+    let frames = Math.ceil(total / 10) || 1;
+    let currentDot = 0;
+    for (let f = 0; f < frames; f++) {
+      html += `<div class="ten-frame">`;
+      for (let c = 0; c < 10; c++) {
+        html += `<div class="ten-cell">`;
+        if (currentDot < total) {
+          html += currentDot < a ? `<div class="dot solid"></div>` : `<div class="dot hollow"></div>`; 
+          currentDot++;
+        }
+        html += `</div>`;
+      }
+      html += `</div>`;
+    }
+  }
+  else if (type === "sub") {
+    let total = a; 
+    let frames = Math.ceil(total / 10) || 1;
+    let currentDot = 0;
+    let solidCount = a - b;
+    for (let f = 0; f < frames; f++) {
+      html += `<div class="ten-frame">`;
+      for (let c = 0; c < 10; c++) {
+        html += `<div class="ten-cell">`;
+        if (currentDot < total) {
+          html += currentDot < solidCount ? `<div class="dot solid"></div>` : `<div class="dot crossed">✕</div>`; 
+          currentDot++;
+        }
+        html += `</div>`;
+      }
+      html += `</div>`;
+    }
+  }
+  else if (type === "compare") {
+    html += `<div style="display:flex; gap:16px; align-items:center;">`;
+    html += `<div style="text-align:center;"><div class="ten-frame">`;
+    for (let c = 0; c < 10; c++) html += `<div class="ten-cell">${c < a ? '<div class="dot solid"></div>' : ''}</div>`;
+    html += `</div></div><span style="font-size:12px; font-weight:bold; color:#64748b;">مُقَابِل</span>`;
+    html += `<div style="text-align:center;"><div class="ten-frame">`;
+    for (let c = 0; c < 10; c++) html += `<div class="ten-cell">${c < b ? '<div class="dot hollow"></div>' : ''}</div>`;
+    html += `</div></div></div>`;
+  }
+  html += `</div>`;
   return html;
 }
 
@@ -304,184 +516,233 @@ function getLimits(level, grade){
   }
 }
 
-function generateEducationalGoal(skill, gradeAr, levelAr) {
+function getDynamicLimits(baseLimits, currentIdx, totalCount) {
+  let segments = Math.max(1, totalCount / 3);
+  let tier = Math.floor((currentIdx - 1) / segments); 
+  let span = baseLimits.max - baseLimits.min;
+  let step = Math.max(1, Math.floor(span / 3));
+
+  let min = baseLimits.min;
+  let max = baseLimits.max;
+
+  if (tier === 0) { max = Math.min(baseLimits.max, min + step); } 
+  else if (tier === 1) { min = Math.min(baseLimits.max, min + step); max = Math.min(baseLimits.max, min + step); } 
+  else { min = Math.min(baseLimits.max, min + step * 2); } 
+
+  if(max > baseLimits.max) max = baseLimits.max;
+  if(min > max) min = max;
+  if(min === max && min > baseLimits.min) min = Math.max(baseLimits.min, min - 2);
+  
+  let diffLabel = tier === 0 ? "تهيئة" : (tier === 1 ? "تطبيق" : "تحدي");
+  return { limits: { min, max }, diffLabel };
+}
+
+function generateEducationalGoal(skill) {
   const goals = {
-    count: `أن يربط الطالب بين المدلول البصري المنظم والرمز العددي الصحيح بدقة.`,
-    add: `أن يجد الطالب ناتج جمع عددين ضمن النطاق المستهدف بصورة صحيحة.`,
-    sub: `أن يستنتج الطالب ناتج الطرح دون خطأ محققاً مهارة الحساب الذهني.`,
-    compare: `أن يقارن الطالب بين قيم الأعداد مستخدماً الإشارات الرياضية المناسبة بشكل صحيح.`,
-    order: `أن يعيد الطالب ترتيب الأعداد ترتيباً منطقياً سليماً يظهر فهمه للتسلسل العددي.`,
-    mix: `تنمية وتمكين المهارات الرياضية الأساسية المتنوعة وفق التدرج المنطقي للمستوى وبناء شخصية الطالب المستقلة.`
+    count: `ربط المدلول البصري بالرمز العددي.`,
+    add: `إيجاد ناتج جمع عددين بدقة.`,
+    sub: `استنتاج ناتج طرح عددين بأسلوب سليم.`,
+    compare: `المقارنة المنطقية بين الكميات.`,
+    order: `تنظيم الأعداد بتسلسل منطقي دقيق.`,
+    mix: `تدرج تربوي شامل للمهارات التأسيسية.`
   };
   return goals[skill] || goals['mix'];
 }
 
 function getInstruction(type, subtype = "") {
   const map = {
-    add: ["جِدْ ناتج الجمع الآتي:", "احسب ناتج جمع الأعداد التالية:"],
-    sub: ["أوجد ناتج الطرح:", "احسب الفرق بين الأعداد الآتية بدقة:"],
-    compare: ["ضع الإشارة المناسبة ( > ، < ، = ) داخل المربع لتصبح العبارة صحيحة:"],
-    order_asc: ["رتب الأعداد التالية ترتيباً تصاعدياً (من الأصغر إلى الأكبر):"],
-    order_desc: ["رتب الأعداد التالية ترتيباً تنازلياً (من الأكبر إلى الأصغر):"],
-    count: ["عُدّ المجموعات المنظمة التالية واكتب العدد المناسب داخل المربع:"]
+    add: ["جِدْ ناتج الجمع الآتي بانتظام:"],
+    sub: ["أوجد ناتج الطرح بدقة:"],
+    compare: ["ضع إشارة ( > ، < ، = ) داخل المربع:"],
+    order_asc: ["رتب الأعداد ترتيباً تصاعدياً (من الأصغر للأكبر):"],
+    order_desc: ["رتب الأعداد ترتيباً تنازلياً (من الأكبر للأصغر):"],
+    count: ["عُدّ العناصر ثم اكتب العدد المناسب:"]
   };
   let key = type;
   if(type === "order") key = subtype === "asc" ? "order_asc" : "order_desc";
-  let arr = map[key] || ["أجب عن السؤال التالي بعناية:"];
-  return arr[Math.floor(Math.random() * arr.length)];
+  return map[key][0];
 }
 
-function generateQuestion(skill, limits, usedQuestions) {
+function generateQuestion(skill, dynData, usedQuestions, level, grade) {
   let attempts = 0;
+  let limits = dynData.limits;
+  
   while(attempts < 100) {
     attempts++;
     let q = null;
 
     if(skill === "add") {
       let a = randRange(limits.min, limits.max - 1);
-      let b = randRange(1, limits.max - a); 
-      q = { type: "add", a, b, id: `add-${a}-${b}` };
+      let b = randRange(1, Math.max(1, limits.max - a)); 
+      q = { type: "add", a, b, ans: a + b, id: `add-${a}-${b}` };
     }
     else if(skill === "sub") {
       let a = randRange(limits.min + 1, limits.max);
-      let b = randRange(limits.min, a - 1); 
-      q = { type: "sub", a, b, id: `sub-${a}-${b}` };
+      let b = randRange(limits.min, Math.max(limits.min, a - 1)); 
+      q = { type: "sub", a, b, ans: a - b, id: `sub-${a}-${b}` };
     }
     else if(skill === "compare") {
       let a = randRange(limits.min, limits.max);
       let b = randRange(limits.min, limits.max);
-      q = { type: "compare", a, b, id: `comp-${a}-${b}` };
+      let ans = a > b ? '>' : (a < b ? '<' : '=');
+      q = { type: "compare", a, b, ans: ans, id: `comp-${a}-${b}` };
     }
     else if(skill === "order") {
       let nums = new Set();
-      while(nums.size < 3) {
+      let availableRange = limits.max - limits.min + 1;
+      let targetSize = Math.min(3, availableRange);
+      
+      while(nums.size < targetSize) {
         nums.add(randRange(limits.min, limits.max));
       }
+      
       let mode = Math.random() > 0.5 ? "asc" : "desc";
-      let sortedArr = [...nums].sort((x, y) => x - y); // إصلاح خلل ترتيب الأعداد
-      q = { type: "order", nums: sortedArr, mode, id: `order-${sortedArr.join('-')}-${mode}` };
+      let sortedArr = [...nums].sort((x, y) => x - y);
+      let ans = mode === "asc" ? sortedArr : [...sortedArr].reverse();
+      let scrambled = [...nums].sort(() => Math.random() - 0.5);
+      
+      let scrambleAttempts = 0;
+      while (scrambled.length > 1 && (scrambled.join(',') === sortedArr.join(',') || scrambled.join(',') === [...sortedArr].reverse().join(',')) && scrambleAttempts < 10) {
+        scrambled.sort(() => Math.random() - 0.5); scrambleAttempts++;
+      }
+      q = { type: "order", nums: scrambled, mode, ans: ans, id: `order-${sortedArr.join('-')}-${mode}` };
     }
     else if(skill === "count") {
       let a = randRange(limits.min, limits.max);
-      q = { type: "count", a, id: `count-${a}` };
+      q = { type: "count", a, ans: a, id: `count-${a}` };
     }
 
     if(q && !usedQuestions.has(q.id)) {
       usedQuestions.add(q.id);
+      q.diffLabel = dynData.diffLabel;
       return q;
     }
   }
-  return { type: "count", a: randRange(limits.min, limits.max) };
+  let fallbackVal = randRange(limits.min, limits.max);
+  return { type: "count", a: fallbackVal, ans: fallbackVal, diffLabel: dynData.diffLabel, id: `fallback-${fallbackVal}-${Math.random()}` };
 }
 
 function build(){
-  let dirName = escapeHtml(document.getElementById("dir-name").value || "وزارة التربية والتعليم");
-  let schoolName = escapeHtml(document.getElementById("school-name").value || "المدرسة الأساسية");
-  let teacherName = escapeHtml(document.getElementById("teacher-name").value || "معلم المادة");
-  let valueTheme = escapeHtml(document.getElementById("value-theme").value || "طلب العلم");
-  let student = escapeHtml(document.getElementById("student").value || "_________________________________");
+  let dirName = escapeHtml(document.getElementById("dir-name").value || "المديرية");
+  let schoolName = escapeHtml(document.getElementById("school-name").value || "المدرسة");
+  let teacherName = escapeHtml(document.getElementById("teacher-name").value || "المعلم");
+  let valueTheme = escapeHtml(document.getElementById("value-theme").value || "التميز");
+  let student = escapeHtml(document.getElementById("student").value || "........................................................");
   
   let grade = document.getElementById("grade").value;
   let level = document.getElementById("level").value;
   let skillSelection = document.getElementById("skill").value;
+  let showAnswers = document.getElementById("show-answers").value === "yes";
   let count = Math.min(20, Math.max(1, parseInt(document.getElementById("count").value || 8)));
 
-  let limits = getLimits(level, grade);
-  const gradeAr = grade === "1" ? "الصف الأول الأساسي" : "الصف الثاني الأساسي";
-  const levelAr = {"easy":"سهل (دعم)", "mid":"متوسط (قياسي)", "hard":"متقدم (تحدي)"}[level];
-  const goalText = generateEducationalGoal(skillSelection, gradeAr, levelAr);
+  let baseLimits = getLimits(level, grade);
+  const gradeAr = grade === "1" ? "الأول الأساسي" : "الثاني الأساسي";
+  const levelAr = {"easy":"دعم وتثبيت", "mid":"متوسط قياسي", "hard":"متقدم وتحدي"}[level];
 
-  let html = `
+  // تجميع الأجزاء في مصفوفة بدل الدمج المستمر في النص لتسريع الأداء البنائي
+  let htmlBuilder = [];
+  
+  htmlBuilder.push(`
   <div class="page">
     <div class="school-header">
       <div class="school-info">
+        <div>دولة فلسطين - وزارة التربية والتعليم</div>
         <div>${dirName}</div>
         <div>${schoolName}</div>
-        <div>المعلم: ${teacherName}</div>
       </div>
       <div class="main-title-area">
-        <h1 class="title">ورقة عمل رياضيات تشخيصية</h1>
-        <div class="goal"><b>الهدف السلوكي:</b> ${goalText}</div>
+        <h1 class="title">ورقة عمل تشخيصية ${showAnswers ? '<span style="color:#dc2626;font-size:18px;">(مُجابَة)</span>' : ''}</h1>
+        <div class="goal"><b>الهدف:</b> ${generateEducationalGoal(skillSelection)}</div>
       </div>
       <div class="school-info" style="text-align: left;">
-        <div>التاريخ: ____/____/ ٢٠٢٦م</div>
-        <div>النطاق: أعداد ضمن العدد (${ar(limits.max)})</div>
-        <div style="color: #27ae60;">قيمة الأسبوع: ${valueTheme}</div>
+        <div>التاريخ: ..... / ..... / ٢٠٢٦ م</div>
+        <div>النطاق: ضمن العدد (${ar(baseLimits.max)})</div>
+        <div>المعلم: ${teacherName}</div>
       </div>
     </div>
 
     <div class="student-bar">
-      <div>اسم الطالب/ة: ${student}</div>
+      <div>اسم الطالب: ${student}</div>
       <div>الصف: ${gradeAr}</div>
-      <div>مستوى الورقة: ${levelAr}</div>
+      <div>المستوى: ${levelAr}</div>
+      <div style="color: var(--secondary);">قيمة: ${valueTheme}</div>
     </div>
 
-    <div id="questions-container">`;
+    <div class="questions-grid">`);
 
   let usedQuestions = new Set();
-  const availableSkills = ["count", "add", "sub", "compare", "order"];
-
-  for(let i = 1; i <= count; i++) {
-    let currentSkill = skillSelection;
-    if(skillSelection === "mix") {
-      currentSkill = availableSkills[(i - 1) % availableSkills.length];
+  let pedagogicalOrder = ["count", "add", "sub", "compare", "order"];
+  let mixedSkillsPool = [];
+  if (skillSelection === "mix") {
+    for(let i=0; i<count; i++) {
+      mixedSkillsPool.push(pedagogicalOrder[i % pedagogicalOrder.length]);
     }
-
-    let qData = generateQuestion(currentSkill, limits, usedQuestions);
-    let visualDotsA = showOrganizedDots(qData.a);
-    let visualDotsB = currentSkill === "add" ? showOrganizedDots(qData.b) : "";
-    
-    html += `<div class="q">
-      <div><b>السؤال ${ar(i)}:</b></div>
-      <div class="inst">${getInstruction(qData.type, qData.mode)}</div>`;
-
-    if(qData.type === "add") {
-      if(visualDotsA || visualDotsB) {
-        html += `<div class="math-display"><div style="font-size:14px; color:#555;">${visualDotsA} &nbsp; + &nbsp; ${visualDotsB}</div></div>`;
-      }
-      html += `
-      <div class="math-display">
-        <span>${ar(qData.a)}</span> <span>+</span> <span>${ar(qData.b)}</span> <span>=</span> <span class="box"></span>
-      </div>`;
-    }
-    else if(qData.type === "sub") {
-      if(visualDotsA) {
-        html += `<div class="math-display"><div style="font-size:14px; color:#555;">${visualDotsA} &nbsp; - &nbsp; (احذف منها ${ar(qData.b)})</div></div>`;
-      }
-      html += `
-      <div class="math-display">
-        <span>${ar(qData.a)}</span> <span>−</span> <span>${ar(qData.b)}</span> <span>=</span> <span class="box"></span>
-      </div>`;
-    }
-    else if(qData.type === "compare") {
-      html += `
-      <div class="math-display" style="gap: 40px;">
-        <span>${ar(qData.a)}</span> <span class="box"></span> <span>${ar(qData.b)}</span>
-      </div>`;
-    }
-    else if(qData.type === "order") {
-      html += `
-      <div class="math-display" style="letter-spacing:15px; font-weight: bold; margin-bottom: 15px;">
-        ${qData.nums.map(ar).join(" ، ")}
-      </div>
-      <div class="math-display" style="gap: 10px;">
-        <span class="box"></span> <span style="font-size: 14px;">←</span> <span class="box"></span> <span style="font-size: 14px;">←</span> <span class="box"></span>
-      </div>`;
-    }
-    else if(qData.type === "count") {
-      if(visualDotsA) {
-        html += `<div class="math-display" style="margin-bottom: 12px;">${visualDotsA}</div>`;
-      }
-      html += `
-      <div class="math-display">
-        <span style="font-size: 16px;">عَدَدُ العَنَاصِرِ = </span> <span class="box"></span>
-      </div>`;
-    }
-    html += `</div>`;
   }
 
-  html += `</div></div>`;
-  document.getElementById("out").innerHTML = html;
+  let stats = { count: 0, add: 0, sub: 0, compare: 0, order: 0 };
+  let typeNames = { count:"العد", add:"الجمع", sub:"الطرح", compare:"المقارنة", order:"الترتيب" };
+
+  for(let i = 1; i <= count; i++) {
+    let currentSkill = skillSelection === "mix" ? mixedSkillsPool[i - 1] : skillSelection;
+    stats[currentSkill]++;
+
+    let dynData = getDynamicLimits(baseLimits, i, count);
+    let qData = generateQuestion(currentSkill, dynData, usedQuestions, level, grade);
+    
+    htmlBuilder.push(`<div class="q">
+      <div class="q-header">
+        <span class="q-num">سؤال (${ar(i)})</span>
+        <span class="q-diff">${qData.diffLabel}</span>
+      </div>
+      <div class="inst">${getInstruction(qData.type, qData.mode)}</div>`);
+
+    let ansHTML = (ans) => showAnswers ? `<span class="answer-text">${ans}</span>` : '';
+
+    if(qData.type === "add") {
+      htmlBuilder.push(generateSmartTenFrame("add", qData.a, qData.b));
+      htmlBuilder.push(`<div class="math-display"><span>${ar(qData.a)}</span> <span>+</span> <span>${ar(qData.b)}</span> <span>=</span> <span class="box">${ansHTML(ar(qData.ans))}</span></div>`);
+    }
+    else if(qData.type === "sub") {
+      htmlBuilder.push(generateSmartTenFrame("sub", qData.a, qData.b));
+      htmlBuilder.push(`<div class="math-display"><span>${ar(qData.a)}</span> <span>−</span> <span>${ar(qData.b)}</span> <span>=</span> <span class="box">${ansHTML(ar(qData.ans))}</span></div>`);
+    }
+    else if(qData.type === "compare") {
+      htmlBuilder.push(generateSmartTenFrame("compare", qData.a, qData.b));
+      htmlBuilder.push(`<div class="math-display" style="margin: 12px 0;"><span>${ar(qData.a)}</span> <span class="box" style="border-radius:50%;">${ansHTML(qData.ans)}</span> <span>${ar(qData.b)}</span></div>`);
+    }
+    else if(qData.type === "order") {
+      htmlBuilder.push(`<div class="math-display" style="font-weight:bold; margin-bottom:15px; gap:20px;">${qData.nums.map(n => `<span>${ar(n)}</span>`).join(" ، ")}</div>
+      <div class="math-display" style="gap:6px;">
+        <div style="text-align:center;"><span class="box">${ansHTML(ar(qData.ans[0] !== undefined ? qData.ans[0] : ''))}</span></div>
+        <span>←</span>
+        <div style="text-align:center;"><span class="box">${ansHTML(ar(qData.ans[1] !== undefined ? qData.ans[1] : ''))}</span></div>
+        ${qData.ans[2] !== undefined ? `<span>←</span><div style="text-align:center;"><span class="box">${ansHTML(ar(qData.ans[2]))}</span></div>` : ''}
+      </div>`);
+    }
+    else if(qData.type === "count") {
+      htmlBuilder.push(generateSmartTenFrame("count", qData.a));
+      htmlBuilder.push(`<div class="math-display"><span>العدد = </span> <span class="box">${ansHTML(ar(qData.ans))}</span></div>`);
+    }
+    htmlBuilder.push(`</div>`);
+  }
+
+  let analysisHtml = Object.keys(stats).filter(k => stats[k] > 0).map(k => `<span>${typeNames[k]}: ${ar(stats[k])}</span>`).join(" | ");
+
+  htmlBuilder.push(`</div>
+    
+    <div class="evaluation-box">
+       التقييم: ( &nbsp; ) متقن للمهارة المستهدفة &nbsp; | &nbsp; ( &nbsp; ) بحاجة لخطة معالجة ودعم
+       <div class="analysis-box">توزيع المهارات: ${analysisHtml}</div>
+    </div>
+
+    <div class="institutional-footer">
+      <div>توقيع المعلم: ....................</div>
+      <div>المشرف المقيم: ....................</div>
+      <div>اعتماد الإدارة: ....................</div>
+    </div>
+  </div>`);
+  
+  document.getElementById("out").innerHTML = htmlBuilder.join('');
 }
 
 build();
